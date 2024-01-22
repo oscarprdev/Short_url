@@ -2,8 +2,10 @@ package urls
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	api "short_url/pkg/api"
+	errors "short_url/pkg/features/shared/handlers"
 	adapters "short_url/pkg/features/urls/adapters"
 	urlUc "short_url/pkg/features/urls/usecases"
 	"time"
@@ -17,10 +19,27 @@ func HandlerShortUrl(urlUc *urlUc.UrlUsecases) echo.HandlerFunc {
 
 		// Provide request body
 		b, err := io.ReadAll(c.Request().Body)
+		if err != nil {
+			newError := &errors.BadRequestError{
+				Details: fmt.Sprintf("Error reading request body: %v", err),
+			}
+			return handleUrlsErrors(w, newError)
+		}
 
 		var rb api.PostUrlJSONBody
-		if err = json.Unmarshal(b, &rb); err != nil {
-			return handleUrlsErrors(w, err)
+		err = json.Unmarshal(b, &rb)
+		if err != nil {
+			newError := &errors.BadRequestError{
+				Details: fmt.Sprintf("Error JSON format on request body: %v", err),
+			}
+			return handleUrlsErrors(w, newError)
+		}
+
+		if rb.OriginalUrl == nil {
+			newError := &errors.BadRequestError{
+				Details: fmt.Sprintf("Not valid request body: %v", err),
+			}
+			return handleUrlsErrors(w, newError)
 		}
 
 		shortUrl := urlUc.ShortUrlUsecases(*rb.OriginalUrl)
@@ -28,7 +47,10 @@ func HandlerShortUrl(urlUc *urlUc.UrlUsecases) echo.HandlerFunc {
 		// Adapt request body to insert in DB
 		rbok, err := adapters.AdaptShortUrlToDB(*rb.OriginalUrl, shortUrl)
 		if err != nil {
-			return handleUrlsErrors(w, err)
+			newError := &errors.BadRequestError{
+				Details: fmt.Sprintf("Not valid request body: %v", err),
+			}
+			return handleUrlsErrors(w, newError)
 		}
 
 		// Create new response url
