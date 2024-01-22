@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: 'The unique identifier for the user.'
+    nullable: false
+    example: 'f05a78f6-66e3-4a31-b718-6e94873b01f0'
+  email:
+    type: string
+    format: email
+    description: "The user's email."
+    nullable: false
+    example: 'email@email.com'

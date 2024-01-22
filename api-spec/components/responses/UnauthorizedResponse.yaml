@@ -1,0 +1,9 @@
+description: Unauthorized response
+content:
+  application/json:
+    schema:
+      $ref: 'components/_index.yaml#/schemas/Error'
+    example:
+      error:
+        status: 401
+        details: 'Unauthorized response'

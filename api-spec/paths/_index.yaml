@@ -1,0 +1,3 @@
+# Users
+'/users':
+  $ref: 'paths/users/users.yaml'

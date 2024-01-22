@@ -1,0 +1,11 @@
+get:
+  tags:
+    - Users
+  description: Get a list of users
+  responses:
+    '200':
+      $ref: 'components/_index.yaml#/responses/GetUsersResponse'
+    '400':
+      $ref: 'components/_index.yaml#/responses/BadRequestResponse'
+    '401':
+      $ref: 'components/_index.yaml#/responses/UnauthorizedResponse'

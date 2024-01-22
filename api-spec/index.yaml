@@ -1,0 +1,17 @@
+openapi: 3.0.0
+
+info:
+  title: Short url
+  description: |
+    API spec for short url app done by Oscar Perez Romero
+  version: 1.0.0
+
+tags:
+  - name: Users
+    description: Users API
+
+paths:
+  $ref: './paths/_index.yaml'
+
+components:
+  $ref: './components/_index.yaml'
