@@ -10,6 +10,10 @@ responses:
   GetUsersResponse:
     $ref: 'components/responses/GetUsersResponse.yaml'
 
+  # Users
+  ShortUrlResponse:
+    $ref: 'components/responses/ShortUrlResponse.yaml'
+
 schemas:
   # Common
   Error:
@@ -18,3 +22,10 @@ schemas:
   # User
   User:
     $ref: 'components/schemas/User.yaml'
+
+  # Url
+  Url:
+    $ref: 'components/schemas/Url.yaml'
+
+  PostShortUrlBody:
+    $ref: 'components/schemas/PostShortUrlBody.yaml'

@@ -19,4 +19,4 @@ generate:
 	make compile && \
 	oapi-codegen \
 		-generate 'types, server, strict-server' \
-		-package short_url compiled.yaml > ../backend/pkg/infra/generated/api.go
+		-package short_url compiled.yaml > ../backend/pkg/api/api_generated.go

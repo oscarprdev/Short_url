@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	strictecho "github.com/oapi-codegen/runtime/strictmiddleware/echo"
@@ -23,6 +24,30 @@ type Error struct {
 	Status *int `json:"status,omitempty"`
 }
 
+// Url defines model for Url.
+type Url struct {
+	// CreatedAt The timestamp when the URL was created.
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
+
+	// ExpiresAt Expiration date and time for the URL.
+	ExpiresAt *time.Time `json:"expiresAt"`
+
+	// Id The unique identifier for the URL.
+	Id *openapi_types.UUID `json:"id,omitempty"`
+
+	// OriginalUrl The original URL.
+	OriginalUrl *string `json:"originalUrl,omitempty"`
+
+	// ShortUrl The short URL.
+	ShortUrl *string `json:"shortUrl,omitempty"`
+
+	// TitleUrl The URL title.
+	TitleUrl *string `json:"titleUrl,omitempty"`
+
+	// UpdatedAt The timestamp when the URL was last updated.
+	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+}
+
 // User defines model for User.
 type User struct {
 	// Email The user's email.
@@ -32,8 +57,20 @@ type User struct {
 	Id *openapi_types.UUID `json:"id,omitempty"`
 }
 
+// PostUrlJSONBody defines parameters for PostUrl.
+type PostUrlJSONBody struct {
+	// OriginalUrl The original URL.
+	OriginalUrl *string `json:"originalUrl,omitempty"`
+}
+
+// PostUrlJSONRequestBody defines body for PostUrl for application/json ContentType.
+type PostUrlJSONRequestBody PostUrlJSONBody
+
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+
+	// (POST /url)
+	PostUrl(ctx echo.Context) error
 
 	// (GET /users)
 	GetUsers(ctx echo.Context) error
@@ -42,6 +79,15 @@ type ServerInterface interface {
 // ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
 	Handler ServerInterface
+}
+
+// PostUrl converts echo context to params.
+func (w *ServerInterfaceWrapper) PostUrl(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.PostUrl(ctx)
+	return err
 }
 
 // GetUsers converts echo context to params.
@@ -81,8 +127,38 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.POST(baseURL+"/url", wrapper.PostUrl)
 	router.GET(baseURL+"/users", wrapper.GetUsers)
 
+}
+
+type PostUrlRequestObject struct {
+	Body *PostUrlJSONRequestBody
+}
+
+type PostUrlResponseObject interface {
+	VisitPostUrlResponse(w http.ResponseWriter) error
+}
+
+type PostUrl200JSONResponse struct {
+	Status *int `json:"status,omitempty"`
+	Url    *Url `json:"url,omitempty"`
+}
+
+func (response PostUrl200JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUrl400JSONResponse Error
+
+func (response PostUrl400JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
 }
 
 type GetUsersRequestObject struct {
@@ -125,6 +201,9 @@ func (response GetUsers401JSONResponse) VisitGetUsersResponse(w http.ResponseWri
 // StrictServerInterface represents all server handlers.
 type StrictServerInterface interface {
 
+	// (POST /url)
+	PostUrl(ctx context.Context, request PostUrlRequestObject) (PostUrlResponseObject, error)
+
 	// (GET /users)
 	GetUsers(ctx context.Context, request GetUsersRequestObject) (GetUsersResponseObject, error)
 }
@@ -139,6 +218,35 @@ func NewStrictHandler(ssi StrictServerInterface, middlewares []StrictMiddlewareF
 type strictHandler struct {
 	ssi         StrictServerInterface
 	middlewares []StrictMiddlewareFunc
+}
+
+// PostUrl operation middleware
+func (sh *strictHandler) PostUrl(ctx echo.Context) error {
+	var request PostUrlRequestObject
+
+	var body PostUrlJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUrl(ctx.Request().Context(), request.(PostUrlRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUrl")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUrlResponseObject); ok {
+		return validResponse.VisitPostUrlResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
 }
 
 // GetUsers operation middleware
