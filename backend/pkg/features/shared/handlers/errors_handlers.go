@@ -22,12 +22,6 @@ func (e *UnauthorizedError) Error() string {
 	return e.Details
 }
 
-// func ProvideUnauthorizedError(d string) *UnauthorizedError {
-// 	return &UnauthorizedError{
-// 		Details: d,
-// 	}
-// }
-
 func DefaultErrorResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(404)

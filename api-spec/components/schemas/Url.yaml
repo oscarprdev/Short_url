@@ -1,0 +1,41 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: 'The unique identifier for the URL.'
+    nullable: false
+    example: 'f05a78f6-66e3-4a31-b718-6e94873b01f0'
+  originalUrl:
+    type: string
+    description: 'The original URL.'
+    nullable: false
+    example: 'http://short&go.dev/long/url'
+  shortUrl:
+    type: string
+    description: 'The short URL.'
+    nullable: false
+    example: 'http://short&go.dev/short/url'
+  titleUrl:
+    type: string
+    description: 'The URL title.'
+    nullable: false
+    example: 'short_url_title'
+  createdAt:
+    type: string
+    format: date-time
+    description: 'The timestamp when the URL was created.'
+    nullable: false
+    example: '2022-01-31T12:34:56Z'
+  updatedAt:
+    type: string
+    format: date-time
+    description: 'The timestamp when the URL was last updated.'
+    nullable: false
+    example: '2022-01-31T12:34:56Z'
+  expiresAt:
+    type: string
+    format: date-time
+    description: 'Expiration date and time for the URL.'
+    nullable: true
+    example: '2022-01-31T23:59:59Z'

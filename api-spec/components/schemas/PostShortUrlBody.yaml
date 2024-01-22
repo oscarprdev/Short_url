@@ -1,0 +1,7 @@
+type: object
+properties:
+  originalUrl:
+    type: string
+    description: 'The original URL.'
+    nullable: false
+    example: 'http://short&go.dev/long/url'

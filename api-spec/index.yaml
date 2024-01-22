@@ -10,6 +10,9 @@ tags:
   - name: Users
     description: Users API
 
+  - name: Urls
+    description: Urls API
+
 paths:
   $ref: './paths/_index.yaml'
 

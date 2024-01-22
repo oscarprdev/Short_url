@@ -1,0 +1,15 @@
+post:
+  tags:
+    - Urls
+  description: Create new Short url
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: 'components/_index.yaml#/schemas/PostShortUrlBody'
+  responses:
+    '200':
+      $ref: 'components/_index.yaml#/responses/ShortUrlResponse'
+    '400':
+      $ref: 'components/_index.yaml#/responses/BadRequestResponse'

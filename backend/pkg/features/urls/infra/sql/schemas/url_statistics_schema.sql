@@ -1,0 +1,9 @@
+DROP TABLE url_statistics IF EXIST;
+
+CREATE TABLE url_statistics (
+    id UUID PRIMARY KEY DEFAULT UUID(),
+    url_id UUID NOT NULL,
+    usage_count INT DEFAULT 0,
+    access_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (url_id) REFERENCES urls(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
