@@ -2,7 +2,11 @@ package auth
 
 import (
 	"context"
-	api "short_url/pkg/api"
+	"fmt"
+
+	authAdapters "short_url/pkg/features/auth/adapters"
+
+	"github.com/markbates/goth"
 )
 
 type AuthUsecases struct {
@@ -15,6 +19,22 @@ func ProvideAuthUsecases(ur AuthRepo) *AuthUsecases {
 	}
 }
 
-func (us *AuthUsecases) AuthUser(ctx context.Context) (*[]api.User, error) {
-	return us.Repo.AuthUser(ctx)
+func (us *AuthUsecases) AuthUser(ctx context.Context, u *goth.User) error {
+	err := us.Repo.GetUserById(ctx, u.UserID)
+
+	if err != nil {
+		dbUser := authAdapters.AdaptAuthInfoToDb(u)
+
+		fmt.Printf("User mapped: %v\n", dbUser)
+
+		if err := us.Repo.CreateNewUser(ctx, dbUser); err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	fmt.Printf("Error here: %v\n", err)
+
+	return nil
 }

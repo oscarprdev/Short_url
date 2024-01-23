@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/gothic"
+	"github.com/markbates/goth/providers/github"
 	"github.com/markbates/goth/providers/google"
 )
 
@@ -22,6 +23,11 @@ func NewAuthProvider() {
 	googleClientSecret := os.Getenv(("GOOGLE_CLIENT_SECRET"))
 	googleCallbackUrl := "http://localhost:8080/auth/callback?provider=google"
 
+	// Github
+	githubClientId := os.Getenv("GITHUB_CLIENT_ID")
+	githubClientSecret := os.Getenv(("GITHUB_CLIENT_SECRET"))
+	githubCallbackUrl := "http://localhost:8080/auth/callback?provider=github"
+
 	store := sessions.NewCookieStore([]byte("my secure key"))
 	store.MaxAge(MaxAge)
 
@@ -33,5 +39,6 @@ func NewAuthProvider() {
 
 	goth.UseProviders(
 		google.New(googleClientId, googleClientSecret, googleCallbackUrl),
+		github.New(githubClientId, githubClientSecret, githubCallbackUrl),
 	)
 }

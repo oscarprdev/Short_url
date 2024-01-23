@@ -14,5 +14,6 @@ func handlerAuthRoute(e *echo.Echo, dbs *dbs.Databases) {
 
 	e.GET("/auth", uh.HandlerAuth(authUc))
 	e.GET("/auth/callback", uh.HandlerAuthCallback(authUc))
+	e.GET("/auth/logout", uh.HandlerLogout(authUc))
 
 }

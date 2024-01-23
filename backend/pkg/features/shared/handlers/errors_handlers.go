@@ -22,6 +22,14 @@ func (e *UnauthorizedError) Error() string {
 	return e.Details
 }
 
+type InternalError struct {
+	Details string
+}
+
+func (e *InternalError) Error() string {
+	return e.Details
+}
+
 func DefaultErrorResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(404)

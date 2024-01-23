@@ -24,6 +24,14 @@ func handleUserErrors(w http.ResponseWriter, err error) error {
 		}
 
 		return errorResponse.VisitGetAuthResponse(w)
+	case *errors.InternalError:
+		status := 500
+		errorResponse := api.GetAuth500JSONResponse{
+			Details: &e.Details,
+			Status:  &status,
+		}
+
+		return errorResponse.VisitGetAuthResponse(w)
 	default:
 		return errors.DefaultErrorResponse(w)
 	}

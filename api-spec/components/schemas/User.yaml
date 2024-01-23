@@ -29,3 +29,8 @@ properties:
     description: 'The timestamp when the user was last updated.'
     nullable: false
     example: '2024-01-10T19:14:04.489431Z'
+  name:
+    type: string
+    description: "The user's first name."
+    nullable: false
+    example: 'Tomm'

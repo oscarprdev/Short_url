@@ -50,17 +50,23 @@ type Url struct {
 
 // User defines model for User.
 type User struct {
+	// CreatedAt The timestamp when the user was created.
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
+
 	// Email The user's email.
 	Email *openapi_types.Email `json:"email,omitempty"`
 
 	// Id The unique identifier for the user.
-	Id *int `json:"id,omitempty"`
+	Id *string `json:"id,omitempty"`
+
+	// Name The user's first name.
+	Name *string `json:"name,omitempty"`
 
 	// Picture The user's picture URL.
 	Picture *string `json:"picture,omitempty"`
 
-	// Verified Check if the user is authorized.
-	Verified *bool `json:"verified,omitempty"`
+	// UpdatedAt The timestamp when the user was last updated.
+	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 }
 
 // PostUrlJSONBody defines parameters for PostUrl.
@@ -201,6 +207,15 @@ func (response GetAuth401JSONResponse) VisitGetAuthResponse(w http.ResponseWrite
 	return json.NewEncoder(w).Encode(response)
 }
 
+type GetAuth500JSONResponse Error
+
+func (response GetAuth500JSONResponse) VisitGetAuthResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
 type GetAuthLogoutRequestObject struct {
 }
 
@@ -237,6 +252,15 @@ func (response GetAuthLogout401JSONResponse) VisitGetAuthLogoutResponse(w http.R
 	return json.NewEncoder(w).Encode(response)
 }
 
+type GetAuthLogout500JSONResponse Error
+
+func (response GetAuthLogout500JSONResponse) VisitGetAuthLogoutResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
 type PostUrlRequestObject struct {
 	Body *PostUrlJSONRequestBody
 }
@@ -262,6 +286,15 @@ type PostUrl400JSONResponse Error
 func (response PostUrl400JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUrl500JSONResponse Error
+
+func (response PostUrl500JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
 
 	return json.NewEncoder(w).Encode(response)
 }
@@ -299,6 +332,15 @@ type GetUsers401JSONResponse Error
 func (response GetUsers401JSONResponse) VisitGetUsersResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(401)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsers500JSONResponse Error
+
+func (response GetUsers500JSONResponse) VisitGetUsersResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
 
 	return json.NewEncoder(w).Encode(response)
 }

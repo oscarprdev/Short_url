@@ -2,9 +2,10 @@ package auth
 
 import (
 	"context"
-	api "short_url/pkg/api"
+	adapters "short_url/pkg/features/auth/adapters"
 )
 
 type AuthRepo interface {
-	AuthUser(ctx context.Context) (*[]api.User, error)
+	CreateNewUser(ctx context.Context, u *adapters.DbUser) error
+	GetUserById(ctx context.Context, id string) error
 }
