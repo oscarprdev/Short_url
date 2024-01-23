@@ -2,9 +2,9 @@ package auth
 
 import (
 	"context"
-	"fmt"
 
 	authAdapters "short_url/pkg/features/auth/adapters"
+	errorsC "short_url/pkg/features/shared/handlers"
 
 	"github.com/markbates/goth"
 )
@@ -23,18 +23,14 @@ func (us *AuthUsecases) AuthUser(ctx context.Context, u *goth.User) error {
 	err := us.Repo.GetUserById(ctx, u.UserID)
 
 	if err != nil {
-		dbUser := authAdapters.AdaptAuthInfoToDb(u)
-
-		fmt.Printf("User mapped: %v\n", dbUser)
-
-		if err := us.Repo.CreateNewUser(ctx, dbUser); err != nil {
-			return err
+		if internalErr, ok := err.(*errorsC.InternalError); ok {
+			return internalErr
 		}
 
-		return nil
-	}
+		dbUser := authAdapters.AdaptAuthInfoToDb(u)
 
-	fmt.Printf("Error here: %v\n", err)
+		return us.Repo.CreateNewUser(ctx, dbUser)
+	}
 
 	return nil
 }

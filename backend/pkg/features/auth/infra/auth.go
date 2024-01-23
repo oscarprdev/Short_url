@@ -40,8 +40,13 @@ func (pr *PostgresRepository) CreateNewUser(ctx context.Context, u *authAdapters
 		&i.Picture,
 		&i.Name,
 	)
+	if err != nil {
+		return &errorsC.InternalError{
+			Details: "Error inserting user on db",
+		}
+	}
 
-	return err
+	return nil
 }
 
 var selectPathQuery = "sql/queries/select_user_by_id.sql"
