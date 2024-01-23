@@ -17,8 +17,15 @@ properties:
     description: "The user's picture URL."
     nullable: false
     example: 'https://image.com/ALV-UjVgV8w'
-  verified:
-    type: boolean
-    description: 'Check if the user is authorized.'
+  createdAt:
+    type: string
+    format: date-time
+    description: 'The timestamp when the user was created.'
     nullable: false
-    example: true
+    example: '2024-01-10T19:14:04.489431Z'
+  updatedAt:
+    type: string
+    format: date-time
+    description: 'The timestamp when the user was last updated.'
+    nullable: false
+    example: '2024-01-10T19:14:04.489431Z'
