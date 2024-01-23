@@ -1,0 +1,6 @@
+name: UserId
+in: query
+description: User identifier
+required: false
+schema:
+  type: string

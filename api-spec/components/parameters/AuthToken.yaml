@@ -1,0 +1,6 @@
+name: Authorization
+in: header
+description: Auth token for user authorization
+required: false
+schema:
+  type: string

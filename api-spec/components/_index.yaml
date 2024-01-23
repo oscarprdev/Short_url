@@ -1,3 +1,10 @@
+parameters:
+  UserId:
+    $ref: 'components/parameters/UserId.yaml'
+
+  AuthToken:
+    $ref: 'components/parameters/AuthToken.yaml'
+
 responses:
   # Common
   BadRequestResponse:
