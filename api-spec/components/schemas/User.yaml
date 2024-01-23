@@ -1,10 +1,10 @@
 type: object
 properties:
   id:
-    type: integer
+    type: string
     description: 'The unique identifier for the user.'
     nullable: false
-    example: 615175183151032984302
+    example: '615175183151032984302'
   email:
     type: string
     format: email

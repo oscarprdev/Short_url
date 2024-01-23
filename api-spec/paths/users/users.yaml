@@ -9,3 +9,5 @@ get:
       $ref: 'components/_index.yaml#/responses/BadRequestResponse'
     '401':
       $ref: 'components/_index.yaml#/responses/UnauthorizedResponse'
+    '500':
+      $ref: 'components/_index.yaml#/responses/InternalErrorResponse'

@@ -13,3 +13,5 @@ post:
       $ref: 'components/_index.yaml#/responses/ShortUrlResponse'
     '400':
       $ref: 'components/_index.yaml#/responses/BadRequestResponse'
+    '500':
+      $ref: 'components/_index.yaml#/responses/InternalErrorResponse'
