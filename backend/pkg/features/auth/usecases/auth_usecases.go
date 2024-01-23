@@ -2,10 +2,10 @@ package auth
 
 import (
 	"context"
-	"time"
 
 	authAdapters "short_url/pkg/features/auth/adapters"
 	errorsC "short_url/pkg/features/shared/handlers"
+	"short_url/pkg/features/shared/utils"
 
 	"github.com/markbates/goth"
 )
@@ -35,9 +35,9 @@ func (us *AuthUsecases) AuthUser(ctx context.Context, u *goth.User) error {
 	}
 
 	// Update token if it is already expired
-	now := time.Now().UTC()
-	if now.After(user.ExpiresAt) {
-		err = us.Repo.UpdateUser(ctx, user)
+	err = utils.IsDateExpired(user.ExpiresAt)
+	if err != nil {
+		err = us.Repo.UpdateUser(ctx, u.ExpiresAt, u.AccessToken, user.Id)
 		if err != nil {
 			return err
 		}

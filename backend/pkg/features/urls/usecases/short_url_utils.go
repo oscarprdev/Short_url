@@ -57,7 +57,7 @@ func shortUrl(ou *adapters.OriginalUrl) string {
 
 	// Hash the concatenated string and take the first 8 characters
 	finalHash := hashString(shortURL)
-	shortURL = fmt.Sprintf("%s/%s", prodURL, finalHash[:8])
+	shortURL = fmt.Sprintf("%s%s", prodURL, finalHash[:8])
 
 	return shortURL
 }

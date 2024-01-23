@@ -46,6 +46,7 @@ func provideOriginalUrl(c echo.Context, w http.ResponseWriter) (*adapters.Origin
 func HandlerShortUrl(uc *urlUc.UrlUsecases) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		w := c.Response().Writer
+		ctx := c.Request().Context()
 
 		ou, err := provideOriginalUrl(c, w)
 		if err != nil {
@@ -55,15 +56,15 @@ func HandlerShortUrl(uc *urlUc.UrlUsecases) echo.HandlerFunc {
 			return handleUrlsErrors(w, newError)
 		}
 
-		authorizationHeader := c.Request().Header.Get("Authorization")
+		authToken := c.Request().Header.Get("Authorization")
 		idQueryParam := c.QueryParam("id")
 
 		// Initialization of url response
 		var url = api.Url{}
 
-		if idQueryParam != "" && authorizationHeader != "" {
+		if idQueryParam != "" && authToken != "" {
 			// Manage the short url and connect url with user to be persistent in database
-			err = uc.ShortUrlComplexUsecases(ou, &url)
+			err = uc.ShortUrlComplexUsecases(ctx, ou, &url, idQueryParam, authToken)
 			if err != nil {
 				newError := &errors.InternalError{
 					Details: fmt.Sprintf("Internal error: %v", err),

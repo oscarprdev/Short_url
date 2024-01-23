@@ -13,9 +13,7 @@ func (uc *UrlUsecases) ShortUrlSimpleUsecases(ou *adapters.OriginalUrl, url *api
 		return err
 	}
 
-	apiurl := adapters.AdaptShortUrlToApp(suDB)
-
-	*url = *apiurl
+	*url = *adapters.AdaptShortUrlToApp(suDB)
 
 	return nil
 }

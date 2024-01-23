@@ -1,50 +1,12 @@
 package adapters
 
 import (
-	"fmt"
-	"regexp"
 	api "short_url/pkg/api"
-	errors "short_url/pkg/features/shared/handlers"
 	"time"
 
 	"github.com/google/uuid"
 )
 
-type ShortUrlDBBody struct {
-	Id          uuid.UUID `json:"id"`
-	OriginalUrl string    `json:"original_url"`
-	ShortUrl    string    `json:"short_url"`
-	Title       string    `json:"title"`
-	CreatedAt   time.Time `json:"created_at"`
-	UpdatedAt   time.Time `json:"updated_at"`
-	ExpiresAt   time.Time `json:"expires_at"`
-}
-
-type OriginalUrl struct {
-	Ou *string
-}
-
-func validateUrl(ou string) (*OriginalUrl, error) {
-	urlPattern := `^https?://([a-zA-Z0-9.-]+)(:[0-9]+)?/?([^\s]*)$`
-
-	regex, err := regexp.Compile(urlPattern)
-	if err != nil {
-		return nil, &errors.BadRequestError{
-			Details: fmt.Sprintf("Original url is not a valid url: %v", err),
-		}
-	}
-
-	match := regex.MatchString(ou)
-	if !match {
-		return nil, &errors.BadRequestError{
-			Details: fmt.Sprintf("Original url is not a valid url: %v", err),
-		}
-	}
-
-	return &OriginalUrl{
-		Ou: &ou,
-	}, nil
-}
 
 func AdaptShortUrlToDB(ou, su string) (*ShortUrlDBBody, error) {
 	validOu, err := validateUrl(ou)
@@ -75,5 +37,12 @@ func AdaptShortUrlToApp(subody *ShortUrlDBBody) *api.Url {
 		CreatedAt:   &subody.CreatedAt,
 		ExpiresAt:   &subody.ExpiresAt,
 		TitleUrl:    &subody.Title,
+	}
+}
+
+func AdaptAuthUserInfoToDB(auo *AuthUserInfo) *AuthUserInfo {
+	return &AuthUserInfo{
+		Id:    auo.Id,
+		Token: auo.Token,
 	}
 }
