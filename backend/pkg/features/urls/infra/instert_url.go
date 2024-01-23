@@ -9,7 +9,7 @@ import (
 	adapters "short_url/pkg/features/urls/adapters"
 )
 
-var pathQuery = "sql/queries/insert_url_query.sql"
+var pathQuery = "sql/queries/insert_url.sql"
 
 func (pr *PostgresRepository) InsertUrl(ctx context.Context, rb *adapters.ShortUrlDBBody) (*api.Url, error) {
 	query, err := insertUrlQuery.ReadFile(pathQuery)
@@ -38,5 +38,5 @@ func (pr *PostgresRepository) InsertUrl(ctx context.Context, rb *adapters.ShortU
 		}
 	}
 
-	return &url, err
+	return &url, nil
 }

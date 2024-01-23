@@ -6,5 +6,7 @@ CREATE TABLE users (
     updated_at TIMESTAMP NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     picture VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expires_at TIMESTAMP NOT NULL
 );

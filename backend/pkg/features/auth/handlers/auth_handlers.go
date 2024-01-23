@@ -36,6 +36,7 @@ func HandlerAuthCallback(authUc *authUc.AuthUsecases) echo.HandlerFunc {
 		ctx := c.Request().Context()
 
 		gothUser, err := gothic.CompleteUserAuth(w, r)
+
 		if err != nil {
 			newError := &errors.UnauthorizedError{
 				Details: fmt.Sprintf("Error authorizing user: %v", err),

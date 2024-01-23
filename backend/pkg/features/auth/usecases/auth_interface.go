@@ -2,10 +2,12 @@ package auth
 
 import (
 	"context"
-	adapters "short_url/pkg/features/auth/adapters"
+	types "short_url/pkg/features/shared/types"
+	"time"
 )
 
 type AuthRepo interface {
-	CreateNewUser(ctx context.Context, u *adapters.DbUser) error
-	GetUserById(ctx context.Context, id string) error
+	CreateNewUser(ctx context.Context, u *types.DbUser) error
+	GetUserById(ctx context.Context, id string) (*types.DbUser, error)
+	UpdateUser(ctx context.Context, expiresAt time.Time, token, id string) error
 }

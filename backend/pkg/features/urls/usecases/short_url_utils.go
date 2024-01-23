@@ -7,8 +7,13 @@ import (
 	"io"
 	"math/rand"
 	"os"
+	adapters "short_url/pkg/features/urls/adapters"
 	"time"
 )
+
+type OriginalUrl struct {
+	Ou *string
+}
 
 func generateRandomString(length int) string {
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -31,10 +36,10 @@ func hashString(input string) string {
 	return fmt.Sprintf("%x", hash)
 }
 
-func (uc *UrlUsecases) ShortUrlUsecases(ou string) string {
+func shortUrl(ou *adapters.OriginalUrl) string {
 	// Compute the MD5 hash of the original URL
 	hasher := md5.New()
-	io.WriteString(hasher, ou)
+	io.WriteString(hasher, *ou.Ou)
 	hash := hasher.Sum(nil)
 
 	// Encode the hash to a base64 string
@@ -52,7 +57,7 @@ func (uc *UrlUsecases) ShortUrlUsecases(ou string) string {
 
 	// Hash the concatenated string and take the first 8 characters
 	finalHash := hashString(shortURL)
-	shortURL = fmt.Sprintf("%s/%s", prodURL, finalHash[:8])
+	shortURL = fmt.Sprintf("%s%s", prodURL, finalHash[:8])
 
 	return shortURL
 }

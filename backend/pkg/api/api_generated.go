@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/oapi-codegen/runtime"
 	strictecho "github.com/oapi-codegen/runtime/strictmiddleware/echo"
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
@@ -75,6 +76,15 @@ type PostUrlJSONBody struct {
 	OriginalUrl *string `json:"originalUrl,omitempty"`
 }
 
+// PostUrlParams defines parameters for PostUrl.
+type PostUrlParams struct {
+	// UserId User identifier
+	UserId *string `form:"UserId,omitempty" json:"UserId,omitempty"`
+
+	// Authorization Auth token for user authorization
+	Authorization *string `json:"Authorization,omitempty"`
+}
+
 // PostUrlJSONRequestBody defines body for PostUrl for application/json ContentType.
 type PostUrlJSONRequestBody PostUrlJSONBody
 
@@ -88,7 +98,7 @@ type ServerInterface interface {
 	GetAuthLogout(ctx echo.Context) error
 
 	// (POST /url)
-	PostUrl(ctx echo.Context) error
+	PostUrl(ctx echo.Context, params PostUrlParams) error
 
 	// (GET /users)
 	GetUsers(ctx echo.Context) error
@@ -121,8 +131,34 @@ func (w *ServerInterfaceWrapper) GetAuthLogout(ctx echo.Context) error {
 func (w *ServerInterfaceWrapper) PostUrl(ctx echo.Context) error {
 	var err error
 
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PostUrlParams
+	// ------------- Optional query parameter "UserId" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "UserId", ctx.QueryParams(), &params.UserId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter UserId: %s", err))
+	}
+
+	headers := ctx.Request().Header
+	// ------------- Optional header parameter "Authorization" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Authorization")]; found {
+		var Authorization string
+		n := len(valueList)
+		if n != 1 {
+			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Expected one value for Authorization, got %d", n))
+		}
+
+		err = runtime.BindStyledParameterWithLocation("simple", false, "Authorization", runtime.ParamLocationHeader, valueList[0], &Authorization)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Authorization: %s", err))
+		}
+
+		params.Authorization = &Authorization
+	}
+
 	// Invoke the callback with all the unmarshaled arguments
-	err = w.Handler.PostUrl(ctx)
+	err = w.Handler.PostUrl(ctx, params)
 	return err
 }
 
@@ -262,7 +298,8 @@ func (response GetAuthLogout500JSONResponse) VisitGetAuthLogoutResponse(w http.R
 }
 
 type PostUrlRequestObject struct {
-	Body *PostUrlJSONRequestBody
+	Params PostUrlParams
+	Body   *PostUrlJSONRequestBody
 }
 
 type PostUrlResponseObject interface {
@@ -286,6 +323,15 @@ type PostUrl400JSONResponse Error
 func (response PostUrl400JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUrl401JSONResponse Error
+
+func (response PostUrl401JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(401)
 
 	return json.NewEncoder(w).Encode(response)
 }
@@ -420,8 +466,10 @@ func (sh *strictHandler) GetAuthLogout(ctx echo.Context) error {
 }
 
 // PostUrl operation middleware
-func (sh *strictHandler) PostUrl(ctx echo.Context) error {
+func (sh *strictHandler) PostUrl(ctx echo.Context, params PostUrlParams) error {
 	var request PostUrlRequestObject
+
+	request.Params = params
 
 	var body PostUrlJSONRequestBody
 	if err := ctx.Bind(&body); err != nil {

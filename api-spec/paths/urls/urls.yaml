@@ -2,6 +2,9 @@ post:
   tags:
     - Urls
   description: Create new Short url
+  parameters:
+    - $ref: 'components/_index.yaml#/parameters/UserId'
+    - $ref: 'components/_index.yaml#/parameters/AuthToken'
   requestBody:
     required: true
     content:
@@ -13,5 +16,7 @@ post:
       $ref: 'components/_index.yaml#/responses/ShortUrlResponse'
     '400':
       $ref: 'components/_index.yaml#/responses/BadRequestResponse'
+    '401':
+      $ref: 'components/_index.yaml#/responses/UnauthorizedResponse'
     '500':
       $ref: 'components/_index.yaml#/responses/InternalErrorResponse'
