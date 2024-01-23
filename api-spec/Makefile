@@ -2,7 +2,14 @@
 
 serve:
 	@echo Serving Api spec
-	npx @redocly/cli build-docs index.yaml && open redoc-static.html
+	make compile && \
+	npx @redocly/cli build-docs compiled.yaml && open redoc-static.html
+
+generate:
+	make compile && \
+	oapi-codegen \
+		-generate 'types, server, strict-server' \
+		-package short_url compiled.yaml > ../backend/pkg/api/api_generated.go
 
 compile:
 	multi-file-swagger -o yaml index.yaml > compiled_tmp1.yaml && \
@@ -14,9 +21,3 @@ compile:
 
 format:
 	sed -i -E 's/\$ref: components\/\([^ ]*\)\.yaml/\$ref: \#\/components\/\1/; s/_index#//; s#\/\/#\/#; s/\$ref: \(.*\)/$ref: "\1"/' compiled.yaml
-
-generate:
-	make compile && \
-	oapi-codegen \
-		-generate 'types, server, strict-server' \
-		-package short_url compiled.yaml > ../backend/pkg/api/api_generated.go
