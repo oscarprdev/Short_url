@@ -55,21 +55,30 @@ func HandlerShortUrl(uc *urlUc.UrlUsecases) echo.HandlerFunc {
 			return handleUrlsErrors(w, newError)
 		}
 
-		// Buscar el id y el auth
 		authorizationHeader := c.Request().Header.Get("Authorization")
 		idQueryParam := c.QueryParam("id")
 
-		if idQueryParam != "" && authorizationHeader != "" {
-			// shortUrlComplexUsecase *url
-		}
-
+		// Initialization of url response
 		var url = api.Url{}
-		err = uc.ShortUrlSimpleUsecases(ou, &url)
-		if err != nil {
-			newError := &errors.InternalError{
-				Details: fmt.Sprintf("Internal error: %v", err),
+
+		if idQueryParam != "" && authorizationHeader != "" {
+			// Manage the short url and connect url with user to be persistent in database
+			err = uc.ShortUrlComplexUsecases(ou, &url)
+			if err != nil {
+				newError := &errors.InternalError{
+					Details: fmt.Sprintf("Internal error: %v", err),
+				}
+				return handleUrlsErrors(w, newError)
 			}
-			return handleUrlsErrors(w, newError)
+		} else {
+			// Just short url and return back to http response
+			err = uc.ShortUrlSimpleUsecases(ou, &url)
+			if err != nil {
+				newError := &errors.InternalError{
+					Details: fmt.Sprintf("Internal error: %v", err),
+				}
+				return handleUrlsErrors(w, newError)
+			}
 		}
 
 		// Return successful response
