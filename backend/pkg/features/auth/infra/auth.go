@@ -40,14 +40,14 @@ func scanDbUser(row *sql.Row) (*authAdapters.DbUser, error) {
 
 func (pr *PostgresRepository) CreateNewUser(ctx context.Context, u *authAdapters.DbUser) error {
 	fmt.Printf("CreateNewUser infra: %v\n", u)
-	data, err := insertUser.ReadFile(insertPathQuery)
+	query, err := insertUser.ReadFile(insertPathQuery)
 	if err != nil {
 		return &errorsC.InternalError{
 			Details: "Error on query",
 		}
 	}
 
-	row := pr.Db.QueryRowContext(ctx, string(data),
+	row := pr.Db.QueryRowContext(ctx, string(query),
 		u.Id,
 		u.CreatedAt,
 		u.UpdatedAt,
@@ -68,15 +68,39 @@ func (pr *PostgresRepository) CreateNewUser(ctx context.Context, u *authAdapters
 
 var selectPathQuery = "sql/queries/select_user_by_id.sql"
 
-func (pr *PostgresRepository) GetUserById(ctx context.Context, id string) error {
-	data, err := selectUserById.ReadFile(selectPathQuery)
+func (pr *PostgresRepository) GetUserById(ctx context.Context, id string) (*authAdapters.DbUser, error) {
+	query, err := selectUserById.ReadFile(selectPathQuery)
 	if err != nil {
-		return &errorsC.InternalError{
+		return nil, &errorsC.InternalError{
 			Details: "Select user query has an error",
 		}
 	}
 
-	row := pr.Db.QueryRowContext(ctx, string(data), id)
+	row := pr.Db.QueryRowContext(ctx, string(query), id)
+
+	user, err := scanDbUser(row)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
+
+var updatePathQuery = "sql/queries/update_user.sql"
+
+func (pr *PostgresRepository) UpdateUser(ctx context.Context, u *authAdapters.DbUser) error {
+	query, err := updateUser.ReadFile(updatePathQuery)
+	if err != nil {
+		return &errorsC.InternalError{
+			Details: "Update user query has an error",
+		}
+	}
+
+	row := pr.Db.QueryRowContext(ctx, string(query),
+		u.Token,
+		u.ExpiresAt,
+		u.Id,
+	)
 
 	_, err = scanDbUser(row)
 	if err != nil {

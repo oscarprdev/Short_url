@@ -7,5 +7,6 @@ import (
 
 type AuthRepo interface {
 	CreateNewUser(ctx context.Context, u *adapters.DbUser) error
-	GetUserById(ctx context.Context, id string) error
+	GetUserById(ctx context.Context, id string) (*adapters.DbUser, error)
+	UpdateUser(ctx context.Context, u *adapters.DbUser) error
 }

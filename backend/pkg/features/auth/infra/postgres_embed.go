@@ -7,3 +7,6 @@ var selectUserById embed.FS
 
 //go:embed sql/queries/insert_user.sql
 var insertUser embed.FS
+
+//go:embed sql/queries/update_user.sql
+var updateUser embed.FS
