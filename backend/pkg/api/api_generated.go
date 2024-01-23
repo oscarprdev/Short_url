@@ -50,11 +50,23 @@ type Url struct {
 
 // User defines model for User.
 type User struct {
+	// CreatedAt The timestamp when the user was created.
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
+
 	// Email The user's email.
 	Email *openapi_types.Email `json:"email,omitempty"`
 
 	// Id The unique identifier for the user.
-	Id *openapi_types.UUID `json:"id,omitempty"`
+	Id *string `json:"id,omitempty"`
+
+	// Name The user's first name.
+	Name *string `json:"name,omitempty"`
+
+	// Picture The user's picture URL.
+	Picture *string `json:"picture,omitempty"`
+
+	// UpdatedAt The timestamp when the user was last updated.
+	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 }
 
 // PostUrlJSONBody defines parameters for PostUrl.
@@ -69,6 +81,12 @@ type PostUrlJSONRequestBody PostUrlJSONBody
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
 
+	// (GET /auth)
+	GetAuth(ctx echo.Context) error
+
+	// (GET /auth/logout)
+	GetAuthLogout(ctx echo.Context) error
+
 	// (POST /url)
 	PostUrl(ctx echo.Context) error
 
@@ -79,6 +97,24 @@ type ServerInterface interface {
 // ServerInterfaceWrapper converts echo contexts to parameters.
 type ServerInterfaceWrapper struct {
 	Handler ServerInterface
+}
+
+// GetAuth converts echo context to params.
+func (w *ServerInterfaceWrapper) GetAuth(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetAuth(ctx)
+	return err
+}
+
+// GetAuthLogout converts echo context to params.
+func (w *ServerInterfaceWrapper) GetAuthLogout(ctx echo.Context) error {
+	var err error
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetAuthLogout(ctx)
+	return err
 }
 
 // PostUrl converts echo context to params.
@@ -127,9 +163,102 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 		Handler: si,
 	}
 
+	router.GET(baseURL+"/auth", wrapper.GetAuth)
+	router.GET(baseURL+"/auth/logout", wrapper.GetAuthLogout)
 	router.POST(baseURL+"/url", wrapper.PostUrl)
 	router.GET(baseURL+"/users", wrapper.GetUsers)
 
+}
+
+type GetAuthRequestObject struct {
+}
+
+type GetAuthResponseObject interface {
+	VisitGetAuthResponse(w http.ResponseWriter) error
+}
+
+type GetAuth200JSONResponse struct {
+	AuthInfo *User `json:"authInfo,omitempty"`
+	Status   *int  `json:"status,omitempty"`
+}
+
+func (response GetAuth200JSONResponse) VisitGetAuthResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetAuth400JSONResponse Error
+
+func (response GetAuth400JSONResponse) VisitGetAuthResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetAuth401JSONResponse Error
+
+func (response GetAuth401JSONResponse) VisitGetAuthResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(401)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetAuth500JSONResponse Error
+
+func (response GetAuth500JSONResponse) VisitGetAuthResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetAuthLogoutRequestObject struct {
+}
+
+type GetAuthLogoutResponseObject interface {
+	VisitGetAuthLogoutResponse(w http.ResponseWriter) error
+}
+
+type GetAuthLogout200JSONResponse struct {
+	Status *int `json:"status,omitempty"`
+}
+
+func (response GetAuthLogout200JSONResponse) VisitGetAuthLogoutResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetAuthLogout400JSONResponse Error
+
+func (response GetAuthLogout400JSONResponse) VisitGetAuthLogoutResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetAuthLogout401JSONResponse Error
+
+func (response GetAuthLogout401JSONResponse) VisitGetAuthLogoutResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(401)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetAuthLogout500JSONResponse Error
+
+func (response GetAuthLogout500JSONResponse) VisitGetAuthLogoutResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
 }
 
 type PostUrlRequestObject struct {
@@ -157,6 +286,15 @@ type PostUrl400JSONResponse Error
 func (response PostUrl400JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUrl500JSONResponse Error
+
+func (response PostUrl500JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
 
 	return json.NewEncoder(w).Encode(response)
 }
@@ -198,8 +336,23 @@ func (response GetUsers401JSONResponse) VisitGetUsersResponse(w http.ResponseWri
 	return json.NewEncoder(w).Encode(response)
 }
 
+type GetUsers500JSONResponse Error
+
+func (response GetUsers500JSONResponse) VisitGetUsersResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
 // StrictServerInterface represents all server handlers.
 type StrictServerInterface interface {
+
+	// (GET /auth)
+	GetAuth(ctx context.Context, request GetAuthRequestObject) (GetAuthResponseObject, error)
+
+	// (GET /auth/logout)
+	GetAuthLogout(ctx context.Context, request GetAuthLogoutRequestObject) (GetAuthLogoutResponseObject, error)
 
 	// (POST /url)
 	PostUrl(ctx context.Context, request PostUrlRequestObject) (PostUrlResponseObject, error)
@@ -218,6 +371,52 @@ func NewStrictHandler(ssi StrictServerInterface, middlewares []StrictMiddlewareF
 type strictHandler struct {
 	ssi         StrictServerInterface
 	middlewares []StrictMiddlewareFunc
+}
+
+// GetAuth operation middleware
+func (sh *strictHandler) GetAuth(ctx echo.Context) error {
+	var request GetAuthRequestObject
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetAuth(ctx.Request().Context(), request.(GetAuthRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetAuth")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetAuthResponseObject); ok {
+		return validResponse.VisitGetAuthResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetAuthLogout operation middleware
+func (sh *strictHandler) GetAuthLogout(ctx echo.Context) error {
+	var request GetAuthLogoutRequestObject
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetAuthLogout(ctx.Request().Context(), request.(GetAuthLogoutRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetAuthLogout")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetAuthLogoutResponseObject); ok {
+		return validResponse.VisitGetAuthLogoutResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
 }
 
 // PostUrl operation middleware

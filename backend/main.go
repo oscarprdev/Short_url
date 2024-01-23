@@ -7,6 +7,7 @@ import (
 	"os"
 
 	dbs "short_url/pkg/databases"
+	auth "short_url/pkg/features/auth/usecases"
 	routes "short_url/pkg/routes"
 
 	"github.com/joho/godotenv"
@@ -26,6 +27,8 @@ func main() {
 	if err != nil {
 		log.Fatal("Can not connect to database", err)
 	}
+
+	auth.NewAuthProvider()
 
 	dbs := dbs.ProvideDatabase(db)
 	router := routes.SetupRoutes(dbs)

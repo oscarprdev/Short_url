@@ -1,10 +1,10 @@
 get:
   tags:
-    - Users
-  description: Get a list of users
+    - Auth
+  description: Logout user
   responses:
     '200':
-      $ref: 'components/_index.yaml#/responses/GetUsersResponse'
+      $ref: 'components/_index.yaml#/responses/LogoutResponse'
     '400':
       $ref: 'components/_index.yaml#/responses/BadRequestResponse'
     '401':

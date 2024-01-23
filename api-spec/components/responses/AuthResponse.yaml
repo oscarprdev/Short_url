@@ -1,0 +1,11 @@
+description: Login response
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+        authInfo:
+          $ref: 'components/_index.yaml#/schemas/User'

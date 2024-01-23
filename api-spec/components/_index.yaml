@@ -6,9 +6,19 @@ responses:
   UnauthorizedResponse:
     $ref: 'components/responses/UnauthorizedResponse.yaml'
 
+  InternalErrorResponse:
+    $ref: 'components/responses/InternalErrorResponse.yaml'
+
   # Users
   GetUsersResponse:
     $ref: 'components/responses/GetUsersResponse.yaml'
+
+  # Auth
+  AuthResponse:
+    $ref: 'components/responses/AuthResponse.yaml'
+
+  LogoutResponse:
+    $ref: 'components/responses/LogoutResponse.yaml'
 
   # Users
   ShortUrlResponse:

@@ -2,6 +2,13 @@
 '/users':
   $ref: 'paths/users/users.yaml'
 
+# Auth
+'/auth':
+  $ref: 'paths/auth/auth.yaml'
+
+'/auth/logout':
+  $ref: 'paths/auth/auth_logout.yaml'
+
 # Urls
 '/url':
   $ref: 'paths/urls/urls.yaml'
