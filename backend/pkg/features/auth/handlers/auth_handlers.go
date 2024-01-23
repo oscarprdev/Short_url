@@ -22,7 +22,7 @@ func HandlerAuthCallback(userUc *userUc.AuthUsecases) echo.HandlerFunc {
 
 		user, err := gothic.CompleteUserAuth(w, r)
 		if err != nil {
-			newError := &errors.BadRequestError{
+			newError := &errors.UnauthorizedError{
 				Details: fmt.Sprintf("Error authorizing user: %v", err),
 			}
 			return handleUserErrors(w, newError)
@@ -33,11 +33,6 @@ func HandlerAuthCallback(userUc *userUc.AuthUsecases) echo.HandlerFunc {
 		// Redirect to a success page or another route
 		http.Redirect(w, r, "http://localhost:5173/", http.StatusFound)
 		return nil
-
-		// w.Header().Set("Content-Type", "application/json")
-		// w.WriteHeader(http.StatusOK)
-
-		// return json.NewEncoder(w).Encode(user)
 	}
 }
 
