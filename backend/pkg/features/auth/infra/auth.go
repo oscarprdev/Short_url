@@ -7,11 +7,36 @@ import (
 	"fmt"
 	authAdapters "short_url/pkg/features/auth/adapters"
 
-	api "short_url/pkg/api"
 	errorsC "short_url/pkg/features/shared/handlers"
 )
 
 var insertPathQuery = "sql/queries/insert_user.sql"
+
+func scanDbUser(row *sql.Row) (*authAdapters.DbUser, error) {
+	var i authAdapters.DbUser
+	err := row.Scan(
+		&i.Id,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.Email,
+		&i.Picture,
+		&i.Name,
+		&i.Token,
+		&i.ExpiresAt,
+	)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, err
+		}
+
+		return nil, &errorsC.InternalError{
+			Details: "Error retrieving user from DB",
+		}
+	}
+
+	return &i, nil
+}
 
 func (pr *PostgresRepository) CreateNewUser(ctx context.Context, u *authAdapters.DbUser) error {
 	fmt.Printf("CreateNewUser infra: %v\n", u)
@@ -29,21 +54,13 @@ func (pr *PostgresRepository) CreateNewUser(ctx context.Context, u *authAdapters
 		u.Email,
 		u.Picture,
 		u.Name,
+		u.Token,
+		u.ExpiresAt,
 	)
 
-	var i api.User
-	err = row.Scan(
-		&i.Id,
-		&i.CreatedAt,
-		&i.UpdatedAt,
-		&i.Email,
-		&i.Picture,
-		&i.Name,
-	)
+	_, err = scanDbUser(row)
 	if err != nil {
-		return &errorsC.InternalError{
-			Details: "Error inserting user on db",
-		}
+		return err
 	}
 
 	return nil
@@ -61,24 +78,9 @@ func (pr *PostgresRepository) GetUserById(ctx context.Context, id string) error 
 
 	row := pr.Db.QueryRowContext(ctx, string(data), id)
 
-	var user authAdapters.DbUser
-	err = row.Scan(
-		&user.Id,
-		&user.CreatedAt,
-		&user.UpdatedAt,
-		&user.Email,
-		&user.Picture,
-		&user.Name,
-	)
-
+	_, err = scanDbUser(row)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return err
-		}
-
-		return &errorsC.InternalError{
-			Details: "Error retrieving user from DB",
-		}
+		return err
 	}
 
 	return nil

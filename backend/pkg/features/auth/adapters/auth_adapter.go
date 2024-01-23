@@ -17,6 +17,8 @@ type DbUser struct {
 	Name      string              `json:"name"`
 	CreatedAt time.Time           `json:"created_at"`
 	UpdatedAt time.Time           `json:"updated_at"`
+	Token     string              `json:"token"`
+	ExpiresAt time.Time           `json:"expires_at"`
 }
 
 func AdaptAuthInfoToDb(uInfo *goth.User) *DbUser {
@@ -31,6 +33,8 @@ func AdaptAuthInfoToDb(uInfo *goth.User) *DbUser {
 		Name:      uInfo.Name,
 		CreatedAt: currentTime,
 		UpdatedAt: currentTime,
+		Token:     uInfo.AccessToken,
+		ExpiresAt: uInfo.ExpiresAt,
 	}
 }
 
