@@ -10,6 +10,13 @@ responses:
   GetUsersResponse:
     $ref: 'components/responses/GetUsersResponse.yaml'
 
+  # Auth
+  AuthResponse:
+    $ref: 'components/responses/AuthResponse.yaml'
+
+  LogoutResponse:
+    $ref: 'components/responses/LogoutResponse.yaml'
+
   # Users
   ShortUrlResponse:
     $ref: 'components/responses/ShortUrlResponse.yaml'

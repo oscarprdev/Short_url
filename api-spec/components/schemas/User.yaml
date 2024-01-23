@@ -1,14 +1,24 @@
 type: object
 properties:
   id:
-    type: string
-    format: uuid
+    type: integer
     description: 'The unique identifier for the user.'
     nullable: false
-    example: 'f05a78f6-66e3-4a31-b718-6e94873b01f0'
+    example: 615175183151032984302
   email:
     type: string
     format: email
     description: "The user's email."
     nullable: false
     example: 'email@email.com'
+  picture:
+    type: string
+    format: url
+    description: "The user's picture URL."
+    nullable: false
+    example: 'https://image.com/ALV-UjVgV8w'
+  verified:
+    type: boolean
+    description: 'Check if the user is authorized.'
+    nullable: false
+    example: true

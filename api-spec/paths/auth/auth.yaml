@@ -1,0 +1,11 @@
+get:
+  tags:
+    - Auth
+  description: Authorize user
+  responses:
+    '200':
+      $ref: 'components/_index.yaml#/responses/AuthResponse'
+    '400':
+      $ref: 'components/_index.yaml#/responses/BadRequestResponse'
+    '401':
+      $ref: 'components/_index.yaml#/responses/UnauthorizedResponse'
