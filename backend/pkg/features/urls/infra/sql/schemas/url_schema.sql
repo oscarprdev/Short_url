@@ -6,7 +6,7 @@ CREATE TABLE urls (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     original_url VARCHAR(255) NOT NULL UNIQUE,
     short_url TEXT NOT NULL UNIQUE,
-    title VARCHAR(255),
+    title VARCHAR(255) NOT NULL,
     expires_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP + INTERVAL '1 week'
 );
 

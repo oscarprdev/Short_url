@@ -17,12 +17,14 @@ type UrlUserInput struct {
 }
 
 func (pr *PostgresRepository) RelateUrlWithUser(ctx context.Context, urlId uuid.UUID, userId string) error {
+
 	query, err := insertUrlUserQuery.ReadFile(insertPathQuery)
 	if err != nil {
 		return &errors.BadRequestError{
 			Details: fmt.Sprintf("Error reading query: %v", err),
 		}
 	}
+
 	row := pr.Db.QueryRowContext(ctx, string(query), uuid.New(), userId, urlId)
 
 	var uui UrlUserInput

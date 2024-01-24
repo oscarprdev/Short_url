@@ -18,11 +18,11 @@ func HandlerGetUsers(userUc *userUc.UserUsecases) echo.HandlerFunc {
 		}
 
 		status := int(200)
-		successResponse := api.GetUsers200JSONResponse{
+		successResponse := api.GetUsersList200JSONResponse{
 			Status: &status,
 			Users:  users,
 		}
 
-		return successResponse.VisitGetUsersResponse(w)
+		return successResponse.VisitGetUsersListResponse(w)
 	}
 }

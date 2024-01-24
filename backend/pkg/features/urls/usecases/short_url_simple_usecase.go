@@ -2,6 +2,7 @@ package urls
 
 import (
 	api "short_url/pkg/api"
+	sharedAdapters "short_url/pkg/features/shared/adapters"
 	adapters "short_url/pkg/features/urls/adapters"
 )
 
@@ -13,7 +14,7 @@ func (uc *UrlUsecases) ShortUrlSimpleUsecases(ou *adapters.OriginalUrl, url *api
 		return err
 	}
 
-	*url = *adapters.AdaptShortUrlToApp(suDB)
+	*url = *sharedAdapters.AdaptShortUrlToApp(suDB)
 
 	return nil
 }

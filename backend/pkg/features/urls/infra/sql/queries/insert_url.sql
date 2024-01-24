@@ -1,2 +1,2 @@
-INSERT INTO urls (id, original_url, short_url)
-VALUES ($1, $2, $3) RETURNING *;
+INSERT INTO urls (id, created_at, updated_at, original_url, short_url, title, expires_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;

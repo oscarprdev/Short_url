@@ -24,6 +24,14 @@ func handleUserErrors(w http.ResponseWriter, err error) error {
 		}
 
 		return errorResponse.VisitGetUsersListResponse(w)
+	case *errors.InternalError:
+		status := 401
+		errorResponse := api.GetUsersList500JSONResponse{
+			Details: &e.Details,
+			Status:  &status,
+		}
+
+		return errorResponse.VisitGetUsersListResponse(w)
 	default:
 		return errors.DefaultErrorResponse(w)
 	}
