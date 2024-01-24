@@ -9,7 +9,7 @@ import (
 
 var updateQuery = "sql/queries/update_url.sql"
 
-func (pr *PostgresRepository) UpdateUrl(ctx context.Context, url types.DbUrl) error {
+func (pr *PostgresRepository) UpdateUsageUrl(ctx context.Context, url types.DbUrl) error {
 	query, err := updateUrlQuery.ReadFile(updateQuery)
 	if err != nil {
 		return &errorsC.InternalError{

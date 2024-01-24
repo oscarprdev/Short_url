@@ -52,3 +52,6 @@ schemas:
 
   UrlUsageBody:
     $ref: 'components/schemas/UrlUsageBody.yaml'
+
+  UrlTitleBody:
+    $ref: 'components/schemas/UrlTitleBody.yaml'

@@ -1,0 +1,13 @@
+type: object
+properties:
+  urlId:
+    type: string
+    format: uuid
+    description: 'URL Id.'
+    nullable: false
+    example: '625b3e66-c924-4e09-8237-4f4094d19835'
+  urlTitle:
+    type: string
+    description: 'The new URL title.'
+    nullable: false
+    example: 'Your awesome title'
