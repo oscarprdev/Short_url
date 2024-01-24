@@ -10,20 +10,20 @@ func handleUserErrors(w http.ResponseWriter, err error) error {
 	switch e := err.(type) {
 	case *errors.BadRequestError:
 		status := 400
-		errorResponse := api.GetUsers400JSONResponse{
+		errorResponse := api.GetUsersList400JSONResponse{
 			Details: &e.Details,
 			Status:  &status,
 		}
 
-		return errorResponse.VisitGetUsersResponse(w)
+		return errorResponse.VisitGetUsersListResponse(w)
 	case *errors.UnauthorizedError:
 		status := 401
-		errorResponse := api.GetUsers401JSONResponse{
+		errorResponse := api.GetUsersList401JSONResponse{
 			Details: &e.Details,
 			Status:  &status,
 		}
 
-		return errorResponse.VisitGetUsersResponse(w)
+		return errorResponse.VisitGetUsersListResponse(w)
 	default:
 		return errors.DefaultErrorResponse(w)
 	}

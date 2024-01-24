@@ -1,6 +1,9 @@
 # Users
-'/users':
-  $ref: 'paths/users/users.yaml'
+'/users/describe':
+  $ref: 'paths/users/users_describe.yaml'
+
+'/users/list':
+  $ref: 'paths/users/users_list.yaml'
 
 # Auth
 '/auth':

@@ -20,6 +20,9 @@ responses:
   GetUsersResponse:
     $ref: 'components/responses/GetUsersResponse.yaml'
 
+  DescribeUserResponse:
+    $ref: 'components/responses/DescribeUserResponse.yaml'
+
   # Auth
   AuthResponse:
     $ref: 'components/responses/AuthResponse.yaml'

@@ -47,8 +47,6 @@ func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters
 	}
 	// SHORT URL
 	su := shortUrl(ou)
-	fmt.Println("shortUrl")
-	fmt.Println(su)
 	suDB, err := adapters.AdaptShortUrlToDB(*ou.Ou, su)
 	if err != nil {
 		return &errorsC.BadRequestError{
@@ -64,7 +62,7 @@ func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters
 			Details: fmt.Sprintf("Error creating new url on db: %v", err),
 		}
 	}
-	// Insert shourt and user on db
+	// Insert short and user on db
 	err = uc.RelateUrlWithUser(ctx, *ur.Id, dbUser.Id)
 	if err != nil {
 		return &errorsC.InternalError{

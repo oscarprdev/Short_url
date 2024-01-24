@@ -1,4 +1,4 @@
-name: UserId
+name: Id
 in: query
 description: User identifier
 required: false
