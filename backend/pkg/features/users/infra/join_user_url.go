@@ -36,7 +36,6 @@ func (pr *PostgresRepository) JoinUserWithUrls(ctx context.Context, id string) (
 		); err != nil {
 			return nil, err
 		}
-
 		items = append(items, i)
 	}
 

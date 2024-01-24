@@ -1,7 +1,6 @@
 package users
 
 import (
-	"fmt"
 	api "short_url/pkg/api"
 	userUc "short_url/pkg/features/users/usecases"
 
@@ -15,8 +14,6 @@ func HandlerDescribeUser(userUc *userUc.UserUsecases) echo.HandlerFunc {
 
 		authToken := c.Request().Header.Get("Authorization")
 		idQueryParam := c.QueryParam("id")
-
-		fmt.Println("HELO")
 
 		describeResponse, err := userUc.DescribeUsers(ctx, authToken, idQueryParam)
 		if err != nil {

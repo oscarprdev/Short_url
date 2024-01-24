@@ -52,7 +52,9 @@ func (uc *UserUsecases) DescribeUsers(ctx context.Context, token, id string) (*a
 
 	var apiUrls []api.Url
 	for _, url := range *urls {
-		apiUrls = append(apiUrls, *sharedAdapters.AdaptShortUrlToApp(&url))
+		currentUrl := url
+		adaptedUrl := sharedAdapters.AdaptShortUrlToApp(&currentUrl)
+		apiUrls = append(apiUrls, *adaptedUrl)
 	}
 
 	return &adapters.DescribeUser{
