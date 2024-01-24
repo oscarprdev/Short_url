@@ -90,8 +90,11 @@ type PostUrlParams struct {
 
 // PostUrlTitleJSONBody defines parameters for PostUrlTitle.
 type PostUrlTitleJSONBody struct {
-	// TitleUrl The new URL title.
-	TitleUrl *string `json:"titleUrl,omitempty"`
+	// UrlId URL Id.
+	UrlId *openapi_types.UUID `json:"urlId,omitempty"`
+
+	// UrlTitle The new URL title.
+	UrlTitle *string `json:"urlTitle,omitempty"`
 }
 
 // PostUrlTitleParams defines parameters for PostUrlTitle.

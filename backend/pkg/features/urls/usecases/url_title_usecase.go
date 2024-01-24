@@ -9,9 +9,11 @@ import (
 	validations "short_url/pkg/features/shared/validations"
 	adapters "short_url/pkg/features/urls/adapters"
 	"time"
+
+	"github.com/google/uuid"
 )
 
-func (uc *UrlUsecases) UrlTitleUsecases(ctx context.Context, urlBody *api.PostUrlTitleJSONBody, queryId, token string) (*api.Url, error) {
+func (uc *UrlUsecases) UrlUsageUsecases(ctx context.Context, urlId uuid.UUID, queryId, token string) (*api.Url, error) {
 	dbu, err := uc.Repo.GetUserById(ctx, queryId)
 	if err != nil {
 		return nil, &errorsC.UnauthorizedError{
@@ -27,7 +29,7 @@ func (uc *UrlUsecases) UrlTitleUsecases(ctx context.Context, urlBody *api.PostUr
 		}
 	}
 
-	url, err := uc.Repo.GetUrlById(ctx, *urlBody.UrlId)
+	url, err := uc.Repo.GetUrlById(ctx, urlId)
 	if err != nil {
 		return nil, err
 	}
@@ -38,12 +40,12 @@ func (uc *UrlUsecases) UrlTitleUsecases(ctx context.Context, urlBody *api.PostUr
 		UpdatedAt:   time.Now().UTC(),
 		OriginalUrl: url.OriginalUrl,
 		ShortUrl:    url.ShortUrl,
-		Title:       *urlBody.UrlTitle,
+		Title:       url.Title,
 		ExpiresAt:   url.ExpiresAt,
-		Usage:       url.Usage,
+		Usage:       url.Usage + 1,
 	}
 
-	err = uc.Repo.UpdateUsageUrl(ctx, urlUpdated)
+	err = uc.Repo.UpdateTitleUrl(ctx, urlUpdated)
 	if err != nil {
 		return nil, err
 	}
