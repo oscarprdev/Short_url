@@ -2,42 +2,35 @@ package adapters
 
 import (
 	api "short_url/pkg/api"
+	types "short_url/pkg/features/shared/types"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
 )
 
-
-func AdaptShortUrlToDB(ou, su string) (*ShortUrlDBBody, error) {
+func AdaptShortUrlToDB(ou, su string) (*types.DbUrl, error) {
 	validOu, err := validateUrl(ou)
 	if err != nil {
 		return nil, err
 	}
 
-	title := "Default url title"
+	urlSplitted := strings.Split(su, "/")
+	title := urlSplitted[len(urlSplitted)-1]
+
 	now := time.Now().UTC()
 	uuid := uuid.New()
 
-	return &ShortUrlDBBody{
+	return &types.DbUrl{
 		Id:          uuid,
 		OriginalUrl: *validOu.Ou,
 		ShortUrl:    su,
 		CreatedAt:   now,
 		UpdatedAt:   now,
 		Title:       title,
+		Usage:       0,
 		ExpiresAt:   now.Add(7 * 24 * time.Hour), // 1 week
 	}, nil
-}
-
-func AdaptShortUrlToApp(subody *ShortUrlDBBody) *api.Url {
-	return &api.Url{
-		OriginalUrl: &subody.OriginalUrl,
-		ShortUrl:    &subody.ShortUrl,
-		UpdatedAt:   &subody.UpdatedAt,
-		CreatedAt:   &subody.CreatedAt,
-		ExpiresAt:   &subody.ExpiresAt,
-		TitleUrl:    &subody.Title,
-	}
 }
 
 func AdaptAuthUserInfoToDB(auo *AuthUserInfo) *AuthUserInfo {
@@ -45,4 +38,17 @@ func AdaptAuthUserInfoToDB(auo *AuthUserInfo) *AuthUserInfo {
 		Id:    auo.Id,
 		Token: auo.Token,
 	}
+}
+
+func AdaptUrldbToApp(urldb *types.DbUrl) (*api.Url, error) {
+	return &api.Url{
+		Id:          &urldb.Id,
+		OriginalUrl: &urldb.OriginalUrl,
+		ShortUrl:    &urldb.ShortUrl,
+		CreatedAt:   &urldb.CreatedAt,
+		UpdatedAt:   &urldb.UpdatedAt,
+		TitleUrl:    &urldb.Title,
+		Usage:       &urldb.Usage,
+		ExpiresAt:   &urldb.ExpiresAt,
+	}, nil
 }

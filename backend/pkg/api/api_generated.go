@@ -47,6 +47,9 @@ type Url struct {
 
 	// UpdatedAt The timestamp when the URL was last updated.
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+
+	// Usage The URL usage count.
+	Usage *int `json:"usage,omitempty"`
 }
 
 // User defines model for User.
@@ -78,8 +81,32 @@ type PostUrlJSONBody struct {
 
 // PostUrlParams defines parameters for PostUrl.
 type PostUrlParams struct {
-	// UserId User identifier
-	UserId *string `form:"UserId,omitempty" json:"UserId,omitempty"`
+	// Id User identifier
+	Id *string `form:"Id,omitempty" json:"Id,omitempty"`
+
+	// Authorization Auth token for user authorization
+	Authorization *string `json:"Authorization,omitempty"`
+}
+
+// PostUrlUseJSONBody defines parameters for PostUrlUse.
+type PostUrlUseJSONBody struct {
+	// UrlId URL Id.
+	UrlId *openapi_types.UUID `json:"urlId,omitempty"`
+}
+
+// PostUrlUseParams defines parameters for PostUrlUse.
+type PostUrlUseParams struct {
+	// Id User identifier
+	Id *string `form:"Id,omitempty" json:"Id,omitempty"`
+
+	// Authorization Auth token for user authorization
+	Authorization *string `json:"Authorization,omitempty"`
+}
+
+// GetUsersDescribeParams defines parameters for GetUsersDescribe.
+type GetUsersDescribeParams struct {
+	// Id User identifier
+	Id *string `form:"Id,omitempty" json:"Id,omitempty"`
 
 	// Authorization Auth token for user authorization
 	Authorization *string `json:"Authorization,omitempty"`
@@ -87,6 +114,9 @@ type PostUrlParams struct {
 
 // PostUrlJSONRequestBody defines body for PostUrl for application/json ContentType.
 type PostUrlJSONRequestBody PostUrlJSONBody
+
+// PostUrlUseJSONRequestBody defines body for PostUrlUse for application/json ContentType.
+type PostUrlUseJSONRequestBody PostUrlUseJSONBody
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
@@ -100,8 +130,14 @@ type ServerInterface interface {
 	// (POST /url)
 	PostUrl(ctx echo.Context, params PostUrlParams) error
 
-	// (GET /users)
-	GetUsers(ctx echo.Context) error
+	// (POST /url/use)
+	PostUrlUse(ctx echo.Context, params PostUrlUseParams) error
+
+	// (GET /users/describe)
+	GetUsersDescribe(ctx echo.Context, params GetUsersDescribeParams) error
+
+	// (GET /users/list)
+	GetUsersList(ctx echo.Context) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -133,11 +169,11 @@ func (w *ServerInterfaceWrapper) PostUrl(ctx echo.Context) error {
 
 	// Parameter object where we will unmarshal all parameters from the context
 	var params PostUrlParams
-	// ------------- Optional query parameter "UserId" -------------
+	// ------------- Optional query parameter "Id" -------------
 
-	err = runtime.BindQueryParameter("form", true, false, "UserId", ctx.QueryParams(), &params.UserId)
+	err = runtime.BindQueryParameter("form", true, false, "Id", ctx.QueryParams(), &params.Id)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter UserId: %s", err))
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Id: %s", err))
 	}
 
 	headers := ctx.Request().Header
@@ -162,12 +198,82 @@ func (w *ServerInterfaceWrapper) PostUrl(ctx echo.Context) error {
 	return err
 }
 
-// GetUsers converts echo context to params.
-func (w *ServerInterfaceWrapper) GetUsers(ctx echo.Context) error {
+// PostUrlUse converts echo context to params.
+func (w *ServerInterfaceWrapper) PostUrlUse(ctx echo.Context) error {
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PostUrlUseParams
+	// ------------- Optional query parameter "Id" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "Id", ctx.QueryParams(), &params.Id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Id: %s", err))
+	}
+
+	headers := ctx.Request().Header
+	// ------------- Optional header parameter "Authorization" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Authorization")]; found {
+		var Authorization string
+		n := len(valueList)
+		if n != 1 {
+			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Expected one value for Authorization, got %d", n))
+		}
+
+		err = runtime.BindStyledParameterWithLocation("simple", false, "Authorization", runtime.ParamLocationHeader, valueList[0], &Authorization)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Authorization: %s", err))
+		}
+
+		params.Authorization = &Authorization
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.PostUrlUse(ctx, params)
+	return err
+}
+
+// GetUsersDescribe converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUsersDescribe(ctx echo.Context) error {
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetUsersDescribeParams
+	// ------------- Optional query parameter "Id" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "Id", ctx.QueryParams(), &params.Id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Id: %s", err))
+	}
+
+	headers := ctx.Request().Header
+	// ------------- Optional header parameter "Authorization" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Authorization")]; found {
+		var Authorization string
+		n := len(valueList)
+		if n != 1 {
+			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Expected one value for Authorization, got %d", n))
+		}
+
+		err = runtime.BindStyledParameterWithLocation("simple", false, "Authorization", runtime.ParamLocationHeader, valueList[0], &Authorization)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Authorization: %s", err))
+		}
+
+		params.Authorization = &Authorization
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetUsersDescribe(ctx, params)
+	return err
+}
+
+// GetUsersList converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUsersList(ctx echo.Context) error {
 	var err error
 
 	// Invoke the callback with all the unmarshaled arguments
-	err = w.Handler.GetUsers(ctx)
+	err = w.Handler.GetUsersList(ctx)
 	return err
 }
 
@@ -202,7 +308,9 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.GET(baseURL+"/auth", wrapper.GetAuth)
 	router.GET(baseURL+"/auth/logout", wrapper.GetAuthLogout)
 	router.POST(baseURL+"/url", wrapper.PostUrl)
-	router.GET(baseURL+"/users", wrapper.GetUsers)
+	router.POST(baseURL+"/url/use", wrapper.PostUrlUse)
+	router.GET(baseURL+"/users/describe", wrapper.GetUsersDescribe)
+	router.GET(baseURL+"/users/list", wrapper.GetUsersList)
 
 }
 
@@ -345,46 +453,142 @@ func (response PostUrl500JSONResponse) VisitPostUrlResponse(w http.ResponseWrite
 	return json.NewEncoder(w).Encode(response)
 }
 
-type GetUsersRequestObject struct {
+type PostUrlUseRequestObject struct {
+	Params PostUrlUseParams
+	Body   *PostUrlUseJSONRequestBody
 }
 
-type GetUsersResponseObject interface {
-	VisitGetUsersResponse(w http.ResponseWriter) error
+type PostUrlUseResponseObject interface {
+	VisitPostUrlUseResponse(w http.ResponseWriter) error
 }
 
-type GetUsers200JSONResponse struct {
-	Status *int    `json:"status,omitempty"`
-	Users  *[]User `json:"users,omitempty"`
+type PostUrlUse200JSONResponse struct {
+	Status *int `json:"status,omitempty"`
+	Url    *Url `json:"url,omitempty"`
 }
 
-func (response GetUsers200JSONResponse) VisitGetUsersResponse(w http.ResponseWriter) error {
+func (response PostUrlUse200JSONResponse) VisitPostUrlUseResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
 
 	return json.NewEncoder(w).Encode(response)
 }
 
-type GetUsers400JSONResponse Error
+type PostUrlUse400JSONResponse Error
 
-func (response GetUsers400JSONResponse) VisitGetUsersResponse(w http.ResponseWriter) error {
+func (response PostUrlUse400JSONResponse) VisitPostUrlUseResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(400)
 
 	return json.NewEncoder(w).Encode(response)
 }
 
-type GetUsers401JSONResponse Error
+type PostUrlUse401JSONResponse Error
 
-func (response GetUsers401JSONResponse) VisitGetUsersResponse(w http.ResponseWriter) error {
+func (response PostUrlUse401JSONResponse) VisitPostUrlUseResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(401)
 
 	return json.NewEncoder(w).Encode(response)
 }
 
-type GetUsers500JSONResponse Error
+type PostUrlUse500JSONResponse Error
 
-func (response GetUsers500JSONResponse) VisitGetUsersResponse(w http.ResponseWriter) error {
+func (response PostUrlUse500JSONResponse) VisitPostUrlUseResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersDescribeRequestObject struct {
+	Params GetUsersDescribeParams
+}
+
+type GetUsersDescribeResponseObject interface {
+	VisitGetUsersDescribeResponse(w http.ResponseWriter) error
+}
+
+type GetUsersDescribe200JSONResponse struct {
+	Status *int   `json:"status,omitempty"`
+	Urls   *[]Url `json:"urls,omitempty"`
+	User   *User  `json:"user,omitempty"`
+}
+
+func (response GetUsersDescribe200JSONResponse) VisitGetUsersDescribeResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersDescribe400JSONResponse Error
+
+func (response GetUsersDescribe400JSONResponse) VisitGetUsersDescribeResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersDescribe401JSONResponse Error
+
+func (response GetUsersDescribe401JSONResponse) VisitGetUsersDescribeResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(401)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersDescribe500JSONResponse Error
+
+func (response GetUsersDescribe500JSONResponse) VisitGetUsersDescribeResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersListRequestObject struct {
+}
+
+type GetUsersListResponseObject interface {
+	VisitGetUsersListResponse(w http.ResponseWriter) error
+}
+
+type GetUsersList200JSONResponse struct {
+	Status *int    `json:"status,omitempty"`
+	Users  *[]User `json:"users,omitempty"`
+}
+
+func (response GetUsersList200JSONResponse) VisitGetUsersListResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersList400JSONResponse Error
+
+func (response GetUsersList400JSONResponse) VisitGetUsersListResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersList401JSONResponse Error
+
+func (response GetUsersList401JSONResponse) VisitGetUsersListResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(401)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUsersList500JSONResponse Error
+
+func (response GetUsersList500JSONResponse) VisitGetUsersListResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(500)
 
@@ -403,8 +607,14 @@ type StrictServerInterface interface {
 	// (POST /url)
 	PostUrl(ctx context.Context, request PostUrlRequestObject) (PostUrlResponseObject, error)
 
-	// (GET /users)
-	GetUsers(ctx context.Context, request GetUsersRequestObject) (GetUsersResponseObject, error)
+	// (POST /url/use)
+	PostUrlUse(ctx context.Context, request PostUrlUseRequestObject) (PostUrlUseResponseObject, error)
+
+	// (GET /users/describe)
+	GetUsersDescribe(ctx context.Context, request GetUsersDescribeRequestObject) (GetUsersDescribeResponseObject, error)
+
+	// (GET /users/list)
+	GetUsersList(ctx context.Context, request GetUsersListRequestObject) (GetUsersListResponseObject, error)
 }
 
 type StrictHandlerFunc = strictecho.StrictEchoHandlerFunc
@@ -496,23 +706,79 @@ func (sh *strictHandler) PostUrl(ctx echo.Context, params PostUrlParams) error {
 	return nil
 }
 
-// GetUsers operation middleware
-func (sh *strictHandler) GetUsers(ctx echo.Context) error {
-	var request GetUsersRequestObject
+// PostUrlUse operation middleware
+func (sh *strictHandler) PostUrlUse(ctx echo.Context, params PostUrlUseParams) error {
+	var request PostUrlUseRequestObject
+
+	request.Params = params
+
+	var body PostUrlUseJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
 
 	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
-		return sh.ssi.GetUsers(ctx.Request().Context(), request.(GetUsersRequestObject))
+		return sh.ssi.PostUrlUse(ctx.Request().Context(), request.(PostUrlUseRequestObject))
 	}
 	for _, middleware := range sh.middlewares {
-		handler = middleware(handler, "GetUsers")
+		handler = middleware(handler, "PostUrlUse")
 	}
 
 	response, err := handler(ctx, request)
 
 	if err != nil {
 		return err
-	} else if validResponse, ok := response.(GetUsersResponseObject); ok {
-		return validResponse.VisitGetUsersResponse(ctx.Response())
+	} else if validResponse, ok := response.(PostUrlUseResponseObject); ok {
+		return validResponse.VisitPostUrlUseResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetUsersDescribe operation middleware
+func (sh *strictHandler) GetUsersDescribe(ctx echo.Context, params GetUsersDescribeParams) error {
+	var request GetUsersDescribeRequestObject
+
+	request.Params = params
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetUsersDescribe(ctx.Request().Context(), request.(GetUsersDescribeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetUsersDescribe")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetUsersDescribeResponseObject); ok {
+		return validResponse.VisitGetUsersDescribeResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetUsersList operation middleware
+func (sh *strictHandler) GetUsersList(ctx echo.Context) error {
+	var request GetUsersListRequestObject
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetUsersList(ctx.Request().Context(), request.(GetUsersListRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetUsersList")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetUsersListResponseObject); ok {
+		return validResponse.VisitGetUsersListResponse(ctx.Response())
 	} else if response != nil {
 		return fmt.Errorf("unexpected response type: %T", response)
 	}
