@@ -88,6 +88,21 @@ type PostUrlParams struct {
 	Authorization *string `json:"Authorization,omitempty"`
 }
 
+// PostUrlTitleJSONBody defines parameters for PostUrlTitle.
+type PostUrlTitleJSONBody struct {
+	// TitleUrl The new URL title.
+	TitleUrl *string `json:"titleUrl,omitempty"`
+}
+
+// PostUrlTitleParams defines parameters for PostUrlTitle.
+type PostUrlTitleParams struct {
+	// Id User identifier
+	Id *string `form:"Id,omitempty" json:"Id,omitempty"`
+
+	// Authorization Auth token for user authorization
+	Authorization *string `json:"Authorization,omitempty"`
+}
+
 // PostUrlUseJSONBody defines parameters for PostUrlUse.
 type PostUrlUseJSONBody struct {
 	// UrlId URL Id.
@@ -115,6 +130,9 @@ type GetUsersDescribeParams struct {
 // PostUrlJSONRequestBody defines body for PostUrl for application/json ContentType.
 type PostUrlJSONRequestBody PostUrlJSONBody
 
+// PostUrlTitleJSONRequestBody defines body for PostUrlTitle for application/json ContentType.
+type PostUrlTitleJSONRequestBody PostUrlTitleJSONBody
+
 // PostUrlUseJSONRequestBody defines body for PostUrlUse for application/json ContentType.
 type PostUrlUseJSONRequestBody PostUrlUseJSONBody
 
@@ -129,6 +147,9 @@ type ServerInterface interface {
 
 	// (POST /url)
 	PostUrl(ctx echo.Context, params PostUrlParams) error
+
+	// (POST /url/title)
+	PostUrlTitle(ctx echo.Context, params PostUrlTitleParams) error
 
 	// (POST /url/use)
 	PostUrlUse(ctx echo.Context, params PostUrlUseParams) error
@@ -195,6 +216,41 @@ func (w *ServerInterfaceWrapper) PostUrl(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.PostUrl(ctx, params)
+	return err
+}
+
+// PostUrlTitle converts echo context to params.
+func (w *ServerInterfaceWrapper) PostUrlTitle(ctx echo.Context) error {
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PostUrlTitleParams
+	// ------------- Optional query parameter "Id" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "Id", ctx.QueryParams(), &params.Id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Id: %s", err))
+	}
+
+	headers := ctx.Request().Header
+	// ------------- Optional header parameter "Authorization" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Authorization")]; found {
+		var Authorization string
+		n := len(valueList)
+		if n != 1 {
+			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Expected one value for Authorization, got %d", n))
+		}
+
+		err = runtime.BindStyledParameterWithLocation("simple", false, "Authorization", runtime.ParamLocationHeader, valueList[0], &Authorization)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Authorization: %s", err))
+		}
+
+		params.Authorization = &Authorization
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.PostUrlTitle(ctx, params)
 	return err
 }
 
@@ -308,6 +364,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.GET(baseURL+"/auth", wrapper.GetAuth)
 	router.GET(baseURL+"/auth/logout", wrapper.GetAuthLogout)
 	router.POST(baseURL+"/url", wrapper.PostUrl)
+	router.POST(baseURL+"/url/title", wrapper.PostUrlTitle)
 	router.POST(baseURL+"/url/use", wrapper.PostUrlUse)
 	router.GET(baseURL+"/users/describe", wrapper.GetUsersDescribe)
 	router.GET(baseURL+"/users/list", wrapper.GetUsersList)
@@ -447,6 +504,54 @@ func (response PostUrl401JSONResponse) VisitPostUrlResponse(w http.ResponseWrite
 type PostUrl500JSONResponse Error
 
 func (response PostUrl500JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUrlTitleRequestObject struct {
+	Params PostUrlTitleParams
+	Body   *PostUrlTitleJSONRequestBody
+}
+
+type PostUrlTitleResponseObject interface {
+	VisitPostUrlTitleResponse(w http.ResponseWriter) error
+}
+
+type PostUrlTitle200JSONResponse struct {
+	Status *int `json:"status,omitempty"`
+	Url    *Url `json:"url,omitempty"`
+}
+
+func (response PostUrlTitle200JSONResponse) VisitPostUrlTitleResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUrlTitle400JSONResponse Error
+
+func (response PostUrlTitle400JSONResponse) VisitPostUrlTitleResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUrlTitle401JSONResponse Error
+
+func (response PostUrlTitle401JSONResponse) VisitPostUrlTitleResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(401)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type PostUrlTitle500JSONResponse Error
+
+func (response PostUrlTitle500JSONResponse) VisitPostUrlTitleResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(500)
 
@@ -607,6 +712,9 @@ type StrictServerInterface interface {
 	// (POST /url)
 	PostUrl(ctx context.Context, request PostUrlRequestObject) (PostUrlResponseObject, error)
 
+	// (POST /url/title)
+	PostUrlTitle(ctx context.Context, request PostUrlTitleRequestObject) (PostUrlTitleResponseObject, error)
+
 	// (POST /url/use)
 	PostUrlUse(ctx context.Context, request PostUrlUseRequestObject) (PostUrlUseResponseObject, error)
 
@@ -700,6 +808,37 @@ func (sh *strictHandler) PostUrl(ctx echo.Context, params PostUrlParams) error {
 		return err
 	} else if validResponse, ok := response.(PostUrlResponseObject); ok {
 		return validResponse.VisitPostUrlResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// PostUrlTitle operation middleware
+func (sh *strictHandler) PostUrlTitle(ctx echo.Context, params PostUrlTitleParams) error {
+	var request PostUrlTitleRequestObject
+
+	request.Params = params
+
+	var body PostUrlTitleJSONRequestBody
+	if err := ctx.Bind(&body); err != nil {
+		return err
+	}
+	request.Body = &body
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.PostUrlTitle(ctx.Request().Context(), request.(PostUrlTitleRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PostUrlTitle")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(PostUrlTitleResponseObject); ok {
+		return validResponse.VisitPostUrlTitleResponse(ctx.Response())
 	} else if response != nil {
 		return fmt.Errorf("unexpected response type: %T", response)
 	}

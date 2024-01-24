@@ -1,0 +1,22 @@
+post:
+  tags:
+    - Urls
+  description: Update Url title
+  parameters:
+    - $ref: 'components/_index.yaml#/parameters/UserId'
+    - $ref: 'components/_index.yaml#/parameters/AuthToken'
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: 'components/_index.yaml#/schemas/UrlTitleBody'
+  responses:
+    '200':
+      $ref: 'components/_index.yaml#/responses/ShortUrlResponse'
+    '400':
+      $ref: 'components/_index.yaml#/responses/BadRequestResponse'
+    '401':
+      $ref: 'components/_index.yaml#/responses/UnauthorizedResponse'
+    '500':
+      $ref: 'components/_index.yaml#/responses/InternalErrorResponse'

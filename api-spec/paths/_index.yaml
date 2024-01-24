@@ -18,3 +18,6 @@
 
 '/url/use':
   $ref: 'paths/urls/urls_use.yaml'
+
+'/url/title':
+  $ref: 'paths/urls/urls_title.yaml'

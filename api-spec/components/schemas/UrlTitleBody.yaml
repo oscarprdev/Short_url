@@ -1,0 +1,7 @@
+type: object
+properties:
+  titleUrl:
+    type: string
+    description: 'The new URL title.'
+    nullable: false
+    example: 'Your awesome title'
