@@ -21,6 +21,11 @@ properties:
     description: 'The URL title.'
     nullable: false
     example: 'short_url_title'
+  usage:
+    type: integer
+    description: 'The URL usage count.'
+    nullable: false
+    example: 20
   createdAt:
     type: string
     format: date-time

@@ -12,4 +12,6 @@ type UrlRepo interface {
 	InsertUrl(ctx context.Context, rb *types.DbUrl) (*types.DbUrl, error)
 	GetUserById(ctx context.Context, id string) (*types.DbUser, error)
 	RelateUrlWithUser(ctx context.Context, urlId uuid.UUID, userId string) error
+	GetUrlById(ctx context.Context, id uuid.UUID) (*types.DbUrl, error)
+	UpdateUrl(ctx context.Context, url types.DbUrl) error
 }

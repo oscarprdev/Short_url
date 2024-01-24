@@ -18,7 +18,7 @@ func (pr *PostgresRepository) InsertUrl(ctx context.Context, rb *types.DbUrl) (*
 		}
 	}
 
-	row := pr.Db.QueryRowContext(ctx, string(query), rb.Id, rb.CreatedAt, rb.UpdatedAt, rb.OriginalUrl, rb.ShortUrl, rb.Title, rb.ExpiresAt)
+	row := pr.Db.QueryRowContext(ctx, string(query), rb.Id, rb.CreatedAt, rb.UpdatedAt, rb.OriginalUrl, rb.ShortUrl, rb.Title, rb.ExpiresAt, rb.Usage)
 
 	var url types.DbUrl
 	err = row.Scan(
@@ -29,6 +29,7 @@ func (pr *PostgresRepository) InsertUrl(ctx context.Context, rb *types.DbUrl) (*
 		&url.ShortUrl,
 		&url.Title,
 		&url.ExpiresAt,
+		&url.Usage,
 	)
 
 	if err != nil {

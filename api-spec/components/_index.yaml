@@ -49,3 +49,6 @@ schemas:
 
   PostShortUrlBody:
     $ref: 'components/schemas/PostShortUrlBody.yaml'
+
+  UrlUsageBody:
+    $ref: 'components/schemas/UrlUsageBody.yaml'

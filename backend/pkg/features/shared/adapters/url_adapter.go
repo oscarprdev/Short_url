@@ -14,5 +14,6 @@ func AdaptShortUrlToApp(subody *types.DbUrl) *api.Url {
 		CreatedAt:   &subody.CreatedAt,
 		ExpiresAt:   &subody.ExpiresAt,
 		TitleUrl:    &subody.Title,
+		Usage:       &subody.Usage,
 	}
 }
