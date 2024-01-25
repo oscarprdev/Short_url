@@ -18,7 +18,7 @@ type Databases struct {
 	SqlDB *sql.DB
 }
 
-func main() {
+func main2() {
 	godotenv.Load()
 	port := os.Getenv("PORT")
 	dbUrl := os.Getenv("DB_URL")
