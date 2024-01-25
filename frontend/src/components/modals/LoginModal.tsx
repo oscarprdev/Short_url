@@ -5,7 +5,9 @@ const LoginModal = () => {
 	return (
 		<article className='w-[300px] flex flex-col items-center gap-5 pb-8'>
 			<h3>Login with:</h3>
-			<LoginInput contrast>
+			<LoginInput
+				href=''
+				contrast>
 				<IconUser />
 				Default user
 			</LoginInput>
@@ -15,11 +17,11 @@ const LoginModal = () => {
 				<span className='w-[15px] h-[0.01rem] bg-primary' />
 			</div>
 			<div className='flex items-center gap-5'>
-				<LoginInput>
+				<LoginInput href='http://localhost:8080/auth?provider=google'>
 					<IconBrandGoogleFilled />
 					Google
 				</LoginInput>
-				<LoginInput>
+				<LoginInput href='http://localhost:8080/auth?provider=github'>
 					<IconBrandGithub />
 					Github
 				</LoginInput>
