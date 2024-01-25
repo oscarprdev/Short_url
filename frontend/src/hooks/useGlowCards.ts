@@ -4,7 +4,6 @@ interface ConfigProps {
 	proximity: number;
 	spread: number;
 	blur: number;
-	gap: number;
 	opacity: number;
 }
 
@@ -43,13 +42,12 @@ export const useGlowCards = (CONFIG: ConfigProps) => {
 		document.body.addEventListener('pointermove', UPDATE);
 
 		const RESTYLE = () => {
-			CONTAINER?.style.setProperty('--gap', `${CONFIG.gap}`);
 			CONTAINER?.style.setProperty('--blur', `${CONFIG.blur}`);
 			CONTAINER?.style.setProperty('--spread', `${CONFIG.spread}`);
 		};
 
 		RESTYLE();
-	}, []);
+	}, [CONFIG]);
 
 	return {
 		containerRef,
