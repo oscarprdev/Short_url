@@ -1,41 +1,28 @@
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import Footer from './components/Footer';
+import Home from './screens/Home';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Route } from 'wouter';
+import RedirectComponent from './screens/Redirect';
 
 function App() {
+	const queryClient = new QueryClient();
+
 	return (
-		<>
-			<div>
-				<a
-					href='https://vitejs.dev'
-					target='_blank'>
-					<img
-						src={viteLogo}
-						className='logo'
-						alt='Vite logo'
-					/>
-				</a>
-				<a
-					href='https://react.dev'
-					target='_blank'>
-					<img
-						src={reactLogo}
-						className='logo react'
-						alt='React logo'
-					/>
-				</a>
-			</div>
-			<h1>Vite + React</h1>
-			<div className='card'>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-				<a href='http://localhost:8080/auth?provider=google'>Login with google</a>
-				<a href='http://localhost:8080/auth?provider=github'>Login with github</a>
-				<a href='http://localhost:8080/auth/logout'>Logout</a>
-			</div>
-			<p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
-		</>
+		<QueryClientProvider client={queryClient}>
+			<main className='relative flex flex-col items-center h-screen w-screen overflow-hidden bg-black'>
+				<Route
+					path='/'
+					component={Home}
+				/>
+				<Route
+					path='/:id'
+					component={RedirectComponent}
+				/>
+				<div className='absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]'></div>
+				<div className='absolute left-0 right-0 top-[-10%] h-[1000px] w-[1000px] rounded-full bg-[radial-gradient(circle_400px_at_50%_300px,#fbfbfb36,#00000080)]'></div>
+				<Footer />
+			</main>
+		</QueryClientProvider>
 	);
 }
 

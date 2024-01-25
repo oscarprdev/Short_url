@@ -11,7 +11,7 @@ import (
 	validations "short_url/pkg/features/shared/validations"
 )
 
-func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters.OriginalUrl, url *api.Url, queryId, token string) error {
+func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters.OriginalUrl, url *api.Url, queryId, token, refererUrl string) error {
 	dbu, err := uc.Repo.GetUserById(ctx, queryId)
 	if err != nil {
 		return &errorsC.UnauthorizedError{
@@ -27,7 +27,7 @@ func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters
 		}
 	}
 	// SHORT URL
-	su := shortUrl(ou)
+	su := shortUrl(ou, refererUrl)
 	suDB, err := adapters.AdaptShortUrlToDB(*ou.Ou, su)
 	if err != nil {
 		return &errorsC.BadRequestError{

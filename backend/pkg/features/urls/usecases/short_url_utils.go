@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
-	"os"
 	adapters "short_url/pkg/features/urls/adapters"
 	"time"
 )
@@ -36,7 +35,7 @@ func hashString(input string) string {
 	return fmt.Sprintf("%x", hash)
 }
 
-func shortUrl(ou *adapters.OriginalUrl) string {
+func shortUrl(ou *adapters.OriginalUrl, refererUrl string) string {
 	// Compute the MD5 hash of the original URL
 	hasher := md5.New()
 	io.WriteString(hasher, *ou.Ou)
@@ -49,15 +48,12 @@ func shortUrl(ou *adapters.OriginalUrl) string {
 	timestamp := time.Now().UnixNano()
 	randomStr := generateRandomString(4)
 
-	// Get the production URL from environment variables
-	prodURL := os.Getenv("PROD_URL")
-
 	// Combine the components to form the short URL
-	shortURL := fmt.Sprintf("%s/%s%s-%d", prodURL, randomStr, encoded[:8], timestamp)
+	shortURL := fmt.Sprintf("%s/%s%s-%d", refererUrl, randomStr, encoded[:8], timestamp)
 
 	// Hash the concatenated string and take the first 8 characters
 	finalHash := hashString(shortURL)
-	shortURL = fmt.Sprintf("%s%s", prodURL, finalHash[:8])
+	shortURL = fmt.Sprintf("%s%s", refererUrl, finalHash[:8])
 
 	return shortURL
 }

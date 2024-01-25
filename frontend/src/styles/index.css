@@ -1,0 +1,61 @@
+@import './shadcn.css';
+@import './glowCard.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: 'geist';
+	src: url('./public/fonts/Geist-Regular.otf') format('opentype');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'geist-ultra';
+	src: url('./public/fonts/Geist-UltraBlack.otf') format('opentype');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'geist-light';
+	src: url('./public/fonts/Geist-Light.otf') format('opentype');
+	font-display: swap;
+}
+
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 20 14.3% 4.1%;
+
+		--contrast: rgb(173, 250, 27);
+
+		--font-ultra: 'geist-ultra';
+		--font-g-light: 'geist-light';
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--background: 20 14.3% 4.1%;
+			--foreground: 60 9.1% 97.8%;
+		}
+	}
+
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+	}
+
+	html {
+		font-family: 'geist';
+	}
+
+	*,
+	*:after,
+	*:before {
+		box-sizing: border-box;
+	}
+}
