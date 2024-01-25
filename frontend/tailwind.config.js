@@ -54,6 +54,7 @@ module.exports = {
 			},
 			fontFamily: {
 				geistUltra: 'var(--font-ultra)',
+				geistLight: 'var(--font-g-light)',
 			},
 			keyframes: {
 				'accordion-down': {

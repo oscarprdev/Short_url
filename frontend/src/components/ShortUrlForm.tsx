@@ -1,6 +1,6 @@
-import { Button } from '../components/ui/button';
-import { Form, FormField, FormItem, FormMessage } from '../components/ui/form';
-import { Input } from '../components/ui/input';
+import { Button } from './ui/button';
+import { Form, FormField, FormItem, FormMessage } from './ui/form';
+import { Input } from './ui/input';
 import { useForm } from 'react-hook-form';
 import { IconScissors } from '@tabler/icons-react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,7 +14,7 @@ interface HomeFormProps {
 	addUrl: (url: string) => void;
 }
 
-const HomeForm = ({ addUrl }: HomeFormProps) => {
+const ShortUrlForm = ({ addUrl }: HomeFormProps) => {
 	const form = useForm({
 		defaultValues: DEFAULT_VALUES,
 		resolver: zodResolver(homeFormSchema),
@@ -62,4 +62,4 @@ const HomeForm = ({ addUrl }: HomeFormProps) => {
 	);
 };
 
-export default HomeForm;
+export default ShortUrlForm;

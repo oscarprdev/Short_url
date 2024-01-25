@@ -9,7 +9,7 @@ const Footer = () => {
 					href='https://github.com/oscarprdev'
 					target='_blank'
 					className='hover:text-[var(--contrast)] duration-300'>
-					Oscarprdev
+					@oscarprdev
 				</a>
 			</p>
 		</footer>

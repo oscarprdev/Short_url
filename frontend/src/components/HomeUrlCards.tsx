@@ -34,7 +34,7 @@ const HomeUrlCards = ({ urls, isHome }: HomeUrlCardProps) => {
 						className='hover:underline'>
 						{url.shortUrl}
 					</a>
-					{isHome && (
+					{!isHome && (
 						<div className='flex flex-col text-sm text-stone-400'>
 							<p>Times used: {url.usage}</p>
 							<p>Expiration: {formatTimeStamp(url.expiresAt)}</p>
