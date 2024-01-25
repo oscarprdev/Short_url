@@ -47,6 +47,7 @@ func HandlerShortUrl(uc *urlUc.UrlUsecases) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		w := c.Response().Writer
 		ctx := c.Request().Context()
+		refererUrl := c.Request().Referer()
 
 		ou, err := provideOriginalUrl(c, w)
 		if err != nil {
@@ -64,7 +65,7 @@ func HandlerShortUrl(uc *urlUc.UrlUsecases) echo.HandlerFunc {
 
 		if idQueryParam != "" && authToken != "" {
 			// Manage the short url and connect url with user to be persistent in database
-			err = uc.ShortUrlComplexUsecases(ctx, ou, &url, idQueryParam, authToken)
+			err = uc.ShortUrlComplexUsecases(ctx, ou, &url, idQueryParam, authToken, refererUrl)
 			if err != nil {
 				newError := &errors.InternalError{
 					Details: fmt.Sprintf("Internal error: %v", err),
@@ -73,7 +74,7 @@ func HandlerShortUrl(uc *urlUc.UrlUsecases) echo.HandlerFunc {
 			}
 		} else {
 			// Just short url and return back to http response
-			err = uc.ShortUrlSimpleUsecases(ou, &url)
+			err = uc.ShortUrlSimpleUsecases(ou, &url, refererUrl)
 			if err != nil {
 				newError := &errors.InternalError{
 					Details: fmt.Sprintf("Internal error: %v", err),

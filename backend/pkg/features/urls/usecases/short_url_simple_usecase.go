@@ -6,8 +6,8 @@ import (
 	adapters "short_url/pkg/features/urls/adapters"
 )
 
-func (uc *UrlUsecases) ShortUrlSimpleUsecases(ou *adapters.OriginalUrl, url *api.Url) error {
-	su := shortUrl(ou)
+func (uc *UrlUsecases) ShortUrlSimpleUsecases(ou *adapters.OriginalUrl, url *api.Url, refererUrl string) error {
+	su := shortUrl(ou, refererUrl)
 
 	suDB, err := adapters.AdaptShortUrlToDB(*ou.Ou, su)
 	if err != nil {
