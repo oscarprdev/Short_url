@@ -5,6 +5,9 @@ parameters:
   AuthToken:
     $ref: 'components/parameters/AuthToken.yaml'
 
+  Url:
+    $ref: 'components/parameters/Url.yaml'
+
 responses:
   # Common
   BadRequestResponse:

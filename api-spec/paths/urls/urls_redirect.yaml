@@ -1,0 +1,13 @@
+get:
+  tags:
+    - Urls
+  description: Redirect to original Url
+  parameters:
+    - $ref: 'components/_index.yaml#/parameters/Url'
+  responses:
+    '200':
+      $ref: 'components/_index.yaml#/responses/ShortUrlResponse'
+    '400':
+      $ref: 'components/_index.yaml#/responses/BadRequestResponse'
+    '500':
+      $ref: 'components/_index.yaml#/responses/InternalErrorResponse'

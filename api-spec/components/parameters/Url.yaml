@@ -1,0 +1,6 @@
+name: Url
+in: query
+description: Short url
+required: false
+schema:
+  type: string
