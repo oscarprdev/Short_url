@@ -15,4 +15,5 @@ type UrlRepo interface {
 	GetUrlById(ctx context.Context, id uuid.UUID) (*types.DbUrl, error)
 	UpdateUsageUrl(ctx context.Context, url types.DbUrl) error
 	UpdateTitleUrl(ctx context.Context, url types.DbUrl) error
+	GetOriginalUrl(ctx context.Context, url string) (*types.DbUrl, error)
 }

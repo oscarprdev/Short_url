@@ -88,6 +88,12 @@ type PostUrlParams struct {
 	Authorization *string `json:"Authorization,omitempty"`
 }
 
+// GetUrlRedirectParams defines parameters for GetUrlRedirect.
+type GetUrlRedirectParams struct {
+	// Url Short url
+	Url *string `form:"Url,omitempty" json:"Url,omitempty"`
+}
+
 // PostUrlTitleJSONBody defines parameters for PostUrlTitle.
 type PostUrlTitleJSONBody struct {
 	// UrlId URL Id.
@@ -150,6 +156,9 @@ type ServerInterface interface {
 
 	// (POST /url)
 	PostUrl(ctx echo.Context, params PostUrlParams) error
+
+	// (GET /url/redirect)
+	GetUrlRedirect(ctx echo.Context, params GetUrlRedirectParams) error
 
 	// (POST /url/title)
 	PostUrlTitle(ctx echo.Context, params PostUrlTitleParams) error
@@ -219,6 +228,24 @@ func (w *ServerInterfaceWrapper) PostUrl(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.PostUrl(ctx, params)
+	return err
+}
+
+// GetUrlRedirect converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUrlRedirect(ctx echo.Context) error {
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetUrlRedirectParams
+	// ------------- Optional query parameter "Url" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "Url", ctx.QueryParams(), &params.Url)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Url: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.GetUrlRedirect(ctx, params)
 	return err
 }
 
@@ -367,6 +394,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.GET(baseURL+"/auth", wrapper.GetAuth)
 	router.GET(baseURL+"/auth/logout", wrapper.GetAuthLogout)
 	router.POST(baseURL+"/url", wrapper.PostUrl)
+	router.GET(baseURL+"/url/redirect", wrapper.GetUrlRedirect)
 	router.POST(baseURL+"/url/title", wrapper.PostUrlTitle)
 	router.POST(baseURL+"/url/use", wrapper.PostUrlUse)
 	router.GET(baseURL+"/users/describe", wrapper.GetUsersDescribe)
@@ -507,6 +535,44 @@ func (response PostUrl401JSONResponse) VisitPostUrlResponse(w http.ResponseWrite
 type PostUrl500JSONResponse Error
 
 func (response PostUrl500JSONResponse) VisitPostUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUrlRedirectRequestObject struct {
+	Params GetUrlRedirectParams
+}
+
+type GetUrlRedirectResponseObject interface {
+	VisitGetUrlRedirectResponse(w http.ResponseWriter) error
+}
+
+type GetUrlRedirect200JSONResponse struct {
+	Status *int `json:"status,omitempty"`
+	Url    *Url `json:"url,omitempty"`
+}
+
+func (response GetUrlRedirect200JSONResponse) VisitGetUrlRedirectResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUrlRedirect400JSONResponse Error
+
+func (response GetUrlRedirect400JSONResponse) VisitGetUrlRedirectResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type GetUrlRedirect500JSONResponse Error
+
+func (response GetUrlRedirect500JSONResponse) VisitGetUrlRedirectResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(500)
 
@@ -715,6 +781,9 @@ type StrictServerInterface interface {
 	// (POST /url)
 	PostUrl(ctx context.Context, request PostUrlRequestObject) (PostUrlResponseObject, error)
 
+	// (GET /url/redirect)
+	GetUrlRedirect(ctx context.Context, request GetUrlRedirectRequestObject) (GetUrlRedirectResponseObject, error)
+
 	// (POST /url/title)
 	PostUrlTitle(ctx context.Context, request PostUrlTitleRequestObject) (PostUrlTitleResponseObject, error)
 
@@ -811,6 +880,31 @@ func (sh *strictHandler) PostUrl(ctx echo.Context, params PostUrlParams) error {
 		return err
 	} else if validResponse, ok := response.(PostUrlResponseObject); ok {
 		return validResponse.VisitPostUrlResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// GetUrlRedirect operation middleware
+func (sh *strictHandler) GetUrlRedirect(ctx echo.Context, params GetUrlRedirectParams) error {
+	var request GetUrlRedirectRequestObject
+
+	request.Params = params
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.GetUrlRedirect(ctx.Request().Context(), request.(GetUrlRedirectRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetUrlRedirect")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(GetUrlRedirectResponseObject); ok {
+		return validResponse.VisitGetUrlRedirectResponse(ctx.Response())
 	} else if response != nil {
 		return fmt.Errorf("unexpected response type: %T", response)
 	}

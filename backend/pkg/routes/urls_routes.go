@@ -12,6 +12,7 @@ import (
 func handlerUrlsRoute(e *echo.Echo, dbs *dbs.Databases) {
 	urlUc := urls.WireUrlsUsecases(dbs.SqlDB)
 
+	e.GET("/url", uh.HandlerUrlRedirect(urlUc))
 	e.POST("/url", uh.HandlerShortUrl(urlUc))
 	e.POST("/url/use", uh.HandlerUrlUsage(urlUc))
 	e.POST("/url/title", uh.HandlerUrlTitle(urlUc))

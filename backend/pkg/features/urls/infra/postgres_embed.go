@@ -25,3 +25,6 @@ var updateUrlQuery embed.FS
 
 //go:embed sql/queries/update_title.sql
 var updateTitleUrlQuery embed.FS
+
+//go:embed sql/queries/select_original.sql
+var selectOriginalQuery embed.FS
