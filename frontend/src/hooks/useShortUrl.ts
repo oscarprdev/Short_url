@@ -10,7 +10,7 @@ export const useShortUrl = () => {
 			return await shortUrl({ originalUrl: url });
 		},
 		onSuccess: ({ url }) => {
-			setUrl(url.shortUrl);
+			setUrl(url);
 		},
 	});
 };

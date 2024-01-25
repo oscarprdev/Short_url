@@ -43,7 +43,7 @@ const HomeForm = ({ addUrl }: HomeFormProps) => {
 						render={({ field }) => (
 							<FormItem>
 								<Input
-									className='w-[400px] border-stone-600'
+									className='text-md w-[400px] border-stone-600'
 									placeholder='Enter your link here...'
 									{...field}
 								/>
@@ -53,7 +53,7 @@ const HomeForm = ({ addUrl }: HomeFormProps) => {
 					/>
 					<Button
 						type='submit'
-						className={` ml-auto`}>
+						className='ml-auto'>
 						<IconScissors className={`${form.formState.isSubmitting && 'animate-spin duration-500'}`} />
 					</Button>
 				</form>

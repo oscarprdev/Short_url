@@ -1,11 +1,12 @@
+import { Url } from '@/src/types/url';
 import { create } from 'zustand';
 
 interface UrlStore {
-	url: string;
-	setUrl: (url: string) => void;
+	url: Url | null;
+	setUrl: (input: Url) => void;
 }
 
 export const useUrlStore = create<UrlStore>((set) => ({
-	url: '',
-	setUrl: (newUrl: string) => set({ url: newUrl }),
+	url: null,
+	setUrl: (url) => set({ url }),
 }));
