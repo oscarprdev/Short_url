@@ -29,9 +29,12 @@
 		--foreground: 20 14.3% 4.1%;
 
 		--contrast: rgb(173, 250, 27);
+		--contrast-hover: rgb(146, 212, 24);
 
 		--font-ultra: 'geist-ultra';
 		--font-g-light: 'geist-light';
+
+		--backdrop: rgba(65, 65, 65, 0.4);
 	}
 
 	@media (prefers-color-scheme: dark) {

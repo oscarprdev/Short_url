@@ -11,12 +11,12 @@ const CONFIG = {
 	opacity: 0,
 };
 
-interface HomeUrlCardProps {
+interface UrlCardsProps {
 	urls: Url[];
 	isHome?: boolean;
 }
 
-const HomeUrlCards = ({ urls, isHome }: HomeUrlCardProps) => {
+const UrlCards = ({ urls, isHome }: UrlCardsProps) => {
 	const { containerRef, cardsRef } = useGlowCards(CONFIG);
 
 	return (
@@ -47,4 +47,4 @@ const HomeUrlCards = ({ urls, isHome }: HomeUrlCardProps) => {
 	);
 };
 
-export default HomeUrlCards;
+export default UrlCards;

@@ -1,12 +1,19 @@
+import { useModal } from '../hooks/useModal';
 import { useShortUrl } from '../hooks/useShortUrl';
 import { useUrlStore } from '../store/urlStore/urlStore';
 import ShortUrlForm from './ShortUrlForm';
-import HomeUrlCards from './HomeUrlCards';
+import UrlCards from './UrlCards';
+import LoginModal from './modals/LoginModal';
 import { Button } from './ui/button';
 
 const HomeContainer = () => {
 	const { urls } = useUrlStore();
 	const { mutate: addurl } = useShortUrl();
+	const modal = useModal();
+
+	const onLoginClick = () => {
+		modal.openModal(<LoginModal />);
+	};
 
 	return (
 		<>
@@ -15,13 +22,17 @@ const HomeContainer = () => {
 				<h2 className='text-[1.2rem]'>The simplest URL Shortner you were waiting for.</h2>
 				<ShortUrlForm addUrl={addurl} />
 				{urls && (
-					<HomeUrlCards
+					<UrlCards
 						urls={urls}
 						isHome
 					/>
 				)}
 			</div>
-			<Button className='absolute top-8 right-10'>Login</Button>
+			<Button
+				onClick={onLoginClick}
+				className='absolute top-8 right-10'>
+				Login
+			</Button>
 		</>
 	);
 };
