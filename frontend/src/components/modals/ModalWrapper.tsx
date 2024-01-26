@@ -10,7 +10,7 @@ const ModalWrapper = ({ children }: ModalProps) => {
 	const { closeModal } = useModal();
 
 	return (
-		<div className='z-20 animate-fade-up absolute grid place-items-center top-0 w-full h-full bg-[var(--backdrop)]'>
+		<div className='z-20 animate-fade-up absolute grid place-items-center top-0 w-screen h-screen bg-[var(--backdrop)] overflow-hidden'>
 			<div className='relative p-5 pt-10 w-fit h-fit min-w-[300px] bg-black border border-stone-800 shadow-lg rounded-2xl'>
 				<div
 					onClick={closeModal}

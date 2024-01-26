@@ -50,6 +50,8 @@
 
 	body {
 		@apply bg-background text-foreground;
+		position: relative;
+		overflow: hidden;
 	}
 
 	html {

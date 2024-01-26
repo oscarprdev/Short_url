@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { shortUrl } from '../services/api/shortUrl';
-import { useUrlStore } from '../store/urlStore/urlStore';
+import { useUrlStore } from '../store/urlStore';
 
 export const useShortUrl = () => {
 	const { setUrl } = useUrlStore();
