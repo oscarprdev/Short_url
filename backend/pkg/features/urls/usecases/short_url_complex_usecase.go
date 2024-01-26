@@ -11,7 +11,7 @@ import (
 	validations "short_url/pkg/features/shared/validations"
 )
 
-func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters.OriginalUrl, url *api.Url, queryId, token, refererUrl string) error {
+func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters.OriginalUrl, url *api.Url, queryId, refererUrl string) error {
 	dbu, err := uc.Repo.GetUserById(ctx, queryId)
 	if err != nil {
 		return &errorsC.UnauthorizedError{
@@ -20,7 +20,7 @@ func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters
 	}
 
 	// Check if the user has permissions
-	dbUser, err := validations.CheckUserIsValidated(ctx, dbu, queryId, token)
+	dbUser, err := validations.CheckUserIsValidated(ctx, dbu)
 	if err != nil {
 		return &errorsC.UnauthorizedError{
 			Details: fmt.Sprintf("User is not authorized: %v", err),

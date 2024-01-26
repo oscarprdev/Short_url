@@ -83,9 +83,6 @@ type PostUrlJSONBody struct {
 type PostUrlParams struct {
 	// Id User identifier
 	Id *string `form:"Id,omitempty" json:"Id,omitempty"`
-
-	// Authorization Auth token for user authorization
-	Authorization *string `json:"Authorization,omitempty"`
 }
 
 // GetUrlRedirectParams defines parameters for GetUrlRedirect.
@@ -107,9 +104,6 @@ type PostUrlTitleJSONBody struct {
 type PostUrlTitleParams struct {
 	// Id User identifier
 	Id *string `form:"Id,omitempty" json:"Id,omitempty"`
-
-	// Authorization Auth token for user authorization
-	Authorization *string `json:"Authorization,omitempty"`
 }
 
 // PostUrlUseJSONBody defines parameters for PostUrlUse.
@@ -122,18 +116,12 @@ type PostUrlUseJSONBody struct {
 type PostUrlUseParams struct {
 	// Id User identifier
 	Id *string `form:"Id,omitempty" json:"Id,omitempty"`
-
-	// Authorization Auth token for user authorization
-	Authorization *string `json:"Authorization,omitempty"`
 }
 
 // GetUsersDescribeParams defines parameters for GetUsersDescribe.
 type GetUsersDescribeParams struct {
 	// Id User identifier
 	Id *string `form:"Id,omitempty" json:"Id,omitempty"`
-
-	// Authorization Auth token for user authorization
-	Authorization *string `json:"Authorization,omitempty"`
 }
 
 // PostUrlJSONRequestBody defines body for PostUrl for application/json ContentType.
@@ -209,23 +197,6 @@ func (w *ServerInterfaceWrapper) PostUrl(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Id: %s", err))
 	}
 
-	headers := ctx.Request().Header
-	// ------------- Optional header parameter "Authorization" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Authorization")]; found {
-		var Authorization string
-		n := len(valueList)
-		if n != 1 {
-			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Expected one value for Authorization, got %d", n))
-		}
-
-		err = runtime.BindStyledParameterWithLocation("simple", false, "Authorization", runtime.ParamLocationHeader, valueList[0], &Authorization)
-		if err != nil {
-			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Authorization: %s", err))
-		}
-
-		params.Authorization = &Authorization
-	}
-
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.PostUrl(ctx, params)
 	return err
@@ -262,23 +233,6 @@ func (w *ServerInterfaceWrapper) PostUrlTitle(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Id: %s", err))
 	}
 
-	headers := ctx.Request().Header
-	// ------------- Optional header parameter "Authorization" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Authorization")]; found {
-		var Authorization string
-		n := len(valueList)
-		if n != 1 {
-			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Expected one value for Authorization, got %d", n))
-		}
-
-		err = runtime.BindStyledParameterWithLocation("simple", false, "Authorization", runtime.ParamLocationHeader, valueList[0], &Authorization)
-		if err != nil {
-			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Authorization: %s", err))
-		}
-
-		params.Authorization = &Authorization
-	}
-
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.PostUrlTitle(ctx, params)
 	return err
@@ -297,23 +251,6 @@ func (w *ServerInterfaceWrapper) PostUrlUse(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Id: %s", err))
 	}
 
-	headers := ctx.Request().Header
-	// ------------- Optional header parameter "Authorization" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Authorization")]; found {
-		var Authorization string
-		n := len(valueList)
-		if n != 1 {
-			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Expected one value for Authorization, got %d", n))
-		}
-
-		err = runtime.BindStyledParameterWithLocation("simple", false, "Authorization", runtime.ParamLocationHeader, valueList[0], &Authorization)
-		if err != nil {
-			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Authorization: %s", err))
-		}
-
-		params.Authorization = &Authorization
-	}
-
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.PostUrlUse(ctx, params)
 	return err
@@ -330,23 +267,6 @@ func (w *ServerInterfaceWrapper) GetUsersDescribe(ctx echo.Context) error {
 	err = runtime.BindQueryParameter("form", true, false, "Id", ctx.QueryParams(), &params.Id)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Id: %s", err))
-	}
-
-	headers := ctx.Request().Header
-	// ------------- Optional header parameter "Authorization" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Authorization")]; found {
-		var Authorization string
-		n := len(valueList)
-		if n != 1 {
-			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Expected one value for Authorization, got %d", n))
-		}
-
-		err = runtime.BindStyledParameterWithLocation("simple", false, "Authorization", runtime.ParamLocationHeader, valueList[0], &Authorization)
-		if err != nil {
-			return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Authorization: %s", err))
-		}
-
-		params.Authorization = &Authorization
 	}
 
 	// Invoke the callback with all the unmarshaled arguments
