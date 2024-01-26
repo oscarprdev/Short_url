@@ -2,9 +2,6 @@ parameters:
   UserId:
     $ref: 'components/parameters/UserId.yaml'
 
-  AuthToken:
-    $ref: 'components/parameters/AuthToken.yaml'
-
   Url:
     $ref: 'components/parameters/Url.yaml'
 

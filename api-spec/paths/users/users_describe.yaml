@@ -4,7 +4,6 @@ get:
   description: Get user info
   parameters:
     - $ref: 'components/_index.yaml#/parameters/UserId'
-    - $ref: 'components/_index.yaml#/parameters/AuthToken'
   responses:
     '200':
       $ref: 'components/_index.yaml#/responses/DescribeUserResponse'
