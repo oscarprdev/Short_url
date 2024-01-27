@@ -1,26 +1,27 @@
 import { Route } from 'wouter';
-import UserScreen from './UserScreen';
-import Home from './Home';
+import HomeScreen from './HomeScreen';
 import Footer from '../components/Footer';
 import AuthScreen from './AuthScreen';
-import ScreenWrapper from './ScreenWrapper';
+import Header from '../components/Header';
+import Background from '../components/Background';
+import UserScreenContainer from '../components/containers/UserScreenContainer';
 
 const Layout = () => {
 	return (
 		<>
-			<Route path='/home'>
-				<AuthScreen>
-					<ScreenWrapper>
-						<UserScreen />
-					</ScreenWrapper>
-				</AuthScreen>
+			<Header />
+			<Route path='/user/:id'>
+				{(params) => (
+					<AuthScreen userId={params.id}>
+						<UserScreenContainer />
+					</AuthScreen>
+				)}
 			</Route>
 			<Route path='/'>
-				<ScreenWrapper>
-					<Home />
-				</ScreenWrapper>
+				<HomeScreen />
 			</Route>
 			<Footer />
+			<Background />
 		</>
 	);
 };

@@ -4,27 +4,29 @@ import { Input } from './ui/input';
 import { useForm } from 'react-hook-form';
 import { IconScissors } from '@tabler/icons-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { homeFormSchema } from '../services/zod/homeFormSchema';
+import { urlFormSchema } from '../services/zod/urlFormSchema';
+import { ShortUrlInput } from '../services/api/shortUrl';
 
 const DEFAULT_VALUES = {
 	link: '',
 };
 
-interface HomeFormProps {
-	addUrl: (url: string) => void;
+interface ShortUrlFormProps {
+	addUrl: ({ originalUrl, userId }: ShortUrlInput) => void;
+	userId?: string | undefined;
 }
 
-const ShortUrlForm = ({ addUrl }: HomeFormProps) => {
+const ShortUrlForm = ({ addUrl, userId }: ShortUrlFormProps) => {
 	const form = useForm({
 		defaultValues: DEFAULT_VALUES,
-		resolver: zodResolver(homeFormSchema),
+		resolver: zodResolver(urlFormSchema),
 	});
 
 	const onSubmit = () => {
 		const linkValue = form.getValues('link');
 
 		return new Promise((resolve) => {
-			addUrl(linkValue);
+			addUrl({ originalUrl: linkValue, userId });
 
 			form.reset(DEFAULT_VALUES);
 			resolve(linkValue);

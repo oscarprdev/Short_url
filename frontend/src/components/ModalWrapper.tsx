@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useModal } from '../../hooks/useModal';
+import { useModal } from '../hooks/useModal';
 import { IconX } from '@tabler/icons-react';
 
 interface ModalProps {

@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '../services/api/getUserInfo';
-import { useUserStore } from '../store/userStore';
+import { useGlobalStore } from '../store/globalState';
 import { useEffect } from 'react';
 
 export const useUserLogged = (userId: string) => {
-	const { setUrls, setUser } = useUserStore();
+	const { setUrls, setUser } = useGlobalStore();
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['user'],

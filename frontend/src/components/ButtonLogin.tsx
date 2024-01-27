@@ -1,5 +1,5 @@
 import { Button } from './ui/button';
-import LoginModal from './modals/LoginModal';
+import LoginModal from './LoginModal';
 import { useModal } from '../hooks/useModal';
 
 const ButtonLogin = () => {

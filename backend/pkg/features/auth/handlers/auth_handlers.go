@@ -55,7 +55,7 @@ func HandlerAuthCallback(authUc *authUc.AuthUsecases) echo.HandlerFunc {
 
 		clientUrl := os.Getenv("CLIENT_URL")
 		// Redirect to a success page or another route
-		path := clientUrl + "home?user=" + gothUser.UserID
+		path := clientUrl + "user/" + gothUser.UserID
 		http.Redirect(w, r, path, http.StatusFound)
 		return nil
 	}
@@ -82,7 +82,7 @@ func HandlerAuth(authUc *authUc.AuthUsecases) echo.HandlerFunc {
 		}
 
 		clientUrl := os.Getenv("CLIENT_URL")
-		path := clientUrl + "home?user=" + gothUser.UserID
+		path := clientUrl + "user/" + gothUser.UserID
 		http.Redirect(w, r, path, http.StatusFound)
 		return nil
 	}

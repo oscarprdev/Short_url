@@ -1,12 +1,9 @@
 import { ReactNode } from 'react';
-import { useQueryParams } from '../hooks/useQueryParams';
 import { useUserLogged } from '../hooks/useUserLogged';
 import { Redirect } from 'wouter';
 
-const AuthScreen = ({ children }: { children: ReactNode }) => {
-	const { queryParams } = useQueryParams();
-
-	const { isLoading, isError } = useUserLogged(queryParams.user);
+const AuthScreen = ({ children, userId }: { children: ReactNode; userId: string }) => {
+	const { isLoading, isError } = useUserLogged(userId);
 
 	if (isLoading) {
 		return <p>Loading..</p>;

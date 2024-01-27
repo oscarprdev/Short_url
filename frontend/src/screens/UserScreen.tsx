@@ -1,9 +1,19 @@
-const UserScreen = () => {
-	return (
-		<section className='flex flex-col h-full w-full items-center gap-20 z-10 mt-28'>
-			<p className='text-white'>Hello</p>
-		</section>
-	);
+import { useUserLogged } from '../hooks/useUserLogged';
+import { Redirect } from 'wouter';
+import UserScreenContainer from '../components/containers/UserScreenContainer';
+
+const UserScreen = ({ userId }: { userId: string }) => {
+	const { isLoading, isError } = useUserLogged(userId);
+
+	if (isLoading) {
+		return <p>Loading..</p>;
+	}
+
+	if (isError) {
+		return <Redirect to='/' />;
+	}
+
+	return <UserScreenContainer />;
 };
 
 export default UserScreen;

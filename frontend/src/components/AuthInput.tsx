@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
 
-interface LoginInputProps {
+interface AuthInputProps {
 	children: ReactNode;
 	contrast?: boolean;
 	href: string;
 }
 
-const LoginInput = ({ children, contrast, href }: LoginInputProps) => {
+const AuthInput = ({ children, contrast, href }: AuthInputProps) => {
 	return (
 		<a
 			href={href}
@@ -18,4 +18,4 @@ const LoginInput = ({ children, contrast, href }: LoginInputProps) => {
 	);
 };
 
-export default LoginInput;
+export default AuthInput;
