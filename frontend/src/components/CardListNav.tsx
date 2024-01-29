@@ -10,8 +10,8 @@ interface CardListNavProps {
 const CardListNav = ({ isRowsLayout, onSetRowLayout, onSetGridLayout }: CardListNavProps) => {
 	const { urls } = useGlobalStore();
 	return (
-		<nav className='relative w-[1100px] flex justify-center pb-2'>
-			<p className='absolute left-20 text-sm text-stone-400'>Total {urls?.length}</p>
+		<nav className='relative w-[90vw] md:w-[1100px] flex justify-center pb-2'>
+			<p className='absolute left-2 md:left-20 text-sm text-stone-400'>Total {urls?.length}</p>
 			<div className='flex items-center gap-2'>
 				<IconLayoutList
 					onClick={onSetRowLayout}

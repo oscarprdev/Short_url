@@ -25,7 +25,7 @@ const UrlCardList = ({ urls, isHome, isRowsLayout }: UrlCardsProps) => {
 				ref={containerRef}
 				className={`${
 					isRowsLayout ? 'w-[90vw] lg:w-[800px]' : 'w-[90vw] lg:w-[1100px]'
-				} animate-fade-up pt-2 h-[425px] link-container flex-wrap items-start gap-5 mt-[-1.5rem] overflow-y-scroll`}>
+				} animate-fade-up pt-2 h-[425px] pb-20 link-container flex-wrap items-start gap-5 mt-[-1.5rem] overflow-y-scroll`}>
 				{urls.map((url) => {
 					return isHome ? (
 						<UrlCard
