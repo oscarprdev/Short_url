@@ -12,6 +12,10 @@ const Layout = () => {
 	return (
 		<>
 			<Header />
+			<Route path='/'>
+				<HomeScreen />
+			</Route>
+			<Route path='/:url'>{(params) => <RedirectScreen shortUrl={params.url} />}</Route>
 			<Route path='/user/:id'>
 				{(params) => (
 					<AuthScreen userId={params.id}>
@@ -19,10 +23,6 @@ const Layout = () => {
 					</AuthScreen>
 				)}
 			</Route>
-			<Route path='/'>
-				<HomeScreen />
-			</Route>
-			<Route path='/:id'>{(params) => <RedirectScreen urlId={params.id} />}</Route>
 			<Footer />
 			<Toaster />
 			<Background />

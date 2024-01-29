@@ -13,7 +13,6 @@ export const useUserLogged = (userId: string) => {
 	});
 
 	useEffect(() => {
-		console.log(data);
 		if (!isLoading && data?.status === 200) {
 			setUrls(data.urls);
 			setUser(data.user);

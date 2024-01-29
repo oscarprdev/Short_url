@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"context"
-	"fmt"
 	errorsC "short_url/pkg/features/shared/handlers"
 	sql "short_url/pkg/features/shared/infra"
 	types "short_url/pkg/features/shared/types"
@@ -19,8 +18,6 @@ func (pr *PostgresRepository) GetUrlById(ctx context.Context, id uuid.UUID) (*ty
 			Details: "Select url query has an error",
 		}
 	}
-
-	fmt.Println(id)
 
 	row := pr.Db.QueryRowContext(ctx, string(query), id)
 
