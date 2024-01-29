@@ -1,3 +1,4 @@
+import { useUrlUsage } from '../hooks/useUrlUsage';
 import { Url } from '../types/url';
 import UrlCardCopyIcon from './UrlCardCopyIcon';
 import UrlCardInfo from './UrlCardInfo';
@@ -11,8 +12,10 @@ interface UserUrlCardProps {
 }
 
 const UserUrlCard = ({ url, cardsRef, isRowsLayout }: UserUrlCardProps) => {
+	const { mutate: urlUsage } = useUrlUsage();
+
 	const onUrlClick = () => {
-		console.log('clicked');
+		urlUsage({ urlId: url.id });
 	};
 
 	return (

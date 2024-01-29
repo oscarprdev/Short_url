@@ -11,6 +11,7 @@ const UserScreenContainer = () => {
 
 	const { user, urls, error } = useGlobalStore();
 	const { mutate: addUrl } = useShortUrl();
+
 	useErrorToast(error);
 
 	const onSetRowLayout = () => {
@@ -22,9 +23,9 @@ const UserScreenContainer = () => {
 	};
 
 	return (
-		<main className='flex flex-col gap-5 h-full w-full items-center z-10'>
+		<main className='flex flex-col gap-5 h-full sm:w-full items-center z-10'>
 			<div className='flex flex-col gap-5 items-center'>
-				<h2 className='text-[2rem]'>Short your favourite links!</h2>
+				<h2 className='text-[1.5rem] lg:text-[2rem]'>Short your favourite links!</h2>
 				<ShortUrlForm
 					addUrl={addUrl}
 					userId={user?.id}

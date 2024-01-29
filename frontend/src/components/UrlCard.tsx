@@ -9,7 +9,7 @@ const UrlCard = ({ url, cardsRef }: UrlCardProps) => {
 	return (
 		<li
 			ref={(el: HTMLLIElement | null) => el && cardsRef.current.push(el!)}
-			className='relative flex flex-col gap-4 link-card px-10 py-5 border border-stone-800 font-light text-stone-300'>
+			className='relative flex flex-col gap-4 link-card h-fit px-10 py-5 border border-stone-800 font-light text-stone-300'>
 			<a
 				href={url.originalUrl}
 				target='blank'

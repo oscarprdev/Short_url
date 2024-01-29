@@ -9,9 +9,11 @@ export const useUserLogged = (userId: string) => {
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['user'],
 		queryFn: async () => await getUserInfo({ userId }),
+		staleTime: Infinity,
 	});
 
 	useEffect(() => {
+		console.log(data);
 		if (!isLoading && data?.status === 200) {
 			setUrls(data.urls);
 			setUser(data.user);

@@ -17,5 +17,7 @@ export const getUserInfo = async ({ userId }: GetUserInfoInput): Promise<GetUser
 
 	const jsonData = await data.json();
 
+	console.log(jsonData);
+
 	return jsonData;
 };

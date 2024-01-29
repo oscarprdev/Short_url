@@ -23,15 +23,19 @@ const UrlCardList = ({ urls, isHome, isRowsLayout }: UrlCardsProps) => {
 		<>
 			<ul
 				ref={containerRef}
-				className={`${isRowsLayout ? 'w-[800px]' : 'w-[1100px]'} animate-fade-up link-container flex-wrap items-start gap-5  mt-[-1.5rem]`}>
+				className={`${
+					isRowsLayout ? 'w-[90vw] lg:w-[800px]' : 'w-[90vw] lg:w-[1100px]'
+				} animate-fade-up link-container flex-wrap items-start gap-5 mt-[-1.5rem]`}>
 				{urls.map((url) => {
 					return isHome ? (
 						<UrlCard
+							key={url.id}
 							url={url}
 							cardsRef={cardsRef}
 						/>
 					) : (
 						<UserUrlCard
+							key={url.id}
 							url={url}
 							cardsRef={cardsRef}
 							isRowsLayout={isRowsLayout}
