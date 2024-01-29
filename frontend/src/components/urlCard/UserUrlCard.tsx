@@ -24,7 +24,10 @@ const UserUrlCard = ({ url, cardsRef, isRowsLayout }: UserUrlCardProps) => {
 			className={`${
 				isRowsLayout && 'w-full'
 			} relative flex flex-col gap-4 link-card py-5 h-fit border border-stone-800 font-light text-stone-300`}>
-			<UrlCardTitle title={url.titleUrl} />
+			<UrlCardTitle
+				title={url.titleUrl}
+				urlId={url.id}
+			/>
 			<UrlCardLink
 				originalUrl={url.originalUrl}
 				shortUrl={url.shortUrl}
