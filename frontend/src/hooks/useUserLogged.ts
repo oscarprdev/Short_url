@@ -4,7 +4,7 @@ import { useGlobalStore } from '../store/globalState';
 import { useEffect } from 'react';
 
 export const useUserLogged = (userId: string) => {
-	const { setUrls, setUser } = useGlobalStore();
+	const { setUrls, setUser, clearStore } = useGlobalStore();
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['user'],
@@ -16,11 +16,12 @@ export const useUserLogged = (userId: string) => {
 			setUrls(data.urls);
 			setUser(data.user);
 		}
-	}, [data, isLoading, setUrls, setUser]);
 
-	if (data?.status !== 200) {
-		return { isLoading, isError: true };
-	}
+		if (data?.status && data?.status !== 200) {
+			window.location.href = 'http://localhost:8080/auth/logout';
+			clearStore();
+		}
+	}, [data, isLoading, setUrls, setUser]);
 
 	return { isLoading, isError };
 };

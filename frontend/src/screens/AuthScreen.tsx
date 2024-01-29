@@ -10,6 +10,7 @@ const AuthScreen = ({ children, userId }: { children: ReactNode; userId: string 
 	}
 
 	if (isError) {
+		console.log(isError);
 		return <Redirect to='/' />;
 	}
 

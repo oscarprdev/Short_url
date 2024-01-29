@@ -3,7 +3,7 @@ import { ShortUrlInput, shortUrl } from '../services/api/shortUrl';
 import { useGlobalStore } from '../store/globalState';
 
 export const useShortUrl = () => {
-	const { addUrl } = useGlobalStore();
+	const { addUrl, setError } = useGlobalStore();
 
 	return useMutation({
 		mutationFn: async ({ originalUrl, userId }: ShortUrlInput) => {
@@ -11,6 +11,9 @@ export const useShortUrl = () => {
 		},
 		onSuccess: ({ url }) => {
 			addUrl(url);
+		},
+		onError: (error) => {
+			setError(error.message);
 		},
 	});
 };

@@ -5,6 +5,7 @@ import AuthScreen from './AuthScreen';
 import Header from '../components/Header';
 import Background from '../components/Background';
 import UserScreenContainer from '../components/containers/UserScreenContainer';
+import { Toaster } from '../components/ui/toaster';
 
 const Layout = () => {
 	return (
@@ -21,6 +22,7 @@ const Layout = () => {
 				<HomeScreen />
 			</Route>
 			<Footer />
+			<Toaster />
 			<Background />
 		</>
 	);

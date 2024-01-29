@@ -12,7 +12,7 @@ export interface ShortUrlOutput {
 }
 
 export const shortUrl = async ({ originalUrl, userId }: ShortUrlInput): Promise<ShortUrlOutput> => {
-	const url = userId ? `${API_URL}/url?user=${userId}}` : `${API_URL}/url`;
+	const url = userId ? `${API_URL}/url?id=${userId}` : `${API_URL}/url`;
 
 	const data = await fetch(url, {
 		method: 'POST',
@@ -20,6 +20,10 @@ export const shortUrl = async ({ originalUrl, userId }: ShortUrlInput): Promise<
 	});
 
 	const jsonData = await data.json();
+
+	if (jsonData.status !== 200) {
+		throw new Error(jsonData.details);
+	}
 
 	return jsonData;
 };

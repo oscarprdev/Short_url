@@ -1,14 +1,19 @@
 import { IconUser } from '@tabler/icons-react';
-import AuthInput from './AuthInput';
+import { Button } from './ui/button';
+import { useGlobalStore } from '../store/globalState';
 
 const ButtonLogout = () => {
+	const { clearStore } = useGlobalStore();
+
+	const onLogoutClick = () => {
+		clearStore();
+		window.location.href = 'http://localhost:8080/auth/logout';
+	};
 	return (
-		<AuthInput
-			href='http://localhost:8080/auth/logout'
-			contrast>
+		<Button onClick={onLogoutClick}>
 			<IconUser />
 			Logout
-		</AuthInput>
+		</Button>
 	);
 };
 
