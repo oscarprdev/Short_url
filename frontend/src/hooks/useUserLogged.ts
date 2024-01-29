@@ -22,6 +22,7 @@ export const useUserLogged = (userId: string) => {
 			window.location.href = 'http://localhost:8080/auth/logout';
 			clearStore();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isLoading, setUrls, setUser]);
 
 	return { isLoading, isError };

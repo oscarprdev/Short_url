@@ -14,5 +14,6 @@ export const useErrorToast = (error: string | null) => {
 			});
 			setError(null);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [error, toast]);
 };

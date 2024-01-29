@@ -23,6 +23,7 @@ const RedirectScreen = ({ shortUrl }: RedirectScreenProps) => {
 
 			window.location.href = originalUrl.originalUrl || '/';
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [shortUrl]);
 
 	return <></>;
