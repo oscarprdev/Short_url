@@ -2,8 +2,8 @@ import { IconHeartFilled } from '@tabler/icons-react';
 
 const Footer = () => {
 	return (
-		<footer className='p-2 z-10 opacity-70'>
-			<p className='text-stone-400 w-full flex gap-2'>
+		<footer className='absolute bottom-0 w-screen flex justify-center items-center p-2 z-10 opacity-70 h-10'>
+			<p className='text-stone-400 flex gap-2'>
 				Made with <IconHeartFilled className='text-[var(--contrast)] mx-1' /> by
 				<a
 					href='https://github.com/oscarprdev'

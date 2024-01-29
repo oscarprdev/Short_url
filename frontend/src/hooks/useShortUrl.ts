@@ -1,16 +1,19 @@
 import { useMutation } from '@tanstack/react-query';
-import { shortUrl } from '../services/api/shortUrl';
-import { useUrlStore } from '../store/urlStore/urlStore';
+import { ShortUrlInput, shortUrl } from '../services/api/shortUrl';
+import { useGlobalStore } from '../store/globalState';
 
 export const useShortUrl = () => {
-	const { setUrl } = useUrlStore();
+	const { addUrl, setError } = useGlobalStore();
 
 	return useMutation({
-		mutationFn: async (url: string) => {
-			return await shortUrl({ originalUrl: url });
+		mutationFn: async ({ originalUrl, userId }: ShortUrlInput) => {
+			return await shortUrl({ originalUrl, userId });
 		},
 		onSuccess: ({ url }) => {
-			setUrl(url);
+			addUrl(url);
+		},
+		onError: (error) => {
+			setError(error.message);
 		},
 	});
 };

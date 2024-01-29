@@ -57,15 +57,14 @@ func HandlerShortUrl(uc *urlUc.UrlUsecases) echo.HandlerFunc {
 			return handleUrlsErrors(w, newError)
 		}
 
-		authToken := c.Request().Header.Get("Authorization")
 		idQueryParam := c.QueryParam("id")
 
 		// Initialization of url response
 		var url = api.Url{}
 
-		if idQueryParam != "" && authToken != "" {
+		if idQueryParam != "" {
 			// Manage the short url and connect url with user to be persistent in database
-			err = uc.ShortUrlComplexUsecases(ctx, ou, &url, idQueryParam, authToken, refererUrl)
+			err = uc.ShortUrlComplexUsecases(ctx, ou, &url, idQueryParam, refererUrl)
 			if err != nil {
 				newError := &errors.InternalError{
 					Details: fmt.Sprintf("Internal error: %v", err),

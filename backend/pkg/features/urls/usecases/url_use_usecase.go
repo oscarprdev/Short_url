@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func (uc *UrlUsecases) UrlTitleUsecases(ctx context.Context, urlBody *api.PostUrlTitleJSONBody, queryId, token string) (*api.Url, error) {
+func (uc *UrlUsecases) UrlTitleUsecases(ctx context.Context, urlBody *api.PostUrlTitleJSONBody, queryId string) (*api.Url, error) {
 	dbu, err := uc.Repo.GetUserById(ctx, queryId)
 	if err != nil {
 		return nil, &errorsC.UnauthorizedError{
@@ -20,7 +20,7 @@ func (uc *UrlUsecases) UrlTitleUsecases(ctx context.Context, urlBody *api.PostUr
 	}
 
 	// Check if the user has permissions
-	_, err = validations.CheckUserIsValidated(ctx, dbu, queryId, token)
+	_, err = validations.CheckUserIsValidated(ctx, dbu)
 	if err != nil {
 		return nil, &errorsC.UnauthorizedError{
 			Details: fmt.Sprintf("User is not authorized: %v", err),

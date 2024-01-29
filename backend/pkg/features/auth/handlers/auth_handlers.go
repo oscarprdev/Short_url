@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	authUc "short_url/pkg/features/auth/usecases"
 	errors "short_url/pkg/features/shared/handlers"
 
@@ -52,8 +53,9 @@ func HandlerAuthCallback(authUc *authUc.AuthUsecases) echo.HandlerFunc {
 			return handleUserErrors(w, newError)
 		}
 
+		clientUrl := os.Getenv("CLIENT_URL")
 		// Redirect to a success page or another route
-		path := "http://localhost:5173/home?user=" + gothUser.UserID
+		path := clientUrl + "user/" + gothUser.UserID
 		http.Redirect(w, r, path, http.StatusFound)
 		return nil
 	}
@@ -79,7 +81,8 @@ func HandlerAuth(authUc *authUc.AuthUsecases) echo.HandlerFunc {
 			return handleUserErrors(w, newError)
 		}
 
-		path := "http://localhost:5173/home?user=" + gothUser.UserID
+		clientUrl := os.Getenv("CLIENT_URL")
+		path := clientUrl + "user/" + gothUser.UserID
 		http.Redirect(w, r, path, http.StatusFound)
 		return nil
 	}
@@ -92,9 +95,8 @@ func HandlerLogout(authUc *authUc.AuthUsecases) echo.HandlerFunc {
 
 		gothic.Logout(w, r)
 
-		fmt.Println("Logged out")
-
-		http.Redirect(w, r, "http://localhost:5173", http.StatusFound)
+		clientUrl := os.Getenv("CLIENT_URL")
+		http.Redirect(w, r, clientUrl, http.StatusFound)
 		return nil
 	}
 }

@@ -54,11 +54,10 @@ func HandlerUrlUsage(uc *urlUc.UrlUsecases) echo.HandlerFunc {
 			return handleUrlsErrors(w, newError)
 		}
 
-		authToken := c.Request().Header.Get("Authorization")
 		idQueryParam := c.QueryParam("id")
 
 		// Initialization of url response
-		url, err := uc.UrlUsageUsecases(ctx, *urlId, idQueryParam, authToken)
+		url, err := uc.UrlUsageUsecases(ctx, *urlId, idQueryParam)
 		if err != nil {
 			return handleUrlsErrors(w, err)
 		}

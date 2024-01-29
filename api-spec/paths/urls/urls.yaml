@@ -4,7 +4,6 @@ post:
   description: Create new Short url
   parameters:
     - $ref: 'components/_index.yaml#/parameters/UserId'
-    - $ref: 'components/_index.yaml#/parameters/AuthToken'
   requestBody:
     required: true
     content:

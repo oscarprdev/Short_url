@@ -4,7 +4,6 @@ post:
   description: Update Url title
   parameters:
     - $ref: 'components/_index.yaml#/parameters/UserId'
-    - $ref: 'components/_index.yaml#/parameters/AuthToken'
   requestBody:
     required: true
     content:

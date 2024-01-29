@@ -25,7 +25,7 @@ func (uc *UserUsecases) GetUsers(ctx context.Context) (*[]api.User, error) {
 	return uc.Repo.GetUsers(ctx)
 }
 
-func (uc *UserUsecases) DescribeUsers(ctx context.Context, token, id string) (*adapters.DescribeUser, error) {
+func (uc *UserUsecases) DescribeUsers(ctx context.Context, id string) (*adapters.DescribeUser, error) {
 	dbu, err := uc.Repo.GetUserById(ctx, id)
 	if err != nil {
 		return nil, &handlers.UnauthorizedError{
@@ -34,7 +34,7 @@ func (uc *UserUsecases) DescribeUsers(ctx context.Context, token, id string) (*a
 	}
 
 	// Check if the user has permissions
-	dbUser, err := validations.CheckUserIsValidated(ctx, dbu, id, token)
+	dbUser, err := validations.CheckUserIsValidated(ctx, dbu)
 	if err != nil {
 		return nil, &handlers.UnauthorizedError{
 			Details: fmt.Sprintf("User is not authorized: %v", err),

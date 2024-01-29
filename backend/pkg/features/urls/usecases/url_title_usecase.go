@@ -13,7 +13,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (uc *UrlUsecases) UrlUsageUsecases(ctx context.Context, urlId uuid.UUID, queryId, token string) (*api.Url, error) {
+func (uc *UrlUsecases) UrlUsageUsecases(ctx context.Context, urlId uuid.UUID, queryId string) (*api.Url, error) {
 	dbu, err := uc.Repo.GetUserById(ctx, queryId)
 	if err != nil {
 		return nil, &errorsC.UnauthorizedError{
@@ -22,7 +22,7 @@ func (uc *UrlUsecases) UrlUsageUsecases(ctx context.Context, urlId uuid.UUID, qu
 	}
 
 	// Check if the user has permissions
-	_, err = validations.CheckUserIsValidated(ctx, dbu, queryId, token)
+	_, err = validations.CheckUserIsValidated(ctx, dbu)
 	if err != nil {
 		return nil, &errorsC.UnauthorizedError{
 			Details: fmt.Sprintf("User is not authorized: %v", err),

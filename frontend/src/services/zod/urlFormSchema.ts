@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const homeFormSchema = z.object({
+export const urlFormSchema = z.object({
 	link: z.string().refine(
 		(url) => {
 			try {

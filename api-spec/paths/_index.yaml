@@ -16,6 +16,9 @@
 '/url':
   $ref: 'paths/urls/urls.yaml'
 
+'/url/redirect':
+  $ref: 'paths/urls/urls_redirect.yaml'
+
 '/url/use':
   $ref: 'paths/urls/urls_use.yaml'
 

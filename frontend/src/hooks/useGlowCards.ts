@@ -8,8 +8,8 @@ interface ConfigProps {
 }
 
 export const useGlowCards = (CONFIG: ConfigProps) => {
-	const containerRef = useRef<HTMLDivElement | null>(null);
-	const cardsRef = useRef<HTMLDivElement[]>([]);
+	const containerRef = useRef<HTMLUListElement | null>(null);
+	const cardsRef = useRef<HTMLLIElement[]>([]);
 
 	useEffect(() => {
 		const CONTAINER = containerRef.current;

@@ -12,10 +12,9 @@ func HandlerDescribeUser(userUc *userUc.UserUsecases) echo.HandlerFunc {
 		ctx := c.Request().Context()
 		w := c.Response().Writer
 
-		authToken := c.Request().Header.Get("Authorization")
 		idQueryParam := c.QueryParam("id")
 
-		describeResponse, err := userUc.DescribeUsers(ctx, authToken, idQueryParam)
+		describeResponse, err := userUc.DescribeUsers(ctx, idQueryParam)
 		if err != nil {
 			return handleUserErrors(w, err)
 		}

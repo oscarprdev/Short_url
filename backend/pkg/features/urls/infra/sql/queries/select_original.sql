@@ -1,0 +1,1 @@
+SELECT * FROM urls WHERE short_url = $1;
