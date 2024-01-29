@@ -1,6 +1,6 @@
 import { ReactNode, useRef, useState } from 'react';
 import { ModalContext } from './ModalContext';
-import ModalWrapper from '../components/ModalWrapper';
+import ModalWrapper from '../components/modals/ModalWrapper';
 
 interface ModalContextProviderProps {
 	children: ReactNode;

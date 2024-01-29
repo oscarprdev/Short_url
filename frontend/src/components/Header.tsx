@@ -1,6 +1,6 @@
 import { useGlobalStore } from '../store/globalState';
-import ButtonLogin from './ButtonLogin';
-import ButtonLogout from './ButtonLogout';
+import ButtonLogin from './buttons/ButtonLogin';
+import ButtonLogout from './buttons/ButtonLogout';
 
 const Header = () => {
 	const { user } = useGlobalStore();

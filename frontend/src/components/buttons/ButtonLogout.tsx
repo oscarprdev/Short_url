@@ -1,6 +1,6 @@
 import { IconUser } from '@tabler/icons-react';
-import { Button } from './ui/button';
-import { useGlobalStore } from '../store/globalState';
+import { Button } from '../ui/button';
+import { useGlobalStore } from '../../store/globalState';
 
 const ButtonLogout = () => {
 	const { clearStore } = useGlobalStore();

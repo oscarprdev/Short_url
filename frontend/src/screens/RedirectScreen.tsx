@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useUrlUsage } from '../hooks/useUrlUsage';
 import { useGlobalStore } from '../store/globalState';
 import { useModal } from '../hooks/useModal';
-import RedirectingModal from '../components/RedirectingModal';
+import RedirectingModal from '../components/modals/RedirectingModal';
 
 interface RedirectScreenProps {
 	shortUrl: string;

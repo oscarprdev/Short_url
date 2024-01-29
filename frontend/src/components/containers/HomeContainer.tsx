@@ -1,8 +1,8 @@
 import { useShortUrl } from '../../hooks/useShortUrl';
 import { useGlobalStore } from '../../store/globalState';
-import ButtonLogin from '../ButtonLogin';
+import ButtonLogin from '../buttons/ButtonLogin';
 import ShortUrlForm from '../ShortUrlForm';
-import UrlCardList from '../UrlCardList';
+import UrlCardList from '../urlCard/UrlCardList';
 
 const HomeContainer = () => {
 	const { urls } = useGlobalStore();

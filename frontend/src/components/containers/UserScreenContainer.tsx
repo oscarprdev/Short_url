@@ -1,5 +1,5 @@
 import ShortUrlForm from '../ShortUrlForm';
-import UrlCardList from '../UrlCardList';
+import UrlCardList from '../urlCard/UrlCardList';
 import { useShortUrl } from '../../hooks/useShortUrl';
 import { useGlobalStore } from '../../store/globalState';
 import { useState } from 'react';

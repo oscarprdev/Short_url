@@ -1,5 +1,5 @@
-import { useGlowCards } from '../hooks/useGlowCards';
-import { Url } from '../types/url';
+import { useGlowCards } from '../../hooks/useGlowCards';
+import { Url } from '../../types/url';
 import UrlCard from './UrlCard';
 import UserUrlCard from './UserUrlCard';
 

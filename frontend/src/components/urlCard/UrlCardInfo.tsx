@@ -1,4 +1,4 @@
-import { formatTimeStamp } from '../utils/formatTimeStamp';
+import { formatTimeStamp } from '../../utils/formatTimeStamp';
 
 interface UrlCardInfoProps {
 	usage: number;

@@ -1,5 +1,5 @@
 import { IconBrandGoogleFilled, IconBrandGithub, IconUser } from '@tabler/icons-react';
-import AuthInput from './AuthInput';
+import AuthInput from '../AuthInput';
 
 const LoginModal = () => {
 	return (

@@ -1,5 +1,5 @@
-import { useUrlUsage } from '../hooks/useUrlUsage';
-import { Url } from '../types/url';
+import { useUrlUsage } from '../../hooks/useUrlUsage';
+import { Url } from '../../types/url';
 import UrlCardCopyIcon from './UrlCardCopyIcon';
 import UrlCardInfo from './UrlCardInfo';
 import UrlCardLink from './UrlCardLink';
