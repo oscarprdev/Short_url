@@ -11,7 +11,7 @@ interface storeState {
 	setUrls: (urls: Url[]) => void;
 	addUrl: (url: Url) => void;
 	clearStore: () => void;
-	setError: (error: string) => void;
+	setError: (error: string | null) => void;
 }
 
 export const useGlobalStore = create<storeState>()(

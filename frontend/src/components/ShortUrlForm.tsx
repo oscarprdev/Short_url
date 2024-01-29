@@ -45,7 +45,7 @@ const ShortUrlForm = ({ addUrl, userId }: ShortUrlFormProps) => {
 						render={({ field }) => (
 							<FormItem>
 								<Input
-									className='text-md w-[400px] border-stone-600'
+									className='text-md sm:w-[99vw] md:w-[400px] border-stone-600'
 									placeholder='Enter your link here...'
 									{...field}
 								/>

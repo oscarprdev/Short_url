@@ -33,6 +33,7 @@ func (pr *PostgresRepository) JoinUserWithUrls(ctx context.Context, id string) (
 			&i.ShortUrl,
 			&i.Title,
 			&i.ExpiresAt,
+			&i.Usage,
 		); err != nil {
 			return nil, err
 		}

@@ -1,6 +1,6 @@
-import { Button } from './ui/button';
-import LoginModal from './LoginModal';
-import { useModal } from '../hooks/useModal';
+import { Button } from '../ui/button';
+import LoginModal from '../modals/LoginModal';
+import { useModal } from '../../hooks/useModal';
 
 const ButtonLogin = () => {
 	const modal = useModal();
