@@ -33,7 +33,6 @@ const UrlCardTitle = ({ title, urlId }: UrlCardTitleProps) => {
 
 	return (
 		<div className='flex items-center justify-start w-full gap-2'>
-			<span className='w-2 h-2 rounded-full bg-blue-500' />
 			<input
 				maxLength={40}
 				ref={titleRef}

@@ -23,7 +23,7 @@ const UserUrlCard = ({ url, cardsRef, isRowsLayout }: UserUrlCardProps) => {
 			ref={(el: HTMLLIElement | null) => el && cardsRef.current.push(el!)}
 			className={`${
 				isRowsLayout && 'w-full'
-			} relative flex flex-col gap-4 link-card py-5 h-fit border border-stone-800 font-light text-stone-300`}>
+			} relative w-[30%] flex flex-col gap-4 link-card py-5 h-fit border border-stone-800 font-light text-stone-300`}>
 			<UrlCardTitle
 				title={url.titleUrl}
 				urlId={url.id}
