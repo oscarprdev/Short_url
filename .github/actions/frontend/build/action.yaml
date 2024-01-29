@@ -3,20 +3,16 @@ description: 'Build frontend app'
 runs:
   using: composite
   steps:
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
+    - uses: oven-sh/setup-bun@v1
 
     - name: Install NPM
       shell: bash
-      run: cd frontend && npm ci
+      run: cd frontend && bun install
 
     - name: Run lint
       shell: bash
-      run: cd frontend && npm run lint
+      run: cd frontend && bun run lint
 
     - name: Run build
       shell: bash
-      run: cd frontend && npm run build
+      run: cd frontend && bun run build
