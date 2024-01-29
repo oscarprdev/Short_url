@@ -16,3 +16,12 @@ jobs:
           fetch-depth: 0
       - name: Backend_Build
         uses: ./.github/actions/backend/build
+
+  frontend_build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Frontend_Build
+        uses: ./.github/actions/frontend/build
