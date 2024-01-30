@@ -1,5 +1,6 @@
 import { IconBrandGoogleFilled, IconBrandGithub, IconUser } from '@tabler/icons-react';
 import AuthInput from '../AuthInput';
+import { API_URL } from '../../constants/apiUrl';
 
 const LoginModal = () => {
 	return (
@@ -17,11 +18,11 @@ const LoginModal = () => {
 				<span className='w-[15px] h-[0.01rem] bg-primary' />
 			</div>
 			<div className='flex items-center gap-5'>
-				<AuthInput href='http://localhost:8080/auth?provider=google'>
+				<AuthInput href={`${API_URL}/auth?provider=google`}>
 					<IconBrandGoogleFilled />
 					Google
 				</AuthInput>
-				<AuthInput href='http://localhost:8080/auth?provider=github'>
+				<AuthInput href={`${API_URL}/auth?provider=github`}>
 					<IconBrandGithub />
 					Github
 				</AuthInput>
