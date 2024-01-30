@@ -11,7 +11,9 @@ const ButtonLogout = () => {
 		window.location.href = `${API_URL}/auth/logout`;
 	};
 	return (
-		<Button onClick={onLogoutClick}>
+		<Button
+			data-testid='logout-btn'
+			onClick={onLogoutClick}>
 			<IconUser />
 			Logout
 		</Button>

@@ -9,7 +9,6 @@ interface AuthInputProps {
 const AuthInput = ({ children, contrast, href }: AuthInputProps) => {
 	return (
 		<a
-			role='link'
 			href={href}
 			className={`${
 				contrast ? 'bg-[var(--contrast)] hover:bg-[var(--contrast-hover)]' : 'bg-primary hover:bg-primary/90'

@@ -1,12 +1,13 @@
 import { afterEach, beforeEach, describe, it } from 'vitest';
 import { RenderResult, render } from '@testing-library/react';
-import ButtonLogin from './ButtonLogin';
+import { mockedUrl } from '../../../tests/mocks/url-response';
+import UrlCardCopyIcon from './UrlCardCopyIcon';
 
-describe('ButtonLogin', () => {
+describe('UrlCardCopyIcon', () => {
 	let component: RenderResult;
 
 	beforeEach(() => {
-		component = render(<ButtonLogin />);
+		component = render(<UrlCardCopyIcon url={mockedUrl.shortUrl} />);
 	});
 
 	afterEach(() => {
@@ -14,7 +15,6 @@ describe('ButtonLogin', () => {
 	});
 
 	it('Should render successfully', () => {
-		component.getByTestId('login-btn');
-		component.getByText('Login');
+		component.getByTestId('icon-copy');
 	});
 });

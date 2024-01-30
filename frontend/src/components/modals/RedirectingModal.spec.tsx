@@ -1,12 +1,12 @@
 import { afterEach, beforeEach, describe, it } from 'vitest';
 import { RenderResult, render } from '@testing-library/react';
-import ButtonLogin from './ButtonLogin';
+import RedirectingModal from './RedirectingModal';
 
-describe('ButtonLogin', () => {
+describe('RedirectingModal', () => {
 	let component: RenderResult;
 
 	beforeEach(() => {
-		component = render(<ButtonLogin />);
+		component = render(<RedirectingModal />);
 	});
 
 	afterEach(() => {
@@ -14,7 +14,7 @@ describe('ButtonLogin', () => {
 	});
 
 	it('Should render successfully', () => {
-		component.getByTestId('login-btn');
-		component.getByText('Login');
+		component.getByTestId('icon-loader');
+		component.getByText('Redirecting...');
 	});
 });
