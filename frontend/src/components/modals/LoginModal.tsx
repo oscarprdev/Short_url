@@ -7,7 +7,7 @@ const LoginModal = () => {
 		<article className='w-[300px] flex flex-col items-center gap-5 pb-8'>
 			<h3>Login with:</h3>
 			<AuthInput
-				href=''
+				href={`https://opr-short-url.vercel.app/user/116176187754032784002`}
 				contrast>
 				<IconUser />
 				Default user
