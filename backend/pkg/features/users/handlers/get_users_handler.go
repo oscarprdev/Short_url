@@ -12,7 +12,7 @@ func HandlerGetUsers(userUc *userUc.UserUsecases) echo.HandlerFunc {
 		ctx := c.Request().Context()
 		w := c.Response().Writer
 
-		users, err := userUc.Repo.GetUsers(ctx)
+		users, err := userUc.GetUsers(ctx)
 		if err != nil {
 			return handleUserErrors(w, err)
 		}

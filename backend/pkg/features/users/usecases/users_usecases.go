@@ -22,7 +22,19 @@ func ProvideUserUsecases(ur UserRepo) *UserUsecases {
 }
 
 func (uc *UserUsecases) GetUsers(ctx context.Context) (*[]api.User, error) {
-	return uc.Repo.GetUsers(ctx)
+	dbUsers, err := uc.Repo.GetUsers(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	var apiUsers []api.User
+	for _, user := range *dbUsers {
+		currentUser := user
+		adaptedUser := adapters.AdaptDbUserToApp(&currentUser)
+		apiUsers = append(apiUsers, *adaptedUser)
+	}
+
+	return &apiUsers, nil
 }
 
 func (uc *UserUsecases) DescribeUsers(ctx context.Context, id string) (*adapters.DescribeUser, error) {
