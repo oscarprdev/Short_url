@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 import { test } from './fixtures/url.fixture';
 import { shortUrlResponse } from '../mocks/short-url-response';
 import { userInfoResponse } from '../mocks/user-info-response';
+import { Url } from '../../src/types/url';
 
 test.describe('Add posts', () => {
 	test.beforeEach(async ({ navigateToApp }) => {
@@ -42,6 +43,60 @@ test.describe('Add posts', () => {
 		await appPage.defaultUserButton.click();
 
 		await expect(appPage.userScreen).toBeVisible();
-		await expect(appPage.userScreenText).toHaveText('Short your favourite links!');
+		await expect(appPage.userScreenText).toBeVisible();
+	});
+
+	test('Should the user logged be able to short url and see it on the list', async ({
+		appPage,
+		setUserInfoResponse,
+		setShortUrlResponse,
+	}) => {
+		const mockedNewUrl: Url = {
+			...shortUrlResponse.url,
+			originalUrl: 'https://random_url/4321',
+			shortUrl: 'https://random_url/short-mocked-url',
+			id: 'f05a78f6-66e3-4a31-b718-6e94873b0100',
+		};
+
+		await setUserInfoResponse({ json: userInfoResponse });
+		await setShortUrlResponse({
+			json: {
+				status: shortUrlResponse.status,
+				url: mockedNewUrl,
+			},
+		});
+
+		await appPage.loginButton.click();
+
+		await expect(appPage.loginModal).toBeVisible();
+		await appPage.defaultUserButton.click();
+
+		await expect(appPage.userScreenNav).toBeVisible();
+
+		const counter = await appPage.getLinkCounter(userInfoResponse.urls.length);
+		await expect(counter).toBeVisible();
+
+		await expect(appPage.urlButton).toBeVisible();
+		await expect(appPage.urlInput).toBeVisible();
+
+		const urlsUpdated = userInfoResponse.urls.concat(mockedNewUrl);
+		await setUserInfoResponse({
+			json: {
+				status: userInfoResponse.status,
+				user: userInfoResponse.user,
+				urls: urlsUpdated,
+			},
+		});
+
+		await appPage.urlInput.fill(mockedNewUrl.originalUrl);
+		await appPage.urlButton.click();
+
+		const counterUpdated = await appPage.getLinkCounter(urlsUpdated.length);
+		await expect(counterUpdated).toBeVisible();
+
+		for (const url of urlsUpdated) {
+			const urlCard = await appPage.getShortUrl(url.shortUrl);
+			await expect(urlCard).toBeVisible();
+		}
 	});
 });

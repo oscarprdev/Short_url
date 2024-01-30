@@ -11,7 +11,11 @@ const CardListNav = ({ isRowsLayout, onSetRowLayout, onSetGridLayout }: CardList
 	const { urls } = useGlobalStore();
 	return (
 		<nav className='relative w-[90vw] md:w-[1100px] flex justify-center pb-2'>
-			<p className='absolute left-2 md:left-20 text-sm text-stone-400'>Total {urls?.length}</p>
+			<p
+				aria-label='link-counter'
+				className='absolute left-2 md:left-20 text-sm text-stone-400'>
+				Total {urls?.length}
+			</p>
 			<div className='flex items-center gap-2'>
 				<IconLayoutList
 					onClick={onSetRowLayout}

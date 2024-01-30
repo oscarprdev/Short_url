@@ -17,6 +17,7 @@ export class AppPage {
 
 	readonly userScreen: Locator;
 	readonly userScreenText: Locator;
+	readonly userScreenNav: Locator;
 
 	constructor(protected page: Page) {
 		this.homeDescription = this.page.getByLabel('home description');
@@ -33,11 +34,20 @@ export class AppPage {
 		this.googleLoginButton = this.page.getByRole('link').getByText('Google');
 		this.githubLoginButton = this.page.getByRole('link').getByText('Github');
 
-		this.userScreen = this.page.getByTestId('user-screen');
-		this.userScreenText = this.page.getByLabel('call to action text');
+		this.userScreen = this.page.getByRole('main');
+		this.userScreenText = this.page.getByText('Short your favourite links!');
+		this.userScreenNav = this.page.getByRole('navigation');
 	}
 
 	async getUrlLink(urlId: string) {
 		return this.page.getByTestId(`url-link-${urlId}`);
+	}
+
+	async getLinkCounter(counterValue: number) {
+		return this.page.getByText(`Total ${counterValue}`);
+	}
+
+	async getShortUrl(shortUrl: string) {
+		return this.page.getByText(shortUrl);
 	}
 }
