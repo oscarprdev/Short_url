@@ -11,7 +11,7 @@ func SetupRoutes(dbs *dbs.Databases) *echo.Echo {
 	e := echo.New()
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:5173"},
+		AllowOrigins: []string{"http://localhost:5173", "https://opr-short-url.vercel.app"},
 		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE},
 		AllowHeaders: []string{echo.HeaderContentType, echo.HeaderAuthorization},
 		MaxAge:       300,
