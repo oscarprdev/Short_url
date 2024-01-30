@@ -21,12 +21,12 @@ func NewAuthProvider() {
 	// Google
 	googleClientId := os.Getenv("GOOGLE_CLIENT_ID")
 	googleClientSecret := os.Getenv(("GOOGLE_CLIENT_SECRET"))
-	googleCallbackUrl := "http://localhost:8080/auth/callback?provider=google"
+	googleCallbackUrl := "https://shorturl-api.up.railway.app/auth/callback?provider=google"
 
 	// Github
 	githubClientId := os.Getenv("GITHUB_CLIENT_ID")
 	githubClientSecret := os.Getenv(("GITHUB_CLIENT_SECRET"))
-	githubCallbackUrl := "http://localhost:8080/auth/callback?provider=github"
+	githubCallbackUrl := "https://shorturl-api.up.railway.app/auth/callback?provider=github"
 
 	store := sessions.NewCookieStore([]byte("my secure key"))
 	store.MaxAge(MaxAge)

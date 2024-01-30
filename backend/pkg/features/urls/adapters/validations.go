@@ -34,7 +34,7 @@ func validateOrigin(c echo.Context) error {
 	host := c.Request().Host
 	path := c.Request().URL.Path
 
-	if host != "http://localhost:8080" {
+	if host != "https://shorturl-api.up.railway.app" {
 		return &errors.BadRequestError{
 			Details: "Not valid host",
 		}

@@ -1,0 +1,28 @@
+name: Backend Railway DB
+description: 'Deploy Railway DB'
+inputs:
+  token:
+    description: 'Railway token env'
+    required: true
+    default: ''
+  service:
+    description: 'Railway service env'
+    required: true
+    default: ''
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Install Railway
+      shell: bash
+      run: npm i -g @railway/cli
+
+    - name: Deploy
+      shell: bash
+      run: railway up --service=${{ inputs.service }} -d
+      env:
+        RAILWAY_TOKEN: ${{ inputs.token }}
