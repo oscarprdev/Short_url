@@ -7,6 +7,7 @@ import (
 
 	sharedAdapters "short_url/pkg/features/shared/adapters"
 	handlers "short_url/pkg/features/shared/handlers"
+	"short_url/pkg/features/shared/types"
 	"short_url/pkg/features/shared/validations"
 	adapters "short_url/pkg/features/users/adapters"
 )
@@ -45,22 +46,29 @@ func (uc *UserUsecases) DescribeUsers(ctx context.Context, id string) (*adapters
 		}
 	}
 
-	// Check if the user has permissions
-	dbUser, err := validations.CheckUserIsValidated(ctx, dbu)
-	if err != nil {
-		return nil, &handlers.UnauthorizedError{
-			Details: fmt.Sprintf("User is not authorized: %v", err),
+	var validDbUser types.DbUser = *dbu
+
+	// If user is not the default user
+	if dbu.Id != "116176187754032784002" {
+		// Check if the user has permissions
+		dbUser, err := validations.CheckUserIsValidated(ctx, dbu)
+		if err != nil {
+			return nil, &handlers.UnauthorizedError{
+				Details: fmt.Sprintf("User is not authorized: %v", err),
+			}
 		}
+
+		validDbUser = *dbUser
 	}
 
-	urls, err := uc.Repo.JoinUserWithUrls(ctx, dbUser.Id)
+	urls, err := uc.Repo.JoinUserWithUrls(ctx, validDbUser.Id)
 	if err != nil {
 		return nil, &handlers.InternalError{
 			Details: fmt.Sprintf("Internal error: %v", err),
 		}
 	}
 
-	apiUser := adapters.AdaptDbUserToApp(dbUser)
+	apiUser := adapters.AdaptDbUserToApp(&validDbUser)
 
 	var apiUrls []api.Url
 	for _, url := range *urls {
