@@ -8,6 +8,18 @@ on:
     types: [opened, synchronize]
 
 jobs:
+  avoid_redundancy:
+    runs-on: ubuntu-22.04
+    permissions:
+      actions: write
+    timeout-minutes: 2
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          all_but_latest: true
+          access_token: ${{ github.token }}
+
   backend_build:
     runs-on: ubuntu-22.04
     steps:
@@ -16,6 +28,19 @@ jobs:
           fetch-depth: 0
       - name: Backend_Build
         uses: ./.github/actions/backend/build
+
+  backend_deploy_railway:
+    needs: [backend_build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Backend_Railway
+        uses: ./.github/actions/backend/railway
+        with:
+          token: ${{ secrets.RAILWAY_TOKEN }}
+          service: ${{ secrets.RAILWAY_SERVICE }}
 
   frontend_build:
     runs-on: ubuntu-22.04
