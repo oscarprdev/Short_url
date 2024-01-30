@@ -20,6 +20,7 @@ func SetupRoutes(dbs *dbs.Databases) *echo.Echo {
 	handlerUsersRoute(e, dbs)
 	handlerUrlsRoute(e, dbs)
 	handlerAuthRoute(e, dbs)
+	handlerSeedRoute(e, dbs)
 
 	return e
 }
