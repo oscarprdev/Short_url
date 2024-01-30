@@ -19,11 +19,14 @@ func (uc *UrlUsecases) UrlTitleUsecases(ctx context.Context, urlBody *api.PostUr
 		}
 	}
 
-	// Check if the user has permissions
-	_, err = validations.CheckUserIsValidated(ctx, dbu)
-	if err != nil {
-		return nil, &errorsC.UnauthorizedError{
-			Details: fmt.Sprintf("User is not authorized: %v", err),
+	// If user is not the default user
+	if dbu.Id != "116176187754032784002" {
+		// Check if the user has permissions
+		_, err := validations.CheckUserIsValidated(ctx, dbu)
+		if err != nil {
+			return nil, &errorsC.UnauthorizedError{
+				Details: fmt.Sprintf("User is not authorized: %v", err),
+			}
 		}
 	}
 

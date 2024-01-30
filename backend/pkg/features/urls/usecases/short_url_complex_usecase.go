@@ -8,6 +8,7 @@ import (
 
 	sharedAdapters "short_url/pkg/features/shared/adapters"
 	errorsC "short_url/pkg/features/shared/handlers"
+	types "short_url/pkg/features/shared/types"
 	validations "short_url/pkg/features/shared/validations"
 )
 
@@ -19,13 +20,21 @@ func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters
 		}
 	}
 
-	// Check if the user has permissions
-	dbUser, err := validations.CheckUserIsValidated(ctx, dbu)
-	if err != nil {
-		return &errorsC.UnauthorizedError{
-			Details: fmt.Sprintf("User is not authorized: %v", err),
+	var validDbUser types.DbUser = *dbu
+
+	// If user is not the default user
+	if dbu.Id != "116176187754032784002" {
+		// Check if the user has permissions
+		dbUser, err := validations.CheckUserIsValidated(ctx, dbu)
+		if err != nil {
+			return &errorsC.UnauthorizedError{
+				Details: fmt.Sprintf("User is not authorized: %v", err),
+			}
 		}
+
+		validDbUser = *dbUser
 	}
+
 	// SHORT URL
 	su := shortUrl(ou, refererUrl)
 	suDB, err := adapters.AdaptShortUrlToDB(*ou.Ou, su)
@@ -45,7 +54,7 @@ func (uc *UrlUsecases) ShortUrlComplexUsecases(ctx context.Context, ou *adapters
 	}
 
 	// Insert short and user on db
-	err = uc.RelateUrlWithUser(ctx, *ur.Id, dbUser.Id)
+	err = uc.RelateUrlWithUser(ctx, *ur.Id, validDbUser.Id)
 	if err != nil {
 		return &errorsC.InternalError{
 			Details: fmt.Sprintf("Error connecting url with user: %v", err),
