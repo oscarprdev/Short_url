@@ -23,6 +23,6 @@ runs:
 
     - name: Deploy
       shell: bash
-      run: RAILWAY_TOKEN=$RAILWAY_TOKEN railway up
+      run: railway up --service=${{ inputs.service }} -d
       env:
         RAILWAY_TOKEN: ${{ inputs.token }}
