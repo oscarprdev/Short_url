@@ -4,7 +4,9 @@ import { API_URL } from '../../constants/apiUrl';
 
 const LoginModal = () => {
 	return (
-		<article className='w-[300px] flex flex-col items-center gap-5 pb-8'>
+		<article
+			aria-label='login modal'
+			className='w-[300px] flex flex-col items-center gap-5 pb-8'>
 			<h3>Login with:</h3>
 			<AuthInput
 				href={`https://opr-short-url.vercel.app/user/116176187754032784002`}

@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '../services/api/getUserInfo';
 import { useGlobalStore } from '../store/globalState';
 import { useEffect } from 'react';
+import { API_URL } from '../constants/apiUrl';
 
 export const useUserLogged = (userId: string) => {
-	const { setUrls, setUser, clearStore } = useGlobalStore();
+	const { setUrls, setUser, clearStore, setError } = useGlobalStore();
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['user'],
@@ -19,8 +20,9 @@ export const useUserLogged = (userId: string) => {
 		}
 
 		if (data?.status && data?.status !== 200) {
-			window.location.href = 'http://localhost:8080/auth/logout';
+			window.location.href = `${API_URL}/auth/logout`;
 			clearStore();
+			setError('User unauthorized or token expired');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isLoading, setUrls, setUser]);

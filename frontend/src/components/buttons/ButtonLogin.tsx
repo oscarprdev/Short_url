@@ -11,6 +11,7 @@ const ButtonLogin = () => {
 
 	return (
 		<Button
+			data-testid='login-btn'
 			onClick={onLoginClick}
 			className='absolute top-8 right-10'>
 			Login

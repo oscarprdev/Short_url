@@ -37,6 +37,7 @@ const ShortUrlForm = ({ addUrl, userId }: ShortUrlFormProps) => {
 		<>
 			<Form {...form}>
 				<form
+					data-testid='url-form'
 					onSubmit={form.handleSubmit(onSubmit)}
 					className='flex items-center gap-2'>
 					<FormField
