@@ -7,7 +7,7 @@ runs:
 
     - name: Install
       shell: bash
-      run: cd frontend && bun run install
+      run: cd frontend && bun install
 
     - name: Install playwright
       shell: bash
