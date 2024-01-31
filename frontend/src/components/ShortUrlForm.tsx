@@ -55,6 +55,7 @@ const ShortUrlForm = ({ addUrl, userId }: ShortUrlFormProps) => {
 						)}
 					/>
 					<Button
+						data-testid='submit-btn'
 						type='submit'
 						className='ml-auto'>
 						<IconScissors className={`${form.formState.isSubmitting && 'animate-spin duration-500'}`} />

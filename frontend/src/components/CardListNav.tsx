@@ -18,10 +18,12 @@ const CardListNav = ({ isRowsLayout, onSetRowLayout, onSetGridLayout }: CardList
 			</p>
 			<div className='flex items-center gap-2'>
 				<IconLayoutList
+					data-testid='icon-layout-list'
 					onClick={onSetRowLayout}
 					className={`${isRowsLayout ? 'text-stone-200' : 'text-stone-600 hover:text-stone-200'} cursor-pointer duration-300`}
 				/>
 				<IconLayoutGrid
+					data-testid='icon-layout-grid'
 					onClick={onSetGridLayout}
 					className={`${!isRowsLayout ? 'text-stone-200' : 'text-stone-600 hover:text-stone-200'} cursor-pointer duration-300`}
 				/>

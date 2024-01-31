@@ -15,7 +15,10 @@ const UrlCardInfo = ({ usage, expiresAt }: UrlCardInfoProps) => {
 					<Tooltip>
 						<TooltipTrigger>
 							<div className='flex items-center gap-2'>
-								<IconPointer className='w-4 text-stone-400' />
+								<IconPointer
+									data-testid='icon-pointer'
+									className='w-4 text-stone-400'
+								/>
 								<p>{usage}</p>
 							</div>
 						</TooltipTrigger>
@@ -28,7 +31,10 @@ const UrlCardInfo = ({ usage, expiresAt }: UrlCardInfoProps) => {
 					<Tooltip>
 						<TooltipTrigger>
 							<div className='flex items-center gap-2'>
-								<IconCalendarX className='w-4 text-stone-400' />
+								<IconCalendarX
+									data-testid='icon-calendar'
+									className='w-4 text-stone-400'
+								/>
 								<p>{formatTimeStamp(expiresAt)}</p>
 							</div>
 						</TooltipTrigger>
