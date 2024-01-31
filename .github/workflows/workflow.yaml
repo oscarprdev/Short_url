@@ -50,3 +50,31 @@ jobs:
           fetch-depth: 0
       - name: Frontend_Build
         uses: ./.github/actions/frontend/build
+
+  frontend_e2e_tests:
+    needs: [frontend_build]
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Frontend_e2e_tests
+        uses: ./.github/actions/frontend/e2e-tests
+
+  frontend_unit_tests:
+    needs: [frontend_build]
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Frontend_unit_tests
+        uses: ./.github/actions/frontend/unit-tests
