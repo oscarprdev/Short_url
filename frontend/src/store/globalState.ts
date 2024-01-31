@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { User } from '../types/user';
 
-interface storeState {
+export interface StoreState {
 	user: User | null;
 	urls: Url[] | null;
 	error: string | null;
@@ -14,7 +14,7 @@ interface storeState {
 	setError: (error: string | null) => void;
 }
 
-export const useGlobalStore = create<storeState>()(
+export const useGlobalStore = create<StoreState>()(
 	persist(
 		(set, get) => ({
 			user: null,

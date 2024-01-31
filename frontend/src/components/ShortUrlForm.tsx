@@ -37,6 +37,7 @@ const ShortUrlForm = ({ addUrl, userId }: ShortUrlFormProps) => {
 		<>
 			<Form {...form}>
 				<form
+					data-testid='url-form'
 					onSubmit={form.handleSubmit(onSubmit)}
 					className='flex items-center gap-2'>
 					<FormField
@@ -54,6 +55,7 @@ const ShortUrlForm = ({ addUrl, userId }: ShortUrlFormProps) => {
 						)}
 					/>
 					<Button
+						data-testid='submit-btn'
 						type='submit'
 						className='ml-auto'>
 						<IconScissors className={`${form.formState.isSubmitting && 'animate-spin duration-500'}`} />

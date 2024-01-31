@@ -11,8 +11,13 @@ const UrlCardLink = ({ originalUrl, shortUrl, onUrlClick }: UrlCardLinkProps) =>
 		<TooltipProvider>
 			<Tooltip>
 				<TooltipTrigger>
-					<div className='flex items-center gap-2'>
-						<IconLink className='w-4 text-stone-400' />
+					<div
+						aria-label='url-link'
+						className='flex items-center gap-2'>
+						<IconLink
+							data-testid='icon-link'
+							className='w-4 text-stone-400'
+						/>
 						<a
 							href={originalUrl}
 							onClick={onUrlClick}

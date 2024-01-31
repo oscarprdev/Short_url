@@ -1,0 +1,18 @@
+name: Frontend e2e tests
+description: 'Run frontend e2e tests'
+runs:
+  using: composite
+  steps:
+    - uses: oven-sh/setup-bun@v1
+
+    - name: Install
+      shell: bash
+      run: cd frontend && bun install
+
+    - name: Install playwright
+      shell: bash
+      run: cd frontend && npx playwright install --with-deps
+
+    - name: Run e2e tests
+      shell: bash
+      run: cd frontend && bun run test:e2e
