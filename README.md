@@ -6,9 +6,9 @@
 
 ## Description
 
-Short url application done with React, Zustand, React Query, Typescript and Tailwind running with Golang api using PostgreSQL database and OAuth. 
+Short url application done with React, Zustand, React Query, Typescript and Tailwind running with Golang api using PostgreSQL database and OAuth authentication. 
 
-In testing, it's working for unit tests with Vitest, React Testing Library, and Mock Service Worker enabling HTTP request interception and Playwright for end-to-end tests.
+In testing, unit tests with Vitest, React Testing Library and Playwright for end-to-end tests.
 
 ## System Design
 
