@@ -13,7 +13,7 @@ const UrlCardDeleteIcon = ({ onDeleteUrl, isPending }: UrlCardDeleteIconProps) =
 				<Tooltip>
 					<TooltipTrigger>
 						{isPending ? (
-							<IconLoader2 className='animate-spin w-4 text-stone-300 hover:text-stone-100' />
+							<IconLoader2 className="animate-spin w-4 text-stone-300 hover:text-stone-100" />
 						) : (
 							<IconTrash
 								data-testid="icon-copy"

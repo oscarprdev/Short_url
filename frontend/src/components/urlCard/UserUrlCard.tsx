@@ -29,7 +29,7 @@ const UserUrlCard = ({ url }: UserUrlCardProps) => {
 			<UrlCardTitle title={url.titleUrl} urlId={url.id} />
 			<UrlCardLink originalUrl={url.originalUrl} shortUrl={url.shortUrl} onUrlClick={onUrlClick} />
 			<UrlCardCopyIcon url={url.shortUrl} />
-			<UrlCardDeleteIcon onDeleteUrl={onDeleteUrl} isPending={isPending}/>
+			<UrlCardDeleteIcon onDeleteUrl={onDeleteUrl} isPending={isPending} />
 			<UrlCardInfo usage={url.usage} />
 		</WrapperAction>
 	);

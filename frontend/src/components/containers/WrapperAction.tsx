@@ -41,7 +41,13 @@ const WrapperAction = ({
 					<div
 						aria-hidden
 						className={cn(
-							color !== 'default' ? `bg-[var(--${color})]` : 'bg-white/50',
+							color === 'contrast'
+								? `bg-[var(--contrast)]`
+								: color === 'contrast-pink'
+									? 'bg-[var(--contrast-pink)]'
+									: color === 'contrast-blue'
+										? 'bg-[var(--contrast-blue)]'
+										: 'bg-white/50',
 							'absolute left-1 top-1 z-[-1] h-full w-full rounded-lg'
 						)}></div>
 				</a>
@@ -58,7 +64,13 @@ const WrapperAction = ({
 					<div
 						aria-hidden
 						className={cn(
-							color !== 'default' ? `bg-[var(--${color})]` : 'bg-white/50',
+							color === 'contrast'
+								? `bg-[var(--contrast)]`
+								: color === 'contrast-pink'
+									? 'bg-[var(--contrast-pink)]'
+									: color === 'contrast-blue'
+										? 'bg-[var(--contrast-blue)]'
+										: 'bg-white/50',
 							'absolute left-0 top-0 z-[-1] h-full w-full rounded-lg'
 						)}></div>
 				</Button>
@@ -70,7 +82,13 @@ const WrapperAction = ({
 					<div
 						aria-hidden
 						className={cn(
-							color !== 'default' ? `bg-[var(--${color})]` : 'bg-white/50',
+							color === 'contrast'
+								? `bg-[var(--contrast)]`
+								: color === 'contrast-pink'
+									? 'bg-[var(--contrast-pink)]'
+									: color === 'contrast-blue'
+										? 'bg-[var(--contrast-blue)]'
+										: 'bg-white/50',
 							'absolute left-0 top-0 z-[-1] h-full w-full rounded-lg'
 						)}></div>
 				</article>

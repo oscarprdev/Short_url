@@ -2,17 +2,13 @@ import { API_URL } from '../../constants/apiUrl';
 import WrapperAction from '../containers/WrapperAction';
 import { IconBrandGithub, IconBrandGoogleFilled } from '@tabler/icons-react';
 
-const DEFAULT_USER_URL = 'https://opr-short-url.vercel.app/user/116176187754032784002'
+const DEFAULT_USER_URL = 'https://oplink.vercel.app/user/116176187754032784002';
 
 const LoginModal = () => {
 	return (
 		<article aria-label="login modal" className="w-[400px] flex flex-col items-center gap-10 pb-8">
 			<h3 className="-mb-10">Choose an account</h3>
-			<WrapperAction
-				color="contrast-blue"
-				url={DEFAULT_USER_URL}
-				id="default"
-				type="url">
+			<WrapperAction color="contrast-blue" url={DEFAULT_USER_URL} id="default" type="url">
 				Default links
 			</WrapperAction>
 			<div className="flex items-center gap-5">
