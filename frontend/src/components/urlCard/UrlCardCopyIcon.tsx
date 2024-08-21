@@ -35,7 +35,7 @@ const UrlCardCopyIcon = ({ url }: UrlCardIconCopyProps) => {
 					</TooltipProvider>
 				</div>
 			) : (
-				<span className="absolute top-2 right-2">
+				<span className="group-hover:block absolute hidden top-2 right-2">
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger>

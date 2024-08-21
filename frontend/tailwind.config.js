@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line no-undef
 module.exports = {
 	darkMode: ['class'],
 	content: ['./src/**/*.{ts,tsx}'],
@@ -14,6 +15,8 @@ module.exports = {
 		extend: {
 			colors: {
 				contrast: 'var(--contrast)',
+				contrast2: 'var(--contrast-pink)',
+				contrast3: 'var(--contrast-blue)',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

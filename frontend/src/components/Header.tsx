@@ -9,7 +9,7 @@ const Header = () => {
 		<header className="z-20 flex items-center justify-between py-5 px-10 w-full">
 			{user ? (
 				<>
-					<h1 className="text-[1.8rem] lg:text-[2rem] font-geistUltra">Short - it</h1>
+					<h1 className="text-[1.8rem] lg:text-[2rem] font-geistUltra">OPlink</h1>
 					<ButtonLogout />
 				</>
 			) : (

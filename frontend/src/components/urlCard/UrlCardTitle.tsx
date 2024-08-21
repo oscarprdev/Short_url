@@ -32,7 +32,7 @@ const UrlCardTitle = ({ title, urlId }: UrlCardTitleProps) => {
 	};
 
 	return (
-		<div className="flex items-center justify-start w-full gap-2">
+		<div className="flex items-center justify-start w-[180px] mr-auto gap-2">
 			<input
 				maxLength={40}
 				ref={titleRef}
@@ -40,7 +40,7 @@ const UrlCardTitle = ({ title, urlId }: UrlCardTitleProps) => {
 				onChange={onInputTitleChange}
 				onKeyDown={onInputKeyDown}
 				onBlur={onInputBlur}
-				className="bg-transparent outline-none w-fit max-w-[80%] border-b border-stone-600"
+				className="bg-transparent outline-none w-fit max-w-[80%]"
 			/>
 			{isPending ? (
 				<IconLoader2 className="w-4 animate-spin text-stone-300" />

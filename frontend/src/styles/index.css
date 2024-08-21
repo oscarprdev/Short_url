@@ -24,23 +24,17 @@
 }
 
 :root {
-	--background: #171716;
-	--foreground: 20 14.3% 4.1%;
+	--background: #2e2e2b;
+	--foreground: 60 9.1% 97.8%;
 
 	--contrast: rgb(203, 248, 22);
-	--contrast-hover: rgb(146, 212, 24);
+	--contrast-pink: rgb(255, 110, 250);
+	--contrast-blue: rgb(128, 183, 255);
 
 	--font-ultra: 'geist-ultra';
 	--font-g-light: 'geist-light';
 
 	--backdrop: rgba(65, 65, 65, 0.4);
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0f0f0f;
-		--foreground: 60 9.1% 97.8%;
-	}
 }
 
 @layer base {
