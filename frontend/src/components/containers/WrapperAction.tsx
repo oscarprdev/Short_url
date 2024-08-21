@@ -45,7 +45,7 @@ const WrapperAction = ({
 							'absolute left-1 top-1 z-[-1] h-full w-full rounded-lg'
 						)}></div>
 				</a>
-			) : type == 'button' ? (
+			) : type === 'button' ? (
 				<Button
 					data-testid={`${id}-btn`}
 					type="submit"
