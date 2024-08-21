@@ -25,7 +25,7 @@ const UserUrlCard = ({ url }: UserUrlCardProps) => {
 	};
 
 	return (
-		<WrapperAction type="card" color="contrast" id="user-card">
+		<WrapperAction type="card" color="contrast" id={`card-${url.shortUrl}`}>
 			<UrlCardTitle title={url.titleUrl} urlId={url.id} />
 			<UrlCardLink originalUrl={url.originalUrl} shortUrl={url.shortUrl} onUrlClick={onUrlClick} />
 			<UrlCardCopyIcon url={url.shortUrl} />
