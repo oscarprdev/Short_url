@@ -2,7 +2,7 @@ import { API_URL } from '../../constants/apiUrl';
 import WrapperAction from '../containers/WrapperAction';
 import { IconBrandGithub, IconBrandGoogleFilled } from '@tabler/icons-react';
 
-const DEFAULT_USER_URL = 'https://opr-short-url.vercel.app/user/116176187754032784002'
+const DEFAULT_USER_URL = 'https://oplink.vercel.app/user/116176187754032784002'
 
 const LoginModal = () => {
 	return (
