@@ -9,7 +9,7 @@ describe('UrlCardInfo', () => {
 	const expiresAt = '2022-01-31T23:59:59Z';
 
 	beforeEach(() => {
-		component = render(<UrlCardInfo usage={usage} expiresAt={expiresAt} />);
+		component = render(<UrlCardInfo usage={usage} />);
 	});
 
 	afterEach(() => {

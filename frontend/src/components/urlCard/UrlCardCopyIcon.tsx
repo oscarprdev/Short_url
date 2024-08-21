@@ -28,7 +28,7 @@ const UrlCardCopyIcon = ({ url }: UrlCardIconCopyProps) => {
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger>
-								<IconCheck className="animate-fade-in w-4 text-stone-300 " />
+								<IconCheck className="animate-fade-in w-4 text-stone-300 hover:text-stone-100 duration-200" />
 							</TooltipTrigger>
 							<TooltipContent>Copied!</TooltipContent>
 						</Tooltip>
@@ -42,7 +42,7 @@ const UrlCardCopyIcon = ({ url }: UrlCardIconCopyProps) => {
 								<IconCopy
 									data-testid="icon-copy"
 									onClick={handleCopyClick}
-									className="animate-fade-in w-4 text-stone-300 "
+									className="animate-fade-in w-4 text-stone-300 hover:text-stone-100 duration-200"
 								/>
 							</TooltipTrigger>
 							<TooltipContent>Copy link</TooltipContent>

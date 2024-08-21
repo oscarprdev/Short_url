@@ -19,3 +19,19 @@ post:
       $ref: 'components/_index.yaml#/responses/UnauthorizedResponse'
     '500':
       $ref: 'components/_index.yaml#/responses/InternalErrorResponse'
+delete:
+  tags:
+    - Urls
+  description: Delete url by id
+  parameters:
+    - $ref: 'components/_index.yaml#/parameters/UserId'
+    - $ref: 'components/_index.yaml#/parameters/UrlId'
+  responses:
+    '200':
+      $ref: 'components/_index.yaml#/responses/SuccessRequestResponse'
+    '400':
+      $ref: 'components/_index.yaml#/responses/BadRequestResponse'
+    '401':
+      $ref: 'components/_index.yaml#/responses/UnauthorizedResponse'
+    '500':
+      $ref: 'components/_index.yaml#/responses/InternalErrorResponse'

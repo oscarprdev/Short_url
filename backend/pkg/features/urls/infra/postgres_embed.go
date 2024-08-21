@@ -23,6 +23,9 @@ var insertUrlUserQuery embed.FS
 //go:embed sql/queries/update_url.sql
 var updateUrlQuery embed.FS
 
+//go:embed sql/queries/remove_url.sql
+var removeUrlQuery embed.FS
+
 //go:embed sql/queries/update_title.sql
 var updateTitleUrlQuery embed.FS
 

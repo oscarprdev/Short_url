@@ -6,14 +6,14 @@ import { describe, expect, it } from 'vitest';
 
 describe('UrlCardList', () => {
 	it('Should render successfully', async () => {
-		const component = render(<UrlCardList urls={[mockedUrl]} isHome={true} isRowsLayout={true} />);
+		const component = render(<UrlCardList urls={[mockedUrl]} isHome={true} />);
 		component.getByRole('list');
 
 		component.unmount();
 	});
 
 	it('Should have proper styles depending if isRowsLayout value is true', () => {
-		const component = render(<UrlCardList urls={[mockedUrl]} isHome={true} isRowsLayout={true} />);
+		const component = render(<UrlCardList urls={[mockedUrl]} isHome={true} />);
 
 		const list = component.getByRole('list');
 
@@ -23,7 +23,7 @@ describe('UrlCardList', () => {
 	});
 
 	it('Should have proper styles depending if isRowsLayout value is false', () => {
-		const component = render(<UrlCardList urls={[mockedUrl]} isHome={true} isRowsLayout={false} />);
+		const component = render(<UrlCardList urls={[mockedUrl]} isHome={true} />);
 
 		const list = component.getByRole('list');
 
@@ -33,7 +33,7 @@ describe('UrlCardList', () => {
 	});
 
 	it('Should display normal url card if isHome is true', () => {
-		const component = render(<UrlCardList urls={[mockedUrl]} isHome={true} isRowsLayout={false} />);
+		const component = render(<UrlCardList urls={[mockedUrl]} isHome={true} />);
 
 		component.getByRole('listitem');
 
@@ -46,7 +46,7 @@ describe('UrlCardList', () => {
 		const queryClient = new QueryClient();
 		const component = render(
 			<QueryClientProvider client={queryClient}>
-				<UrlCardList urls={[mockedUrl]} isHome={false} isRowsLayout={false} />
+				<UrlCardList urls={[mockedUrl]} isHome={false} />
 			</QueryClientProvider>
 		);
 

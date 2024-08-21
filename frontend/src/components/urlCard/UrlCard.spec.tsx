@@ -5,10 +5,9 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('UrlCard', () => {
 	let component: RenderResult;
-	const cardsRef: React.MutableRefObject<HTMLLIElement[]> = { current: [] };
 
 	beforeEach(() => {
-		component = render(<UrlCard url={mockedUrl} cardsRef={cardsRef} />);
+		component = render(<UrlCard url={mockedUrl} />);
 	});
 
 	afterEach(() => {

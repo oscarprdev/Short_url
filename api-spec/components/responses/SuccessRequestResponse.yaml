@@ -1,0 +1,15 @@
+description: Success request response.
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+        message:
+          type: string
+          description: 'Success action response message.'
+          nullable: false
+          example: 'Action request has been successfully requested'
+     

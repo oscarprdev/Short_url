@@ -73,6 +73,15 @@ type User struct {
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 }
 
+// DeleteUrlParams defines parameters for DeleteUrl.
+type DeleteUrlParams struct {
+	// Id User identifier
+	Id *string `form:"Id,omitempty" json:"Id,omitempty"`
+
+	// UrlId Url identifier
+	UrlId *string `form:"UrlId,omitempty" json:"UrlId,omitempty"`
+}
+
 // PostUrlJSONBody defines parameters for PostUrl.
 type PostUrlJSONBody struct {
 	// OriginalUrl The original URL.
@@ -142,6 +151,9 @@ type ServerInterface interface {
 	// (GET /auth/logout)
 	GetAuthLogout(ctx echo.Context) error
 
+	// (DELETE /url)
+	DeleteUrl(ctx echo.Context, params DeleteUrlParams) error
+
 	// (POST /url)
 	PostUrl(ctx echo.Context, params PostUrlParams) error
 
@@ -181,6 +193,31 @@ func (w *ServerInterfaceWrapper) GetAuthLogout(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshaled arguments
 	err = w.Handler.GetAuthLogout(ctx)
+	return err
+}
+
+// DeleteUrl converts echo context to params.
+func (w *ServerInterfaceWrapper) DeleteUrl(ctx echo.Context) error {
+	var err error
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteUrlParams
+	// ------------- Optional query parameter "Id" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "Id", ctx.QueryParams(), &params.Id)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter Id: %s", err))
+	}
+
+	// ------------- Optional query parameter "UrlId" -------------
+
+	err = runtime.BindQueryParameter("form", true, false, "UrlId", ctx.QueryParams(), &params.UrlId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Invalid format for parameter UrlId: %s", err))
+	}
+
+	// Invoke the callback with all the unmarshaled arguments
+	err = w.Handler.DeleteUrl(ctx, params)
 	return err
 }
 
@@ -313,6 +350,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 
 	router.GET(baseURL+"/auth", wrapper.GetAuth)
 	router.GET(baseURL+"/auth/logout", wrapper.GetAuthLogout)
+	router.DELETE(baseURL+"/url", wrapper.DeleteUrl)
 	router.POST(baseURL+"/url", wrapper.PostUrl)
 	router.GET(baseURL+"/url/redirect", wrapper.GetUrlRedirect)
 	router.POST(baseURL+"/url/title", wrapper.PostUrlTitle)
@@ -407,6 +445,54 @@ func (response GetAuthLogout401JSONResponse) VisitGetAuthLogoutResponse(w http.R
 type GetAuthLogout500JSONResponse Error
 
 func (response GetAuthLogout500JSONResponse) VisitGetAuthLogoutResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(500)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeleteUrlRequestObject struct {
+	Params DeleteUrlParams
+}
+
+type DeleteUrlResponseObject interface {
+	VisitDeleteUrlResponse(w http.ResponseWriter) error
+}
+
+type DeleteUrl200JSONResponse struct {
+	// Message Success action response message.
+	Message *string `json:"message,omitempty"`
+	Status  *int    `json:"status,omitempty"`
+}
+
+func (response DeleteUrl200JSONResponse) VisitDeleteUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeleteUrl400JSONResponse Error
+
+func (response DeleteUrl400JSONResponse) VisitDeleteUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(400)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeleteUrl401JSONResponse Error
+
+func (response DeleteUrl401JSONResponse) VisitDeleteUrlResponse(w http.ResponseWriter) error {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(401)
+
+	return json.NewEncoder(w).Encode(response)
+}
+
+type DeleteUrl500JSONResponse Error
+
+func (response DeleteUrl500JSONResponse) VisitDeleteUrlResponse(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(500)
 
@@ -698,6 +784,9 @@ type StrictServerInterface interface {
 	// (GET /auth/logout)
 	GetAuthLogout(ctx context.Context, request GetAuthLogoutRequestObject) (GetAuthLogoutResponseObject, error)
 
+	// (DELETE /url)
+	DeleteUrl(ctx context.Context, request DeleteUrlRequestObject) (DeleteUrlResponseObject, error)
+
 	// (POST /url)
 	PostUrl(ctx context.Context, request PostUrlRequestObject) (PostUrlResponseObject, error)
 
@@ -769,6 +858,31 @@ func (sh *strictHandler) GetAuthLogout(ctx echo.Context) error {
 		return err
 	} else if validResponse, ok := response.(GetAuthLogoutResponseObject); ok {
 		return validResponse.VisitGetAuthLogoutResponse(ctx.Response())
+	} else if response != nil {
+		return fmt.Errorf("unexpected response type: %T", response)
+	}
+	return nil
+}
+
+// DeleteUrl operation middleware
+func (sh *strictHandler) DeleteUrl(ctx echo.Context, params DeleteUrlParams) error {
+	var request DeleteUrlRequestObject
+
+	request.Params = params
+
+	handler := func(ctx echo.Context, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteUrl(ctx.Request().Context(), request.(DeleteUrlRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteUrl")
+	}
+
+	response, err := handler(ctx, request)
+
+	if err != nil {
+		return err
+	} else if validResponse, ok := response.(DeleteUrlResponseObject); ok {
+		return validResponse.VisitDeleteUrlResponse(ctx.Response())
 	} else if response != nil {
 		return fmt.Errorf("unexpected response type: %T", response)
 	}

@@ -7,12 +7,11 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 describe('UserUrlCard', () => {
 	let component: RenderResult;
 	const queryClient = new QueryClient();
-	const cardsRef: React.MutableRefObject<HTMLLIElement[]> = { current: [] };
 
 	beforeEach(() => {
 		component = render(
 			<QueryClientProvider client={queryClient}>
-				<UserUrlCard url={mockedUrl} cardsRef={cardsRef} isRowsLayout={false} />
+				<UserUrlCard url={mockedUrl} />
 			</QueryClientProvider>
 		);
 	});
