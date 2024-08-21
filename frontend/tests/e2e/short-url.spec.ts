@@ -1,8 +1,8 @@
-import { expect } from '@playwright/test';
-import { test } from './fixtures/url.fixture';
+import { Url } from '../../src/types/url';
 import { shortUrlResponse } from '../mocks/short-url-response';
 import { userInfoResponse } from '../mocks/user-info-response';
-import { Url } from '../../src/types/url';
+import { test } from './fixtures/url.fixture';
+import { expect } from '@playwright/test';
 
 test.describe('Add posts', () => {
 	test.beforeEach(async ({ navigateToApp }) => {

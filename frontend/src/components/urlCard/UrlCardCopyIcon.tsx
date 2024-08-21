@@ -1,7 +1,6 @@
-import { IconCopy, IconCheck } from '@tabler/icons-react';
-
-import { useState } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { IconCheck, IconCopy } from '@tabler/icons-react';
+import { useState } from 'react';
 
 interface UrlCardIconCopyProps {
 	url: string;
@@ -25,25 +24,25 @@ const UrlCardCopyIcon = ({ url }: UrlCardIconCopyProps) => {
 	return (
 		<>
 			{isCopied ? (
-				<div className='absolute top-2 right-2'>
+				<div className="absolute top-2 right-2">
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger>
-								<IconCheck className='animate-fade-in w-4 text-stone-300 ' />
+								<IconCheck className="animate-fade-in w-4 text-stone-300 " />
 							</TooltipTrigger>
 							<TooltipContent>Copied!</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>
 				</div>
 			) : (
-				<span className='absolute top-2 right-2'>
+				<span className="absolute top-2 right-2">
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger>
 								<IconCopy
-									data-testid='icon-copy'
+									data-testid="icon-copy"
 									onClick={handleCopyClick}
-									className='animate-fade-in w-4 text-stone-300 '
+									className="animate-fade-in w-4 text-stone-300 "
 								/>
 							</TooltipTrigger>
 							<TooltipContent>Copy link</TooltipContent>

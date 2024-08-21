@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, it } from 'vitest';
-import { RenderResult, render } from '@testing-library/react';
 import HomeContainer from './HomeContainer';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RenderResult, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, it } from 'vitest';
 
 describe('HomeContainer', () => {
 	let component: RenderResult;

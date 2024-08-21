@@ -1,6 +1,6 @@
-import { Redirect } from 'wouter';
 import HomeContainer from '../components/containers/HomeContainer';
 import { useGlobalStore } from '../store/globalState';
+import { Redirect } from 'wouter';
 
 const HomeScreen = () => {
 	const { user } = useGlobalStore();

@@ -1,6 +1,6 @@
-import { API_URL } from '@/src/constants/apiUrl';
 import { FulfillResponse } from '../types/fulfill-response';
 import { test as base } from './app.fixture';
+import { API_URL } from '@/src/constants/apiUrl';
 
 interface PostsFixture {
 	setShortUrlResponse(response: FulfillResponse): Promise<void>;

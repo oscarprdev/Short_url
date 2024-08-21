@@ -1,19 +1,14 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { RenderResult, render } from '@testing-library/react';
-import UrlCard from './UrlCard';
 import { mockedUrl } from '../../../tests/mocks/url-response';
+import UrlCard from './UrlCard';
+import { RenderResult, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('UrlCard', () => {
 	let component: RenderResult;
 	const cardsRef: React.MutableRefObject<HTMLLIElement[]> = { current: [] };
 
 	beforeEach(() => {
-		component = render(
-			<UrlCard
-				url={mockedUrl}
-				cardsRef={cardsRef}
-			/>
-		);
+		component = render(<UrlCard url={mockedUrl} cardsRef={cardsRef} />);
 	});
 
 	afterEach(() => {

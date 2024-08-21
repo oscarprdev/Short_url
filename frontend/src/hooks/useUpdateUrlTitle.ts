@@ -1,6 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
-import { useGlobalStore } from '../store/globalState';
 import { updateUrlTitle } from '../services/api/updateUrlTitle';
+import { useGlobalStore } from '../store/globalState';
+import { useMutation } from '@tanstack/react-query';
 
 export const useUpdateUrlTitle = () => {
 	const { user, urls, setUrls, setError } = useGlobalStore();
@@ -11,13 +11,13 @@ export const useUpdateUrlTitle = () => {
 		},
 		onSuccess: ({ url }) => {
 			if (urls) {
-				const updatedUrls = urls.map((currentUrl) => (currentUrl.id === url.id ? url : currentUrl));
+				const updatedUrls = urls.map(currentUrl => (currentUrl.id === url.id ? url : currentUrl));
 				setUrls(updatedUrls);
 			} else {
 				setError('No urls availables');
 			}
 		},
-		onError: (error) => {
+		onError: error => {
 			setError(error.message);
 		},
 	});

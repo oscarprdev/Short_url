@@ -1,6 +1,6 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { RenderResult, fireEvent, render } from '@testing-library/react';
 import CardListNav from './CardListNav';
+import { RenderResult, fireEvent, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('CardListNav', () => {
 	let component: RenderResult;
@@ -9,11 +9,7 @@ describe('CardListNav', () => {
 
 	beforeEach(() => {
 		component = render(
-			<CardListNav
-				isRowsLayout={true}
-				onSetGridLayout={onSetGridLayout}
-				onSetRowLayout={onSetRowLayout}
-			/>
+			<CardListNav isRowsLayout={true} onSetGridLayout={onSetGridLayout} onSetRowLayout={onSetRowLayout} />
 		);
 	});
 

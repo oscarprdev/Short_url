@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, it } from 'vitest';
-import { RenderResult, render } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import UserScreenContainer from './UserScreenContainer';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RenderResult, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, it } from 'vitest';
 
 describe('UserScreenContainer', () => {
 	let component: RenderResult;

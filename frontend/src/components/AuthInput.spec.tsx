@@ -1,17 +1,11 @@
-import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/react';
-import AuthInput from './AuthInput';
 import { mockedUrl } from '../../tests/mocks/url-response';
+import AuthInput from './AuthInput';
+import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('AuthInput', () => {
 	it('Should render successfully', async () => {
-		const component = render(
-			<AuthInput
-				children={<p>Hello</p>}
-				contrast={true}
-				href={mockedUrl.originalUrl}
-			/>
-		);
+		const component = render(<AuthInput children={<p>Hello</p>} contrast={true} href={mockedUrl.originalUrl} />);
 
 		const link = component.getByRole('link');
 
@@ -25,13 +19,7 @@ describe('AuthInput', () => {
 	});
 
 	it('Should render proper styles when constrast is false', async () => {
-		const component = render(
-			<AuthInput
-				children={<p>Hello</p>}
-				contrast={false}
-				href={mockedUrl.originalUrl}
-			/>
-		);
+		const component = render(<AuthInput children={<p>Hello</p>} contrast={false} href={mockedUrl.originalUrl} />);
 
 		const link = component.getByRole('link');
 

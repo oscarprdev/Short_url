@@ -69,7 +69,12 @@
 	border: 10px solid transparent;
 	border-radius: var(--border-radius);
 	mask: linear-gradient(#0000, #0000),
-		conic-gradient(from calc((var(--start) - (var(--spread) * 0.5)) * 1deg), #000 0deg, #fff, #0000 calc(var(--spread) * 1deg));
+		conic-gradient(
+			from calc((var(--start) - (var(--spread) * 0.5)) * 1deg),
+			#000 0deg,
+			#fff,
+			#0000 calc(var(--spread) * 1deg)
+		);
 	mask-composite: intersect;
 	mask-clip: padding-box, border-box;
 	opacity: var(--active);

@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import { useUserLogged } from '../hooks/useUserLogged';
+import { ReactNode } from 'react';
 import { Redirect } from 'wouter';
 
 const AuthScreen = ({ children, userId }: { children: ReactNode; userId: string }) => {
@@ -10,7 +10,7 @@ const AuthScreen = ({ children, userId }: { children: ReactNode; userId: string 
 	}
 
 	if (isError) {
-		return <Redirect to='/' />;
+		return <Redirect to="/" />;
 	}
 
 	return <>{children}</>;

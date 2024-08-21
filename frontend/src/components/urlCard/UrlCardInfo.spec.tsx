@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, it } from 'vitest';
-import { RenderResult, render } from '@testing-library/react';
-import UrlCardInfo from './UrlCardInfo';
 import { formatTimeStamp } from '../../utils/formatTimeStamp';
+import UrlCardInfo from './UrlCardInfo';
+import { RenderResult, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, it } from 'vitest';
 
 describe('UrlCardInfo', () => {
 	let component: RenderResult;
@@ -9,12 +9,7 @@ describe('UrlCardInfo', () => {
 	const expiresAt = '2022-01-31T23:59:59Z';
 
 	beforeEach(() => {
-		component = render(
-			<UrlCardInfo
-				usage={usage}
-				expiresAt={expiresAt}
-			/>
-		);
+		component = render(<UrlCardInfo usage={usage} expiresAt={expiresAt} />);
 	});
 
 	afterEach(() => {

@@ -1,6 +1,6 @@
 import { formatTimeStamp } from '../../utils/formatTimeStamp';
-import { IconPointer, IconCalendarX } from '@tabler/icons-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { IconCalendarX, IconPointer } from '@tabler/icons-react';
 
 interface UrlCardInfoProps {
 	usage: number;
@@ -9,16 +9,13 @@ interface UrlCardInfoProps {
 
 const UrlCardInfo = ({ usage, expiresAt }: UrlCardInfoProps) => {
 	return (
-		<div className='flex flex-col text-sm text-stone-400 w-full'>
-			<div className='w-fit'>
+		<div className="flex flex-col text-sm text-stone-400 w-full">
+			<div className="w-fit">
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger>
-							<div className='flex items-center gap-2'>
-								<IconPointer
-									data-testid='icon-pointer'
-									className='w-4 text-stone-400'
-								/>
+							<div className="flex items-center gap-2">
+								<IconPointer data-testid="icon-pointer" className="w-4 text-stone-400" />
 								<p>{usage}</p>
 							</div>
 						</TooltipTrigger>
@@ -26,15 +23,12 @@ const UrlCardInfo = ({ usage, expiresAt }: UrlCardInfoProps) => {
 					</Tooltip>
 				</TooltipProvider>
 			</div>
-			<div className='w-fit'>
+			<div className="w-fit">
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger>
-							<div className='flex items-center gap-2'>
-								<IconCalendarX
-									data-testid='icon-calendar'
-									className='w-4 text-stone-400'
-								/>
+							<div className="flex items-center gap-2">
+								<IconCalendarX data-testid="icon-calendar" className="w-4 text-stone-400" />
 								<p>{formatTimeStamp(expiresAt)}</p>
 							</div>
 						</TooltipTrigger>

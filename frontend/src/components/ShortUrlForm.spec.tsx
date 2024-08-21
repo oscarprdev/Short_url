@@ -1,18 +1,13 @@
-import { afterEach, beforeEach, describe, it, vi } from 'vitest';
-import { RenderResult, render } from '@testing-library/react';
 import ShortUrlForm from './ShortUrlForm';
+import { RenderResult, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, it, vi } from 'vitest';
 
 describe('ShortUrlForm', () => {
 	let component: RenderResult;
 	const addUrl = vi.fn();
 
 	beforeEach(() => {
-		component = render(
-			<ShortUrlForm
-				addUrl={addUrl}
-				userId='1'
-			/>
-		);
+		component = render(<ShortUrlForm addUrl={addUrl} userId="1" />);
 	});
 
 	afterEach(() => {

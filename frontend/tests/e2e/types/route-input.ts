@@ -1,5 +1,5 @@
-import { Page } from '@playwright/test';
 import { FulfillResponse } from './fulfill-response';
+import { Page } from '@playwright/test';
 
 export type RouteUrl = Parameters<Page['route']>[0];
 

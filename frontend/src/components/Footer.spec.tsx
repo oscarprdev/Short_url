@@ -1,6 +1,6 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { RenderResult, render } from '@testing-library/react';
 import Footer from './Footer';
+import { RenderResult, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('Footer', () => {
 	let component: RenderResult;

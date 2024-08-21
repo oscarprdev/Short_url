@@ -1,8 +1,8 @@
-import { afterEach, beforeEach, describe, it, expect } from 'vitest';
-import { RenderResult, render } from '@testing-library/react';
 import { mockedUrl } from '../../../tests/mocks/url-response';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import UserUrlCard from './UserUrlCard';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RenderResult, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe('UserUrlCard', () => {
 	let component: RenderResult;
@@ -12,11 +12,7 @@ describe('UserUrlCard', () => {
 	beforeEach(() => {
 		component = render(
 			<QueryClientProvider client={queryClient}>
-				<UserUrlCard
-					url={mockedUrl}
-					cardsRef={cardsRef}
-					isRowsLayout={false}
-				/>
+				<UserUrlCard url={mockedUrl} cardsRef={cardsRef} isRowsLayout={false} />
 			</QueryClientProvider>
 		);
 	});

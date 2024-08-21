@@ -1,6 +1,6 @@
-import { test as base } from 'playwright/test';
 import { AppPage } from '../pages/app-page';
 import { SetRouteInput } from '../types/route-input';
+import { test as base } from 'playwright/test';
 
 interface AppFixture {
 	appPage: AppPage;
@@ -19,7 +19,7 @@ export const test = base.extend<AppFixture>({
 	},
 	setRoute: async ({ page }, use) => {
 		await use(async ({ url, response }): Promise<void> => {
-			await page.route(url, async (route) => {
+			await page.route(url, async route => {
 				if (route.request().method() === 'POST') {
 					return await route.fulfill(response);
 				}

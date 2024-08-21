@@ -1,6 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
 import { ShortUrlInput, shortUrl } from '../services/api/shortUrl';
 import { useGlobalStore } from '../store/globalState';
+import { useMutation } from '@tanstack/react-query';
 
 export const useShortUrl = () => {
 	const { addUrl, setError, user, clearStore } = useGlobalStore();
@@ -17,7 +17,7 @@ export const useShortUrl = () => {
 				addUrl(url);
 			}
 		},
-		onError: (error) => {
+		onError: error => {
 			setError(error.message);
 		},
 	});

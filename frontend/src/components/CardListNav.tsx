@@ -1,5 +1,5 @@
-import { IconLayoutGrid, IconLayoutList } from '@tabler/icons-react';
 import { useGlobalStore } from '../store/globalState';
+import { IconLayoutGrid, IconLayoutList } from '@tabler/icons-react';
 
 interface CardListNavProps {
 	isRowsLayout: boolean;
@@ -10,20 +10,18 @@ interface CardListNavProps {
 const CardListNav = ({ isRowsLayout, onSetRowLayout, onSetGridLayout }: CardListNavProps) => {
 	const { urls } = useGlobalStore();
 	return (
-		<nav className='relative w-[90vw] md:w-[1100px] flex justify-center pb-2'>
-			<p
-				aria-label='link-counter'
-				className='absolute left-2 md:left-20 text-sm text-stone-400'>
+		<nav className="relative w-[90vw] md:w-[1100px] flex justify-center pb-2">
+			<p aria-label="link-counter" className="absolute left-2 md:left-20 text-sm text-stone-400">
 				Total {urls?.length}
 			</p>
-			<div className='flex items-center gap-2'>
+			<div className="flex items-center gap-2">
 				<IconLayoutList
-					data-testid='icon-layout-list'
+					data-testid="icon-layout-list"
 					onClick={onSetRowLayout}
 					className={`${isRowsLayout ? 'text-stone-200' : 'text-stone-600 hover:text-stone-200'} cursor-pointer duration-300`}
 				/>
 				<IconLayoutGrid
-					data-testid='icon-layout-grid'
+					data-testid="icon-layout-grid"
 					onClick={onSetGridLayout}
 					className={`${!isRowsLayout ? 'text-stone-200' : 'text-stone-600 hover:text-stone-200'} cursor-pointer duration-300`}
 				/>
