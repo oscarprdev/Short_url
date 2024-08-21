@@ -15,7 +15,6 @@ describe('UrlCard', () => {
 	});
 
 	it('Should render successfully', () => {
-		component.getByRole('listitem');
 		const link = component.getByRole('link');
 
 		expect(link.getAttribute('href')).toBe(mockedUrl.originalUrl);
