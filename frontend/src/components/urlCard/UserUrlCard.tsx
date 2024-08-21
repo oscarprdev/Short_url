@@ -1,47 +1,37 @@
+import { useDeleteUrl } from '../../hooks/useDeleteUrl';
 import { useUrlUsage } from '../../hooks/useUrlUsage';
 import { Url } from '../../types/url';
+import WrapperAction from '../containers/WrapperAction';
 import UrlCardCopyIcon from './UrlCardCopyIcon';
+import UrlCardDeleteIcon from './UrlCardDeleteIcon';
 import UrlCardInfo from './UrlCardInfo';
 import UrlCardLink from './UrlCardLink';
 import UrlCardTitle from './UrlCardTitle';
 
 interface UserUrlCardProps {
 	url: Url;
-	cardsRef: React.MutableRefObject<HTMLLIElement[]>;
-	isRowsLayout?: boolean;
 }
 
-const UserUrlCard = ({ url, cardsRef, isRowsLayout }: UserUrlCardProps) => {
+const UserUrlCard = ({ url }: UserUrlCardProps) => {
 	const { mutate: urlUsage } = useUrlUsage();
+	const { mutate: deleteUrl, isPending } = useDeleteUrl();
 
 	const onUrlClick = () => {
 		urlUsage({ urlId: url.id });
 	};
 
+	const onDeleteUrl = () => {
+		deleteUrl({ urlId: url.id });
+	};
+
 	return (
-		<li
-			ref={(el: HTMLLIElement | null) => el && cardsRef.current.push(el!)}
-			className={`${
-				isRowsLayout ? 'w-full' : 'w-[90vw] md:w-[30%]'
-			} relative  flex flex-col gap-4 link-card py-5 h-fit border border-stone-800 font-light text-stone-300`}>
-			<UrlCardTitle
-				title={url.titleUrl}
-				urlId={url.id}
-			/>
-			<UrlCardLink
-				originalUrl={url.originalUrl}
-				shortUrl={url.shortUrl}
-				onUrlClick={onUrlClick}
-			/>
+		<WrapperAction type="card" color="contrast" id={`card-${url.shortUrl}`}>
+			<UrlCardTitle title={url.titleUrl} urlId={url.id} />
+			<UrlCardLink originalUrl={url.originalUrl} shortUrl={url.shortUrl} onUrlClick={onUrlClick} />
 			<UrlCardCopyIcon url={url.shortUrl} />
-			{!isRowsLayout && (
-				<UrlCardInfo
-					usage={url.usage}
-					expiresAt={url.expiresAt}
-				/>
-			)}
-			<div className='glows'></div>
-		</li>
+			<UrlCardDeleteIcon onDeleteUrl={onDeleteUrl} isPending={isPending}/>
+			<UrlCardInfo usage={url.usage} />
+		</WrapperAction>
 	);
 };
 

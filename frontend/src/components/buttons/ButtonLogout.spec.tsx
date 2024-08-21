@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { RenderResult, render, fireEvent, waitFor } from '@testing-library/react';
 import { API_URL } from '../../constants/apiUrl';
 import ButtonLogout from './ButtonLogout';
+import { RenderResult, fireEvent, render, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('ButtonLogout', () => {
 	let component: RenderResult;

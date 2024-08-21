@@ -14,6 +14,7 @@ func handlerUrlsRoute(e *echo.Echo, dbs *dbs.Databases) {
 
 	e.GET("/url", uh.HandlerUrlRedirect(urlUc))
 	e.POST("/url", uh.HandlerShortUrl(urlUc))
+	e.DELETE("/url", uh.HandlerDeleteUrl(urlUc))
 	e.POST("/url/use", uh.HandlerUrlUsage(urlUc))
 	e.POST("/url/title", uh.HandlerUrlTitle(urlUc))
 }

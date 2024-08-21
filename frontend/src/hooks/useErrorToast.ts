@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import { useToast } from '../components/ui/use-toast';
 import { useGlobalStore } from '../store/globalState';
+import { useEffect } from 'react';
 
 export const useErrorToast = (error: string | null) => {
 	const { setError } = useGlobalStore();

@@ -1,6 +1,6 @@
-import { afterEach, beforeEach, describe, it } from 'vitest';
-import { RenderResult, render } from '@testing-library/react';
 import ButtonLogin from './ButtonLogin';
+import { RenderResult, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, it } from 'vitest';
 
 describe('ButtonLogin', () => {
 	let component: RenderResult;

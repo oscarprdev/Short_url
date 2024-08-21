@@ -2,11 +2,17 @@ parameters:
   UserId:
     $ref: 'components/parameters/UserId.yaml'
 
+  UrlId:
+    $ref: 'components/parameters/UrlId.yaml'
+
   Url:
     $ref: 'components/parameters/Url.yaml'
 
 responses:
   # Common
+  SuccessRequestResponse:
+    $ref: 'components/responses/SuccessRequestResponse.yaml'
+
   BadRequestResponse:
     $ref: 'components/responses/BadRequestResponse.yaml'
 

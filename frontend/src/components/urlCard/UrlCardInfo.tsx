@@ -1,44 +1,23 @@
-import { formatTimeStamp } from '../../utils/formatTimeStamp';
-import { IconPointer, IconCalendarX } from '@tabler/icons-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { IconPointer } from '@tabler/icons-react';
 
 interface UrlCardInfoProps {
 	usage: number;
-	expiresAt: string;
 }
 
-const UrlCardInfo = ({ usage, expiresAt }: UrlCardInfoProps) => {
+const UrlCardInfo = ({ usage }: UrlCardInfoProps) => {
 	return (
-		<div className='flex flex-col text-sm text-stone-400 w-full'>
-			<div className='w-fit'>
+		<div className="flex flex-col text-sm text-stone-400 w-full">
+			<div className="w-fit">
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger>
-							<div className='flex items-center gap-2'>
-								<IconPointer
-									data-testid='icon-pointer'
-									className='w-4 text-stone-400'
-								/>
-								<p>{usage}</p>
+							<div className="flex items-center gap-2 w-[170px] text-xs">
+								<IconPointer data-testid="icon-pointer" size={14} className="text-stone-400" />
+								{usage}
 							</div>
 						</TooltipTrigger>
 						<TooltipContent>Times used</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
-			</div>
-			<div className='w-fit'>
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger>
-							<div className='flex items-center gap-2'>
-								<IconCalendarX
-									data-testid='icon-calendar'
-									className='w-4 text-stone-400'
-								/>
-								<p>{formatTimeStamp(expiresAt)}</p>
-							</div>
-						</TooltipTrigger>
-						<TooltipContent>Expiration date</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
 			</div>

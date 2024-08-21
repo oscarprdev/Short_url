@@ -1,7 +1,7 @@
+import { User } from '../types/user';
 import { Url } from '@/src/types/url';
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import { User } from '../types/user';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 export interface StoreState {
 	user: User | null;
@@ -20,11 +20,11 @@ export const useGlobalStore = create<StoreState>()(
 			user: null,
 			urls: null,
 			error: null,
-			setUser: (user) => set({ user }),
-			setUrls: (urls) => set({ urls }),
-			addUrl: (url) => set({ urls: [url, ...(get().urls || [])] }),
+			setUser: user => set({ user }),
+			setUrls: urls => set({ urls }),
+			addUrl: url => set({ urls: [url, ...(get().urls || [])] }),
 			clearStore: () => set({ urls: null, user: null, error: null }),
-			setError: (error) => set({ error }),
+			setError: error => set({ error }),
 		}),
 		{
 			name: 'user-store',

@@ -1,7 +1,6 @@
-import { IconUser } from '@tabler/icons-react';
-import { Button } from '../ui/button';
-import { useGlobalStore } from '../../store/globalState';
 import { API_URL } from '../../constants/apiUrl';
+import { useGlobalStore } from '../../store/globalState';
+import WrapperAction from '../containers/WrapperAction';
 
 const ButtonLogout = () => {
 	const { clearStore } = useGlobalStore();
@@ -11,12 +10,9 @@ const ButtonLogout = () => {
 		window.location.href = `${API_URL}/auth/logout`;
 	};
 	return (
-		<Button
-			data-testid='logout-btn'
-			onClick={onLogoutClick}>
-			<IconUser />
+		<WrapperAction color="default" id="logout" onClick={onLogoutClick}>
 			Logout
-		</Button>
+		</WrapperAction>
 	);
 };
 

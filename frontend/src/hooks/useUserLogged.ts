@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
+import { API_URL } from '../constants/apiUrl';
 import { getUserInfo } from '../services/api/getUserInfo';
 import { useGlobalStore } from '../store/globalState';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { API_URL } from '../constants/apiUrl';
 
 export const useUserLogged = (userId: string) => {
 	const { setUrls, setUser, clearStore, setError } = useGlobalStore();

@@ -12,7 +12,11 @@ export interface UpdateUrlTittleOutput {
 	url: Url;
 }
 
-export const updateUrlTitle = async ({ userId, urlId, urlTitle }: UpdateUrlTitleInput): Promise<UpdateUrlTittleOutput> => {
+export const updateUrlTitle = async ({
+	userId,
+	urlId,
+	urlTitle,
+}: UpdateUrlTitleInput): Promise<UpdateUrlTittleOutput> => {
 	const response = await fetch(`${API_URL}/url/title?id=${userId}`, {
 		method: 'POST',
 		body: JSON.stringify({

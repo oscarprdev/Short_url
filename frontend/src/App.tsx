@@ -1,6 +1,6 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ModalProvider } from './context/ModalProvider';
 import Layout from './screens/Layout';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 function App() {
 	const queryClient = new QueryClient();

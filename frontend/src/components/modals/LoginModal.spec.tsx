@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { RenderResult, render, fireEvent, waitFor } from '@testing-library/react';
 import { API_URL } from '../../constants/apiUrl';
 import LoginModal from './LoginModal';
+import { RenderResult, fireEvent, render, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('LoginModal', () => {
 	let component: RenderResult;
@@ -27,7 +27,7 @@ describe('LoginModal', () => {
 	it('Should update location when clicks on default button', async () => {
 		const buttons = component.getAllByRole('link');
 
-		const defaultButton = buttons.find((btn) => btn.innerText === 'Default user');
+		const defaultButton = buttons.find(btn => btn.innerText === 'Default user');
 
 		if (defaultButton) {
 			fireEvent.click(defaultButton);
@@ -41,7 +41,7 @@ describe('LoginModal', () => {
 	it('Should update location when clicks on google button', async () => {
 		const buttons = component.getAllByRole('link');
 
-		const defaultButton = buttons.find((btn) => btn.innerText === 'Google');
+		const defaultButton = buttons.find(btn => btn.innerText === 'Google');
 
 		if (defaultButton) {
 			fireEvent.click(defaultButton);
@@ -55,7 +55,7 @@ describe('LoginModal', () => {
 	it('Should update location when clicks on github button', async () => {
 		const buttons = component.getAllByRole('link');
 
-		const defaultButton = buttons.find((btn) => btn.innerText === 'Github');
+		const defaultButton = buttons.find(btn => btn.innerText === 'Github');
 
 		if (defaultButton) {
 			fireEvent.click(defaultButton);

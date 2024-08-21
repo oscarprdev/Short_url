@@ -1,6 +1,6 @@
-import { Button } from '../ui/button';
-import LoginModal from '../modals/LoginModal';
 import { useModal } from '../../hooks/useModal';
+import WrapperAction from '../containers/WrapperAction';
+import LoginModal from '../modals/LoginModal';
 
 const ButtonLogin = () => {
 	const modal = useModal();
@@ -10,12 +10,11 @@ const ButtonLogin = () => {
 	};
 
 	return (
-		<Button
-			data-testid='login-btn'
-			onClick={onLoginClick}
-			className='absolute top-8 right-10'>
-			Login
-		</Button>
+		<div className="absolute top-5 right-5">
+			<WrapperAction color="default" id="login" onClick={onLoginClick}>
+				Login
+			</WrapperAction>
+		</div>
 	);
 };
 

@@ -1,7 +1,7 @@
-import { ChangeEvent, useState, FocusEvent, useRef, KeyboardEvent } from 'react';
-import { IconCheck, IconLoader2, IconX } from '@tabler/icons-react';
 import { useUpdateUrlTitle } from '../../hooks/useUpdateUrlTitle';
 import { formatCapitalize } from '../../utils/formatCapitalized';
+import { IconCheck, IconLoader2, IconX } from '@tabler/icons-react';
+import { ChangeEvent, FocusEvent, KeyboardEvent, useRef, useState } from 'react';
 
 interface UrlCardTitleProps {
 	title: string;
@@ -32,7 +32,7 @@ const UrlCardTitle = ({ title, urlId }: UrlCardTitleProps) => {
 	};
 
 	return (
-		<div className='flex items-center justify-start w-full gap-2'>
+		<div className="flex items-center justify-start w-[180px] mr-auto gap-2">
 			<input
 				maxLength={40}
 				ref={titleRef}
@@ -40,14 +40,14 @@ const UrlCardTitle = ({ title, urlId }: UrlCardTitleProps) => {
 				onChange={onInputTitleChange}
 				onKeyDown={onInputKeyDown}
 				onBlur={onInputBlur}
-				className='bg-transparent outline-none w-fit max-w-[80%] border-b border-stone-600'
+				className="bg-transparent outline-none w-fit max-w-[80%]"
 			/>
 			{isPending ? (
-				<IconLoader2 className='w-4 animate-spin text-stone-300' />
+				<IconLoader2 className="w-4 animate-spin text-stone-300" />
 			) : isSuccess ? (
-				<IconCheck className='animate-fade-in w-4 text-stone-300' />
+				<IconCheck className="animate-fade-in w-4 text-stone-300" />
 			) : (
-				isError && <IconX className='animate-fade-in w-4 text-stone-300' />
+				isError && <IconX className="animate-fade-in w-4 text-stone-300" />
 			)}
 		</div>
 	);

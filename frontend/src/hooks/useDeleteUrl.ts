@@ -1,20 +1,20 @@
-import { urlUsage } from '../services/api/urlUsage';
+import { deleteUrl } from '../services/api/deleteUrl';
 import { useGlobalStore } from '../store/globalState';
 import { useMutation } from '@tanstack/react-query';
 
-export const useUrlUsage = () => {
+export const useDeleteUrl = () => {
 	const { user, urls, setUrls, setError } = useGlobalStore();
 
 	return useMutation({
 		mutationFn: async ({ urlId }: { urlId: string }) => {
-			return await urlUsage({ urlId, userId: user?.id });
+			await deleteUrl({ urlId, userId: user?.id });
+
+			return urlId;
 		},
-		onSuccess: ({ url }) => {
-			if (urls) {
-				const updatedUrls = urls.map(currentUrl => (currentUrl.id === url.id ? url : currentUrl));
+		onSuccess: (id: string) => {
+			if (Array.isArray(urls)) {
+				const updatedUrls = urls.filter(currentUrl => currentUrl.id !== id);
 				setUrls(updatedUrls);
-			} else {
-				setError('No urls availables');
 			}
 		},
 		onError: error => {

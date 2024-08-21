@@ -1,6 +1,6 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { RenderResult, fireEvent, render } from '@testing-library/react';
 import UrlCardLink from './UrlCardLink';
+import { RenderResult, fireEvent, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('UrlCardLink', () => {
 	let component: RenderResult;
@@ -9,13 +9,7 @@ describe('UrlCardLink', () => {
 	const onUrlClick = vi.fn();
 
 	beforeEach(() => {
-		component = render(
-			<UrlCardLink
-				originalUrl={originalUrl}
-				shortUrl={shortUrl}
-				onUrlClick={onUrlClick}
-			/>
-		);
+		component = render(<UrlCardLink originalUrl={originalUrl} shortUrl={shortUrl} onUrlClick={onUrlClick} />);
 	});
 
 	afterEach(() => {

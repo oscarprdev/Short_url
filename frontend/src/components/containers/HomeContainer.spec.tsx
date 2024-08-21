@@ -1,7 +1,7 @@
-import { afterEach, beforeEach, describe, it } from 'vitest';
-import { RenderResult, render } from '@testing-library/react';
 import HomeContainer from './HomeContainer';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RenderResult, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, it } from 'vitest';
 
 describe('HomeContainer', () => {
 	let component: RenderResult;
@@ -20,8 +20,8 @@ describe('HomeContainer', () => {
 	});
 
 	it('Should render successfully', () => {
-		component.getByText('Short - it');
-		component.getByText('The simplest URL Shortner you were waiting for.');
+		component.getByText('OPlink');
+		component.getByText('The simplest URL Shortner app you were waiting for.');
 		component.getByTestId('url-form');
 	});
 });

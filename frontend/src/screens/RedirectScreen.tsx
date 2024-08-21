@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import RedirectingModal from '../components/modals/RedirectingModal';
+import { useModal } from '../hooks/useModal';
 import { useUrlUsage } from '../hooks/useUrlUsage';
 import { useGlobalStore } from '../store/globalState';
-import { useModal } from '../hooks/useModal';
-import RedirectingModal from '../components/modals/RedirectingModal';
+import { useEffect } from 'react';
 
 interface RedirectScreenProps {
 	shortUrl: string;
@@ -14,7 +14,7 @@ const RedirectScreen = ({ shortUrl }: RedirectScreenProps) => {
 	const modal = useModal();
 
 	useEffect(() => {
-		const originalUrl = urls?.find((url) => url.shortUrl.match(shortUrl));
+		const originalUrl = urls?.find(url => url.shortUrl.match(shortUrl));
 
 		if (originalUrl) {
 			urlUsage({ urlId: originalUrl?.id });

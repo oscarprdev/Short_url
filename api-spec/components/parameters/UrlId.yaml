@@ -1,0 +1,6 @@
+name: UrlId
+in: query
+description: Url identifier
+required: false
+schema:
+  type: string

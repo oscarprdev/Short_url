@@ -1,24 +1,15 @@
 import { Url } from '../../types/url';
+import WrapperAction from '../containers/WrapperAction';
 
 interface UrlCardProps {
 	url: Url;
-	cardsRef: React.MutableRefObject<HTMLLIElement[]>;
 }
 
-const UrlCard = ({ url, cardsRef }: UrlCardProps) => {
+const UrlCard = ({ url }: UrlCardProps) => {
 	return (
-		<li
-			ref={(el: HTMLLIElement | null) => el && cardsRef.current.push(el!)}
-			className='relative flex flex-col gap-4 link-card h-fit px-10 mt-5 py-5 border border-stone-800 font-light text-stone-300'>
-			<a
-				href={url.originalUrl}
-				data-testid={`url-link-${url.id}`}
-				target='blank'
-				className='hover:underline'>
-				{url.shortUrl}
-			</a>
-			<div className='glows'></div>
-		</li>
+		<WrapperAction size="md" type="url" color="contrast" url={url.originalUrl} id={url.id}>
+			{url.shortUrl}
+		</WrapperAction>
 	);
 };
 

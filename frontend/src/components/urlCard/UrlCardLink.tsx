@@ -1,4 +1,3 @@
-import { IconLink } from '@tabler/icons-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
 
 interface UrlCardLinkProps {
@@ -10,24 +9,18 @@ const UrlCardLink = ({ originalUrl, shortUrl, onUrlClick }: UrlCardLinkProps) =>
 	return (
 		<TooltipProvider>
 			<Tooltip>
-				<TooltipTrigger>
-					<div
-						aria-label='url-link'
-						className='flex items-center gap-2'>
-						<IconLink
-							data-testid='icon-link'
-							className='w-4 text-stone-400'
-						/>
+				<TooltipTrigger asChild>
+					<div aria-label="url-link" className="flex items-center gap-2 w-[170px]">
 						<a
 							href={originalUrl}
 							onClick={onUrlClick}
-							target='blank'
-							className='hover:underline truncate'>
+							target="blank"
+							className="hover:underline truncate text-xs">
 							{shortUrl}
 						</a>
 					</div>
 				</TooltipTrigger>
-				<TooltipContent>Shorten link of: {originalUrl}</TooltipContent>
+				<TooltipContent className="z-50">{originalUrl}</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>
 	);

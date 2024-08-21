@@ -1,33 +1,34 @@
-import { IconBrandGoogleFilled, IconBrandGithub, IconUser } from '@tabler/icons-react';
-import AuthInput from '../AuthInput';
 import { API_URL } from '../../constants/apiUrl';
+import WrapperAction from '../containers/WrapperAction';
+import { IconBrandGithub, IconBrandGoogleFilled } from '@tabler/icons-react';
+
+const DEFAULT_USER_URL = 'https://opr-short-url.vercel.app/user/116176187754032784002'
 
 const LoginModal = () => {
 	return (
-		<article
-			aria-label='login modal'
-			className='w-[300px] flex flex-col items-center gap-5 pb-8'>
-			<h3>Login with:</h3>
-			<AuthInput
-				href={`https://opr-short-url.vercel.app/user/116176187754032784002`}
-				contrast>
-				<IconUser />
-				Default user
-			</AuthInput>
-			<div className='flex items-center gap-5'>
-				<span className='w-[15px] h-[0.01rem] bg-primary' />
-				<p>or</p>
-				<span className='w-[15px] h-[0.01rem] bg-primary' />
+		<article aria-label="login modal" className="w-[400px] flex flex-col items-center gap-10 pb-8">
+			<h3 className="-mb-10">Choose an account</h3>
+			<WrapperAction
+				color="contrast-blue"
+				url={DEFAULT_USER_URL}
+				id="default"
+				type="url">
+				Default links
+			</WrapperAction>
+			<div className="flex items-center gap-5">
+				<span className="w-[15px] h-[0.01rem] bg-primary" />
+				<span className="w-[15px] h-[0.01rem] bg-primary" />
+				<span className="w-[15px] h-[0.01rem] bg-primary" />
 			</div>
-			<div className='flex items-center gap-5'>
-				<AuthInput href={`${API_URL}/auth?provider=google`}>
+			<div className="flex items-center gap-5 -mt-5">
+				<WrapperAction color="default" url={`${API_URL}/auth?provider=google`} id="default" type="url">
 					<IconBrandGoogleFilled />
 					Google
-				</AuthInput>
-				<AuthInput href={`${API_URL}/auth?provider=github`}>
+				</WrapperAction>
+				<WrapperAction color="default" url={`${API_URL}/auth?provider=github`} id="default" type="url">
 					<IconBrandGithub />
 					Github
-				</AuthInput>
+				</WrapperAction>
 			</div>
 		</article>
 	);

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const urlFormSchema = z.object({
 	link: z.string().refine(
-		(url) => {
+		url => {
 			try {
 				new URL(url);
 				return true;
