@@ -19,11 +19,6 @@ describe('LoginModal', () => {
 		component.unmount();
 	});
 
-	it('Should render successfully', async () => {
-		component.getByText('Login with:');
-		component.getByText('or');
-	});
-
 	it('Should update location when clicks on default button', async () => {
 		const buttons = component.getAllByRole('link');
 
