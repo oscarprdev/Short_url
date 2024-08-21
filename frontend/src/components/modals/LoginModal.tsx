@@ -2,7 +2,7 @@ import { API_URL } from '../../constants/apiUrl';
 import WrapperAction from '../containers/WrapperAction';
 import { IconBrandGithub, IconBrandGoogleFilled } from '@tabler/icons-react';
 
-// const DEFAULT_USER_URL = 'https://opr-short-url.vercel.app/user/116176187754032784002'
+const DEFAULT_USER_URL = 'https://opr-short-url.vercel.app/user/116176187754032784002'
 
 const LoginModal = () => {
 	return (
@@ -10,7 +10,7 @@ const LoginModal = () => {
 			<h3 className="-mb-10">Choose an account</h3>
 			<WrapperAction
 				color="contrast-blue"
-				url={`http://localhost:5173/user/116176187754032784002`}
+				url={DEFAULT_USER_URL}
 				id="default"
 				type="url">
 				Default links

@@ -20,8 +20,8 @@ describe('HomeContainer', () => {
 	});
 
 	it('Should render successfully', () => {
-		component.getByText('Short - it');
-		component.getByText('The simplest URL Shortner you were waiting for.');
+		component.getByText('OPlink');
+		component.getByText('The simplest URL Shortner app you were waiting for.');
 		component.getByTestId('url-form');
 	});
 });

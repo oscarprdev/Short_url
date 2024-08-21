@@ -63,7 +63,7 @@ const WrapperAction = ({
 						)}></div>
 				</Button>
 			) : (
-				<article data-testid={`${id}-btn`} className="group relative w-[200px] h-[110px] p-2 pl-0">
+				<article data-testid={`${id}`} className="group relative w-[200px] h-[110px] p-2 pl-0">
 					<div className="absolute flex flex-col gap-1 p-5 w-[200px] -top-1 -left-1 z-1 bg-black group-hover:text-white rounded-lg ml-auto font-bold bg-[var(--background)] text-zinc-100 border border-zinc-500 h-full duration-200 ease-out group-hover:translate-x-1 group-hover:translate-y-1">
 						{children}
 					</div>

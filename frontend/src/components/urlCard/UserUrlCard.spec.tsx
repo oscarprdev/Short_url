@@ -21,7 +21,7 @@ describe('UserUrlCard', () => {
 	});
 
 	it('Should render successfully', () => {
-		component.getByRole('listitem');
+		component.getByTestId('user-card');
 
 		const link = component.getByRole('link');
 
@@ -32,6 +32,5 @@ describe('UserUrlCard', () => {
 
 		component.getByTestId('icon-copy');
 		component.getByTestId('icon-pointer');
-		component.getByTestId('icon-calendar');
 	});
 });

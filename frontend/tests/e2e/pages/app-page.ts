@@ -25,12 +25,12 @@ export class AppPage {
 
 		this.urlForm = this.page.getByTestId('url-form');
 		this.urlInput = this.page.getByPlaceholder('Enter your link here...');
-		this.urlButton = this.page.locator('button[type="submit"]');
-		this.urlCard = this.page.getByRole('listitem');
+		this.urlButton = this.page.getByTestId('submit-btn');
+		this.urlCard = this.page.getByTestId('url-link-card');
 
 		this.loginModal = this.page.getByLabel('login modal');
 		this.loginButton = this.page.getByTestId('login-btn');
-		this.defaultUserButton = this.page.getByRole('link').getByText('Default user');
+		this.defaultUserButton = this.page.getByRole('link').getByText('Default links');
 		this.googleLoginButton = this.page.getByRole('link').getByText('Google');
 		this.githubLoginButton = this.page.getByRole('link').getByText('Github');
 
